@@ -8,7 +8,7 @@ import { navigate } from '../util';
 /** 从「重新生成」带过来的预填内容 */
 export const genPrefill = signal<{ topic: string; background?: string; replaceId?: string } | null>(null);
 
-const SUGGESTIONS = ['CAD 布尔运算', '网格生成与 Delaunay 三角化', '计算几何基础', 'GPU 驱动渲染', 'WebGPU 入门', '曲面细分与 LOD'];
+const SUGGESTIONS = ['Mesh Shader 与 Meshlet', '可见性缓冲（Visibility Buffer）', '超大 CAD 装配体渲染', 'CAD 边线与剖切显示', 'B-Rep 曲面细分（Tessellation）', 'CAD 布尔运算'];
 const TIMEOUT_MS = 120_000;
 
 /** 生成任务放在模块级：切到别的页面不会中断，完成后提示 */
@@ -22,7 +22,8 @@ async function startGeneration(topic: string, background: string, replaceId?: st
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
     const model = settings.value.aiModel || DEFAULT_MODEL;
-    const { path, costUsd } = await generatePath({ key: aiKey.value, model, topic, background, signal: ctrl.signal });
+    const includeBeginner = settings.value.aiIncludeBeginner ?? false;
+    const { path, costUsd } = await generatePath({ key: aiKey.value, model, topic, background, includeBeginner, signal: ctrl.signal });
     addLocalAiCost(costUsd);
     const id = replaceId ?? `ai-${newId()}`;
     saveAiPath({ ...path, id, source: 'ai', createdAt: Date.now(), model, background: background.trim() || undefined, costUsd });
@@ -102,7 +103,7 @@ export function GeneratePage() {
         <label class="field">
           <span>主题</span>
           <input
-            placeholder="例如：CAD 布尔运算、GPU 驱动渲染"
+            placeholder="例如：Mesh Shader、超大 CAD 装配体渲染"
             value={topic}
             maxLength={60}
             onInput={(e) => setTopic((e.target as HTMLInputElement).value)}
@@ -122,11 +123,20 @@ export function GeneratePage() {
           <span>我的背景和目标（可选，让推荐更贴合）</span>
           <textarea
             rows={3}
-            placeholder="例如：会 C++，做过 3 年 CAD 插件开发，想自己实现 NURBS 曲面求交"
+            placeholder="例如：熟悉 Vulkan，在做 CAD 查看器，想解决百万零件装配体的流畅显示"
             value={background}
             maxLength={300}
             onInput={(e) => setBackground((e.target as HTMLTextAreaElement).value)}
           />
+        </label>
+
+        <label class="check">
+          <input
+            type="checkbox"
+            checked={settings.value.aiIncludeBeginner ?? false}
+            onChange={(e) => updateSettings({ aiIncludeBeginner: (e.target as HTMLInputElement).checked })}
+          />
+          包含新手级资源（默认只推荐中级和高级）
         </label>
 
         <div class="actions">

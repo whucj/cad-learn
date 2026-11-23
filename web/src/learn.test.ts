@@ -13,7 +13,7 @@ describe('builtin curated paths', () => {
     for (const r of p.resources) {
       expect(r.type).toBeTruthy();
       for (const f of ['name', 'why', 'teaches', 'bestFor', 'howTo', 'avoid'] as const) expect(r[f].length, `${r.name}.${f}`).toBeGreaterThan(5);
-      expect(['新手', '中级', '高级']).toContain(r.level);
+      expect(['中级', '高级']).toContain(r.level); // 内置清单不含新手资源
       expect(r.url).toMatch(/^https:\/\//);
     }
     expect(p.order.map((o) => o.name).sort()).toEqual(p.resources.map((r) => r.name).sort());
@@ -55,6 +55,17 @@ describe('parsePathJson', () => {
     ]);
   });
 
+  it('drops beginner resources unless asked for them (keeps at least 3)', () => {
+    const extra = { name: 'D', type: '论文', why: 'w', teaches: 't', bestFor: 'b', level: '高级', howTo: 'h', avoid: 'x' };
+    const base = JSON.parse(aiJson());
+    const four = JSON.stringify({ ...base, resources: [...base.resources, extra] });
+    expect(parsePathJson(four, 't', false).resources.map((r) => r.name)).toEqual(['B', 'C', 'D']);
+    expect(parsePathJson(four, 't', false).order.map((o) => o.name)).toEqual(['C', 'B', 'D']);
+    expect(parsePathJson(four, 't', true).resources.map((r) => r.name)).toEqual(['A', 'B', 'C', 'D']);
+    // 去掉后不足 3 个：保留原样，不报错
+    expect(parsePathJson(aiJson(), 't', false).resources.map((r) => r.name)).toEqual(['A', 'B', 'C']);
+  });
+
   it('rejects unusable output', () => {
     expect(() => parsePathJson('not json', 't')).toThrow(AiError);
     expect(() => parsePathJson(aiJson({ resources: [{ name: 'only one' }] }), 't')).toThrow('太少');
@@ -66,6 +77,8 @@ describe('parsePathJson', () => {
     expect(user.content).toContain('学习「网格生成」杠杆最高的 5 个资源');
     expect(user.content).toContain('我要的是信号，不是噪音');
     expect(user.content).toContain('我的背景和目标：会 C++');
+    expect(user.content).toContain('不需要新手级资源');
+    expect(curatorMessages('x', '', true)[1].content).not.toContain('不需要新手级资源');
   });
 });
 
@@ -137,8 +150,8 @@ describe('learning paths in Obsidian export and backup', () => {
     expect(md).toContain('1. [/] **C**：先打基础\n2. [x] **A**：再精读\n3. [ ] **B**');
     expect(md).toContain('- 我的笔记：[[Notes/学习：A]]');
     expect(md).not.toContain('javascript:');
-    expect(plan.files.get('CADLearn/学习路线/几何内核.md')).toContain('2. [/] **The NURBS Book');
-    expect(plan.files.has('CADLearn/学习路线/实时渲染.md')).toBe(true);
+    expect(plan.files.get('CADLearn/学习路线/几何内核.md')).toContain('1. [/] **The NURBS Book');
+    expect(plan.files.has('CADLearn/学习路线/GPU 驱动与 CAD 渲染.md')).toBe(true);
 
     const backup = JSON.parse(plan.files.get('CADLearn/cad-learn-backup.json')!);
     expect(Object.keys(backup.aiPaths)).toEqual(['ai-x']);

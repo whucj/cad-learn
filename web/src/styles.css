@@ -725,3 +725,15 @@ dl.fields .warn {
   font-weight: 600;
   cursor: pointer;
 }
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 10px;
+  font-size: 0.9rem;
+}
+.check input {
+  width: 18px;
+  height: 18px;
+}

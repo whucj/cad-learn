@@ -86,6 +86,8 @@ export interface Settings {
   aiModel?: string;
   /** 生成学习路线时附带的个人背景（可选） */
   aiBackground?: string;
+  /** AI 生成时是否包含新手级资源（默认不包含） */
+  aiIncludeBeginner?: boolean;
   /** 本机 AI 调用的估算花费（按月） */
   localAi?: { month: string; calls: number; costUsd: number };
 }

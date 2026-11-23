@@ -5,8 +5,10 @@ interests: |
   我在自学 CAD 几何内核和实时渲染。
   几何内核：B-Rep 拓扑与几何、NURBS 曲线曲面、曲面求交、布尔运算、倒角/抽壳等建模算法、
   网格生成与处理、几何约束求解、OpenCASCADE(OCCT)/CGAL/Manifold 等库的原理与使用。
-  实时渲染：GPU 渲染管线、光栅化、着色器、PBR 材质、阴影、抗锯齿、全局光照、光线追踪、
-  Vulkan/D3D12/WebGPU、GPU 性能优化、CAD 模型的大场景渲染（LOD、剔除、实例化）。
+  渲染（重点）：GPU 驱动渲染（GPU 剔除、间接绘制、mesh shader / meshlet、可见性缓冲、虚拟几何与 LOD）、
+  CAD/BIM 渲染（超大装配体、B-Rep 细分显示、边线与轮廓线、剖切、透明、深度精度、选择拾取）、
+  Vulkan/D3D12/WebGPU 与 GPU 性能优化。PBR、阴影、全局光照、光线追踪等通用渲染技术为次要兴趣。
+  我已有基础：入门教程、新手向科普的相关度应打低分。
   不太关心：纯机器人控制、纯计算机视觉识别、与图形无关的 AI 新闻、营销内容。
 
 # AI 打标签时优先使用的标签（导出到 Obsidian 时会变成 #标签）
@@ -19,6 +21,11 @@ tags:
   - 约束求解
   - 计算几何
   - OCCT
+  - GPU驱动渲染
+  - MeshShader
+  - 剔除
+  - LOD
+  - CAD渲染
   - 渲染管线
   - 光栅化
   - 着色器
@@ -92,6 +99,7 @@ sources:
   - { name: AMD GPUOpen, topic: rendering, url: "https://gpuopen.com/feed/" }
   - { name: Filament Releases, topic: rendering, url: "https://github.com/google/filament/releases.atom" }
   - { name: meshoptimizer Releases, topic: rendering, url: "https://github.com/zeux/meshoptimizer/releases.atom" }
+  - { name: zeux.io（Arseny Kapoulkine）, topic: rendering, url: "https://zeux.io/feed/" }
 
   # 综合
   - { name: three.js Releases, topic: general, url: "https://github.com/mrdoob/three.js/releases.atom" }

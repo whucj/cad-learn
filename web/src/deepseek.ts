@@ -13,12 +13,12 @@ const PRICE = { hit: 0.003, miss: 0.15, out: 0.6 };
 
 export class AiError extends Error {}
 
-export function curatorMessages(topic: string, background?: string) {
+export function curatorMessages(topic: string, background?: string, includeBeginner = false) {
   const system = `你是一位专家级学习策展人，熟悉 CAD 几何内核、计算几何与计算机图形学等领域的学习资源。
 只推荐你确定真实存在、口碑公认的资源；不确定的链接宁可留空（null），绝不编造书名、作者或网址。
 用简体中文回答，资源名称保留原文。只输出 json。`;
   const user = `请扮演一位专家级学习策展人。找出学习「${topic}」杠杆最高的 5 个资源。
-${background?.trim() ? `\n我的背景和目标：${background.trim()}\n` : ''}
+${background?.trim() ? `\n我的背景和目标：${background.trim()}\n` : ''}${includeBeginner ? '' : '\n我已有基础，不需要新手级资源：只推荐中级和高级资源，跳过入门教程。\n'}
 资源可以包括书籍、视频、课程、网站、newsletter、社区，或值得关注的专家。
 
 每个资源包含：
@@ -50,7 +50,7 @@ ${background?.trim() ? `\n我的背景和目标：${background.trim()}\n` : ''}
 }
 
 /** 校验并清洗 AI 输出；不合格抛 AiError */
-export function parsePathJson(content: string, topic: string): Omit<LearningPath, 'id' | 'source'> {
+export function parsePathJson(content: string, topic: string, includeBeginner = true): Omit<LearningPath, 'id' | 'source'> {
   let s = content.trim();
   if (s.startsWith('```')) s = s.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
   let j: Record<string, unknown>;
@@ -78,6 +78,11 @@ export function parsePathJson(content: string, topic: string): Omit<LearningPath
       howTo: text(o.howTo),
       avoid: text(o.avoid),
     });
+  }
+  // 不要新手资源时，AI 仍可能给出个别入门资源：去掉后至少还剩 3 个才去掉
+  if (!includeBeginner) {
+    const advanced = resources.filter((r) => r.level !== '新手');
+    if (advanced.length >= 3) resources.splice(0, resources.length, ...advanced);
   }
   if (resources.length < 3) throw new AiError('AI 返回的资源太少，请换个说法或重试');
 
@@ -119,6 +124,7 @@ export async function generatePath(opts: {
   model?: string;
   topic: string;
   background?: string;
+  includeBeginner?: boolean;
   signal?: AbortSignal;
   fetchImpl?: typeof fetch;
 }): Promise<{ path: Omit<LearningPath, 'id' | 'source'>; costUsd: number }> {
@@ -126,7 +132,7 @@ export async function generatePath(opts: {
   const model = opts.model?.trim() || DEFAULT_MODEL;
   const body = JSON.stringify({
     model,
-    messages: curatorMessages(opts.topic, opts.background),
+    messages: curatorMessages(opts.topic, opts.background, opts.includeBeginner),
     response_format: { type: 'json_object' },
     thinking: { type: 'disabled' },
     max_tokens: 4000,
@@ -155,5 +161,5 @@ export async function generatePath(opts: {
   }
   const j = (await resp.json()) as { choices?: { message?: { content?: string } }[]; usage?: Record<string, number> };
   const content = j.choices?.[0]?.message?.content ?? '';
-  return { path: parsePathJson(content, opts.topic), costUsd: estimateCost(j.usage ?? {}) };
+  return { path: parsePathJson(content, opts.topic, opts.includeBeginner ?? false), costUsd: estimateCost(j.usage ?? {}) };
 }
