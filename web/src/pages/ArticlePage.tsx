@@ -2,7 +2,7 @@ import { useEffect } from 'preact/hooks';
 import { articleMap, createNote, latest, markRead, noteForArticle, readIds, starred, toggleStar } from '../store';
 import { TOPIC_LABEL } from '../types';
 import { safeHref } from '../url';
-import { arxivId, navigate, relTime, stars } from '../util';
+import { arxivId, navigate, relTime, stars, viaLabel } from '../util';
 
 export function ArticlePage({ id }: { id: string }) {
   const a = articleMap.value.get(id);
@@ -24,6 +24,7 @@ export function ArticlePage({ id }: { id: string }) {
   const existingNote = noteForArticle(a.id);
   const href = safeHref(a.url);
   const arxiv = href && arxivId(href);
+  const viaHref = safeHref(a.via?.url);
 
   function openNote() {
     if (existingNote) return navigate(`#/n/${existingNote.id}`);
@@ -44,6 +45,14 @@ export function ArticlePage({ id }: { id: string }) {
           {a.author && <span>{a.author}</span>}
           <span>{relTime(a.published ?? a.fetched)}</span>
           <span>{TOPIC_LABEL[a.topic]}</span>
+          {a.via &&
+            (viaHref ? (
+              <a href={viaHref} target="_blank" rel="noopener noreferrer">
+                收录于{viaLabel(a.via.title)} ↗
+              </a>
+            ) : (
+              <span>收录于{viaLabel(a.via.title)}</span>
+            ))}
         </div>
 
         <div class="actions">
@@ -106,8 +115,8 @@ export function ArticlePage({ id }: { id: string }) {
 
         {a.snippet && (
           <section>
-            <h2>原文摘录</h2>
-            <blockquote>{a.snippet}</blockquote>
+            <h2>{a.via ? '编辑推荐语' : '原文摘录'}</h2>
+            <blockquote class="snippet">{a.snippet}</blockquote>
           </section>
         )}
 

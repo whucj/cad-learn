@@ -38,6 +38,12 @@ export function navigate(hash: string) {
   location.hash = hash;
 }
 
+/** 合集出处的简短显示："Graphics Programming weekly - Issue 463 - …" → "第 463 期" */
+export function viaLabel(title: string): string {
+  const n = /\bIssue\s+(\d+)/i.exec(title)?.[1];
+  return n ? `第 ${n} 期` : title;
+}
+
 export function stars(n: number): string {
   return '★'.repeat(n) + '☆'.repeat(Math.max(0, 5 - n));
 }

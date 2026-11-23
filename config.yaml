@@ -55,6 +55,7 @@ ai:
 # ---------------- 订阅源 ----------------
 # topic: geometry（几何内核）/ rendering（实时渲染）/ general（综合）
 # arxiv 类型写查询语句即可，会自动拼成 arXiv API 地址
+# split（可选）：合集类订阅源的拆分规则，CSS 选择器：item 每篇容器、link 标题链接、summary 简介
 sources:
   # 几何内核
   - { name: arXiv cs.CG 计算几何, topic: geometry, arxiv: "cat:cs.CG" }
@@ -66,7 +67,11 @@ sources:
 
   # 实时渲染
   - { name: arXiv cs.GR 图形学, topic: rendering, arxiv: "cat:cs.GR" }
-  - { name: Graphics Programming Weekly, topic: rendering, url: "https://www.jendrikillner.com/post/index.xml" }
+  # 每周精选合集：每期约 10 篇，按下面的规则拆成独立文章（编辑写的要点作为简介）
+  - name: Graphics Programming Weekly
+    topic: rendering
+    url: "https://www.jendrikillner.com/post/index.xml"
+    split: { item: ".post_container", link: "h2 a", summary: ".post_content" }
   - { name: MJP 博客, topic: rendering, url: "https://therealmjp.github.io/index.xml" }
   - { name: Aras Pranckevičius 博客, topic: rendering, url: "https://aras-p.info/atom.xml" }
   - { name: Interplay of Light, topic: rendering, url: "https://interplayoflight.wordpress.com/feed/" }

@@ -160,19 +160,24 @@ export function clippingMarkdown(a: Article, clippedAt: number, noteFiles: strin
   if (a.author) fm.push(`author: ${yamlStr(a.author)}`);
   if (a.published) fm.push(`published: ${a.published.slice(0, 10)}`);
   fm.push(`clipped: ${isoDate(clippedAt)}`);
+  if (a.via) fm.push(`via: ${yamlStr(a.via.title)}`);
   if (a.ai?.level) fm.push(`level: ${a.ai.level}`);
   if (a.ai?.relevance) fm.push(`relevance: ${a.ai.relevance}`);
   fm.push('tags:', ...tagList(['cad-learn/clipping', TOPIC_TAG[a.topic], ...(a.ai?.tags ?? [])]));
 
   const out = [`---`, ...fm, `---`, ``, `# ${a.title}`, ``];
   if (url) out.push(`> 原文：[${escapeLinkText(a.source)}](${url})`, ``);
+  const viaUrl = safeHref(a.via?.url);
+  if (a.via && viaUrl) out.push(`> 收录于：[${escapeLinkText(a.via.title)}](${viaUrl})`, ``);
   const arxiv = url && /^https:\/\/arxiv\.org\/abs\/([\d.]+)$/.exec(url)?.[1];
   if (arxiv) out.push(`> [PDF](https://arxiv.org/pdf/${arxiv}) · [HTML](https://arxiv.org/html/${arxiv})`, ``);
   if (a.ai) {
     out.push(`## AI 摘要`, ``, a.ai.summary, ``);
     if (a.ai.points.length) out.push(`## 要点`, ``, ...a.ai.points.map((p) => `- ${p}`), ``);
   }
-  if (a.snippet) out.push(`## 原文摘录`, ``, `> ${a.snippet}`, ``);
+  if (a.snippet) {
+    out.push(a.via ? `## 编辑推荐语` : `## 原文摘录`, ``, ...a.snippet.split('\n').map((l) => `> ${l}`), ``);
+  }
   if (noteFiles.length) out.push(`## 我的笔记`, ``, ...noteFiles.map((f) => `- [[Notes/${f}]]`), ``);
   return out.join('\n');
 }

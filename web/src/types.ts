@@ -20,6 +20,8 @@ export interface Article {
   fetched: string;
   snippet?: string;
   ai?: AiResult;
+  /** 从合集（如 Graphics Programming Weekly 某一期）拆出时的出处 */
+  via?: { title: string; url: string };
 }
 
 export interface LatestData {

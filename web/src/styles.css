@@ -289,6 +289,10 @@ a {
   margin: 16px 0;
 }
 
+.article blockquote.snippet {
+  white-space: pre-line;
+}
+
 .article blockquote {
   margin: 0;
   padding: 8px 12px;

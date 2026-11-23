@@ -65,7 +65,17 @@ bool _hasBlockAncestor(Element e, Element root) {
   return false;
 }
 
-/// 为 AI 准备正文：feed 自带的足够长就直接用；arXiv 用摘要；否则抓原网页。
+/// 视频、社交网站：抓网页拿不到正文，直接用订阅源里的简介
+const _noFetchHosts = ['youtube.com', 'youtu.be', 'linkedin.com', 'x.com', 'twitter.com', 'bsky.app', 'reddit.com', 'vimeo.com'];
+
+bool _skipFetch(String url) {
+  final host = Uri.tryParse(url)?.host ?? '';
+  return _noFetchHosts.any((h) => host == h || host.endsWith('.$h'));
+}
+
+/// 为 AI 准备正文：
+/// - 订阅源自带的内容足够长、arXiv（摘要已足够）、视频/社交链接：直接用订阅源内容；
+/// - 否则抓原网页提取正文，并保留订阅源简介在前（合集编辑写的要点很有价值）。
 Future<String> textForAi({
   required String url,
   required String? feedHtml,
@@ -74,13 +84,21 @@ Future<String> textForAi({
 }) async {
   final feedText = htmlToPlain(feedHtml ?? '');
   String text;
-  if (feedText.length >= 800 || url.contains('arxiv.org/abs/')) {
+  if (feedText.length >= 800 || url.contains('arxiv.org/abs/') || _skipFetch(url)) {
     text = feedText;
   } else {
+    String? page;
     try {
-      text = extractMainText(await (fetch ?? fetchText)(url)) ?? feedText;
+      page = extractMainText(await (fetch ?? fetchText)(url));
     } catch (_) {
+      page = null;
+    }
+    if (page == null) {
       text = feedText;
+    } else if (feedText.isEmpty) {
+      text = page;
+    } else {
+      text = '订阅源简介：\n$feedText\n\n原文正文：\n$page';
     }
   }
   return text.length > maxChars ? text.substring(0, maxChars) : text;

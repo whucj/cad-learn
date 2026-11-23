@@ -2,11 +2,16 @@ import 'dart:io';
 
 import 'package:yaml/yaml.dart';
 
+import 'digest.dart';
+
 class SourceConfig {
-  SourceConfig({required this.name, required this.url, required this.topic});
+  SourceConfig({required this.name, required this.url, required this.topic, this.split});
   final String name;
   final String url;
   final String topic;
+
+  /// 合集类订阅源的拆分规则（可选）
+  final SplitRule? split;
 
   bool get isArxiv => Uri.parse(url).host.endsWith('arxiv.org');
 }
@@ -70,7 +75,15 @@ class Config {
       } else {
         throw FormatException('「$name」需要 url 或 arxiv');
       }
-      sources.add(SourceConfig(name: name, url: url, topic: topic));
+      SplitRule? split;
+      if (m['split'] != null) {
+        final sp = m['split'];
+        if (sp is! YamlMap || sp['item'] == null || sp['link'] == null) {
+          throw FormatException('「$name」的 split 需要 item 和 link 两个选择器');
+        }
+        split = SplitRule(item: '${sp['item']}', link: '${sp['link']}', summary: sp['summary']?.toString());
+      }
+      sources.add(SourceConfig(name: name, url: url, topic: topic, split: split));
     }
 
     double d(Object? v, double def) => v == null ? def : (v as num).toDouble();

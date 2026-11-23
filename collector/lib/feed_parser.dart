@@ -10,6 +10,7 @@ class FeedItem {
     this.publishedAt,
     this.summary,
     this.contentHtml,
+    this.via,
   });
 
   final String url;
@@ -18,6 +19,19 @@ class FeedItem {
   final DateTime? publishedAt;
   final String? summary;
   final String? contentHtml;
+
+  /// 从合集（如每周精选）中拆出时，记录出处
+  final Via? via;
+}
+
+class Via {
+  const Via({required this.title, required this.url});
+  final String title;
+  final String url;
+
+  Map<String, Object?> toJson() => {'title': title, 'url': url};
+  static Via? fromJson(Object? j) =>
+      j is Map ? Via(title: j['title'] as String? ?? '', url: j['url'] as String? ?? '') : null;
 }
 
 class FeedParseException implements Exception {

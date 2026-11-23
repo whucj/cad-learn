@@ -45,6 +45,8 @@ GitHub Actions（每天 4 次）
 都在 `config.yaml`，可以直接在 GitHub 网页上编辑，提交后会自动重新运行：
 
 - `sources`：RSS/Atom 地址，或 `arxiv:` 查询语句（如 `abs:"ray tracing"`）。GitHub 项目发布：`https://github.com/<owner>/<repo>/releases.atom`
+- `split`（可选）：合集类订阅源的拆分规则。例如 Graphics Programming Weekly 每期约 10 篇精选，按 CSS 选择器拆成独立文章，
+  各自去重、打分和摘要，编辑写的要点作为“编辑推荐语”保留，并注明收录于第几期
 - `interests`：你的学习方向描述，AI 按它给相关度打分
 - `tags`：推荐标签（导出到 Obsidian 后是 `#标签`）
 - `ai.monthly_budget_usd`：本月估算花费达到后停止摘要（默认 4.5）

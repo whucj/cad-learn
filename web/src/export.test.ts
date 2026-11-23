@@ -140,6 +140,23 @@ describe('buildExportPlan', () => {
     expect(plan.files.get('CADLearn/Clippings/Evil.md')).not.toContain('原文：');
   });
 
+  it('digest articles keep their issue link and multi-line editor bullets', () => {
+    const a = article({
+      id: 'g1',
+      url: 'https://dl.acm.org/doi/10.1145/3842562',
+      title: 'Stealthy Blue Noise',
+      source: 'Graphics Programming Weekly',
+      topic: 'rendering',
+      snippet: '• presents blue-noise samples\n• applies to stippling',
+      via: { title: 'Graphics Programming weekly - Issue 463 - November 15th, 2026', url: 'https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/' },
+    });
+    const plan = buildExportPlan(input({ notes: [], starred: [{ article: a, starredAt: t0 }] }));
+    const md = plan.files.get('CADLearn/Clippings/Stealthy Blue Noise.md')!;
+    expect(md).toContain('via: "Graphics Programming weekly - Issue 463 - November 15th, 2026"');
+    expect(md).toContain('> 收录于：[Graphics Programming weekly - Issue 463 - November 15th, 2026](https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/)');
+    expect(md).toContain('## 编辑推荐语\n\n> • presents blue-noise samples\n> • applies to stippling\n');
+  });
+
   it('sanitizes folder and keeps names deterministic', () => {
     const n = (id: string, created: number) => note({ id, title: 'Same', created, updated: created, articleId: undefined });
     const plan = buildExportPlan(input({ notes: [n('x', t0 + 1), n('y', t0)], settings: { ...settings, exportFolder: '/My: Vault//Learn/' } }));

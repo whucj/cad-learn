@@ -1,4 +1,5 @@
 import 'config.dart';
+import 'digest.dart';
 import 'extractor.dart';
 import 'feed_parser.dart';
 import 'net.dart';
@@ -69,10 +70,14 @@ class Collector {
     Future<void> one(SourceConfig s) async {
       final now = clock().toUtc();
       try {
-        final items = FeedParser.parse(await fetch(s.url), baseUrl: s.url)
+        final parsed = FeedParser.parse(await fetch(s.url), baseUrl: s.url)
           ..sort((a, b) => (b.publishedAt ?? DateTime(0)).compareTo(a.publishedAt ?? DateTime(0)));
+        // 合集类源：把每一期拆成一篇篇文章（最新几期，共最多 maxItemsPerSource 篇）
+        final items = s.split == null
+            ? parsed.take(maxItemsPerSource).toList()
+            : expandDigest(parsed, s.split!, maxItems: maxItemsPerSource);
         var added = 0;
-        for (final i in items.take(maxItemsPerSource)) {
+        for (final i in items) {
           final id = StoredArticle.idFor(i.url);
           if (store.contains(id) || fresh.containsKey(id)) continue;
           final a = StoredArticle(
@@ -86,6 +91,7 @@ class Collector {
             published: i.publishedAt,
             snippet: i.summary,
             feedHtml: i.contentHtml,
+            via: i.via,
           );
           fresh[id] = a;
           store.add(a);
@@ -93,7 +99,8 @@ class Collector {
         }
         report.added += added;
         status[s.name] = {'name': s.name, 'topic': s.topic, 'ok': true, 'items': items.length, 'added': added};
-        log('  OK   ${s.name}: ${items.length} 条，新增 $added');
+        final split = s.split == null ? '' : '（${parsed.length} 期拆出）';
+        log('  OK   ${s.name}: ${items.length} 条$split，新增 $added');
       } catch (e) {
         status[s.name] = {'name': s.name, 'topic': s.topic, 'ok': false, 'error': e.toString()};
         log('  FAIL ${s.name}: $e');
@@ -145,7 +152,8 @@ class Collector {
           maxChars: ai.maxInputChars,
           fetch: fetch,
         );
-        final r = await summarizer!.summarize(title: a.title, source: a.source, url: a.url, text: text);
+        final source = a.via == null ? a.source : '${a.source}（收录于：${a.via!.title}）';
+        final r = await summarizer!.summarize(title: a.title, source: source, url: a.url, text: text);
         final cost = estimateCost(ai.offpeak, hit: r.hitTokens, miss: r.missTokens, output: r.outputTokens, peak: isPeak(clock()));
         a.ai = r.result;
         usage

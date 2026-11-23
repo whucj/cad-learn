@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart' as p;
 
+import 'feed_parser.dart' show Via;
+
 class AiResult {
   AiResult({required this.summary, required this.points, required this.tags, required this.relevance, this.level});
 
@@ -48,6 +50,7 @@ class StoredArticle {
     this.ai,
     this.aiTries = 0,
     this.feedHtml,
+    this.via,
   });
 
   final String id;
@@ -64,6 +67,9 @@ class StoredArticle {
 
   AiResult? ai;
   int aiTries;
+
+  /// 从合集中拆出时的出处（如 Graphics Programming Weekly 第 N 期）
+  final Via? via;
 
   /// 仅本次运行内存中使用（给 AI 用），不写入 JSON
   final String? feedHtml;
@@ -82,6 +88,7 @@ class StoredArticle {
         if (published != null) 'published': published!.toUtc().toIso8601String(),
         'fetched': fetched.toUtc().toIso8601String(),
         if (snippet != null && snippet!.isNotEmpty) 'snippet': snippet,
+        if (via != null) 'via': via!.toJson(),
         if (ai != null) 'ai': ai!.toJson(),
         if (aiTries > 0 && ai == null) 'aiTries': aiTries,
       };
@@ -98,6 +105,7 @@ class StoredArticle {
         snippet: j['snippet'] as String?,
         ai: j['ai'] == null ? null : AiResult.fromJson((j['ai'] as Map).cast<String, Object?>()),
         aiTries: (j['aiTries'] as num?)?.toInt() ?? 0,
+        via: Via.fromJson(j['via']),
       );
 }
 
