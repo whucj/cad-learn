@@ -1,0 +1,83 @@
+# CAD Learn 配置。可以直接在 GitHub 网页上编辑此文件，提交后下一次定时任务生效。
+
+# ---------------- 兴趣描述（AI 据此给文章打 1–5 分相关度） ----------------
+interests: |
+  我在自学 CAD 几何内核和实时渲染。
+  几何内核：B-Rep 拓扑与几何、NURBS 曲线曲面、曲面求交、布尔运算、倒角/抽壳等建模算法、
+  网格生成与处理、几何约束求解、OpenCASCADE(OCCT)/CGAL/Manifold 等库的原理与使用。
+  实时渲染：GPU 渲染管线、光栅化、着色器、PBR 材质、阴影、抗锯齿、全局光照、光线追踪、
+  Vulkan/D3D12/WebGPU、GPU 性能优化、CAD 模型的大场景渲染（LOD、剔除、实例化）。
+  不太关心：纯机器人控制、纯计算机视觉识别、与图形无关的 AI 新闻、营销内容。
+
+# AI 打标签时优先使用的标签（导出到 Obsidian 时会变成 #标签）
+tags:
+  - B-Rep
+  - NURBS
+  - 曲面求交
+  - 布尔运算
+  - 网格处理
+  - 约束求解
+  - 计算几何
+  - OCCT
+  - 渲染管线
+  - 光栅化
+  - 着色器
+  - PBR
+  - 阴影
+  - 抗锯齿
+  - 全局光照
+  - 光线追踪
+  - 神经渲染
+  - 高斯泼溅
+  - GPU架构
+  - 性能优化
+  - Vulkan
+  - D3D12
+  - WebGPU
+  - 版本发布
+
+# ---------------- AI（DeepSeek） ----------------
+# API Key 不写在这里！放在 GitHub 仓库 Settings → Secrets → Actions → DEEPSEEK_API_KEY
+ai:
+  model: deepseek-flash
+  base_url: https://api.deepseek.com
+  monthly_budget_usd: 4.5   # 本月估算花费达到后停止调用，留一点余量
+  max_per_run: 40           # 每次运行最多摘要多少篇
+  max_age_days: 30          # 只给最近 N 天发布的文章做摘要（避免给旧内容花钱）
+  max_input_chars: 6000     # 送给 AI 的正文最多多少字符
+  # 每百万 token 价格（美元），2026-11-23 抄自 https://api-docs.deepseek.com/quick_start/pricing
+  # 高峰价为非高峰的 2 倍；高峰：周一至周五 UTC 01:00–04:00、06:00–10:00
+  price_offpeak:
+    input_cache_hit: 0.003
+    input_cache_miss: 0.15
+    output: 0.6
+
+# ---------------- 订阅源 ----------------
+# topic: geometry（几何内核）/ rendering（实时渲染）/ general（综合）
+# arxiv 类型写查询语句即可，会自动拼成 arXiv API 地址
+sources:
+  # 几何内核
+  - { name: arXiv cs.CG 计算几何, topic: geometry, arxiv: "cat:cs.CG" }
+  - { name: arXiv NURBS / B-Rep, topic: geometry, arxiv: 'abs:NURBS OR abs:"B-rep" OR abs:"boundary representation"' }
+  - { name: OCCT Releases, topic: geometry, url: "https://github.com/Open-Cascade-SAS/OCCT/releases.atom" }
+  - { name: FreeCAD Releases, topic: geometry, url: "https://github.com/FreeCAD/FreeCAD/releases.atom" }
+  - { name: CGAL Releases, topic: geometry, url: "https://github.com/CGAL/cgal/releases.atom" }
+  - { name: Manifold Releases, topic: geometry, url: "https://github.com/elalish/manifold/releases.atom" }
+
+  # 实时渲染
+  - { name: arXiv cs.GR 图形学, topic: rendering, arxiv: "cat:cs.GR" }
+  - { name: Graphics Programming Weekly, topic: rendering, url: "https://www.jendrikillner.com/post/index.xml" }
+  - { name: MJP 博客, topic: rendering, url: "https://therealmjp.github.io/index.xml" }
+  - { name: Aras Pranckevičius 博客, topic: rendering, url: "https://aras-p.info/atom.xml" }
+  - { name: Interplay of Light, topic: rendering, url: "https://interplayoflight.wordpress.com/feed/" }
+  - { name: NVIDIA Technical Blog, topic: rendering, url: "https://developer.nvidia.com/blog/feed/" }
+  - { name: AMD GPUOpen, topic: rendering, url: "https://gpuopen.com/feed/" }
+  - { name: Filament Releases, topic: rendering, url: "https://github.com/google/filament/releases.atom" }
+  - { name: meshoptimizer Releases, topic: rendering, url: "https://github.com/zeux/meshoptimizer/releases.atom" }
+
+  # 综合
+  - { name: three.js Releases, topic: general, url: "https://github.com/mrdoob/three.js/releases.atom" }
+  - { name: wgpu Releases, topic: general, url: "https://github.com/gfx-rs/wgpu/releases.atom" }
+
+  # 可以试试（2026-11 从服务器访问被拦，GitHub Actions 上可能也不行）：
+  # - { name: Real-Time Rendering Blog, topic: rendering, url: "https://www.realtimerendering.com/blog/feed/" }

@@ -1,0 +1,4 @@
+web/node_modules/
+web/dist/
+collector/.dart_tool/
+.DS_Store

@@ -1,0 +1,86 @@
+name: 采集并发布
+
+on:
+  schedule:
+    # UTC 时间，每天 4 次；避开 DeepSeek 高峰（工作日 UTC 01–04、06–10 价格翻倍）
+    - cron: '30 4,12,18,23 * * *'
+  workflow_dispatch: # 可在 Actions 页面手动运行
+  push:
+    branches: [main]
+    paths: ['config.yaml', 'collector/**', 'web/**', '.github/workflows/**']
+
+permissions:
+  contents: write # 提交 data/
+  pages: write
+  id-token: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: 采集器测试（仅代码变更时）
+        if: github.event_name == 'push'
+        working-directory: collector
+        run: |
+          dart pub get
+          dart test
+
+      - name: 抓取订阅源 + AI 摘要
+        working-directory: collector
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          dart pub get
+          dart run bin/collect.dart --root ..
+
+      - name: 提交数据
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "数据无变化"
+          else
+            git commit -m "data: $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git pull --rebase
+            git push
+          fi
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: 构建网页
+        working-directory: web
+        run: |
+          npm ci
+          npm test
+          npm run build
+
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
