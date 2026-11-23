@@ -1,6 +1,7 @@
 import { computed, signal } from '@preact/signals';
-import { useEffect } from 'preact/hooks';
-import { latest, loadError, markAllRead, readIds, settings, starred } from '../store';
+import { useEffect, useRef } from 'preact/hooks';
+import { attachPullToRefresh, refreshData } from '../pwa';
+import { latest, loadError, markAllRead, readIds, refreshing, settings, starred } from '../store';
 import { TOPIC_LABEL, type Article, type Topic } from '../types';
 import { relTime, stars } from '../util';
 
@@ -13,6 +14,12 @@ const unreadOnly = signal(false);
 const query = signal('');
 const limit = signal(60);
 let savedScroll = 0;
+
+export function showView(v: View) {
+  view.value = v;
+  limit.value = 60;
+  savedScroll = 0;
+}
 
 const filtered = computed(() => {
   const q = query.value.trim().toLowerCase();
@@ -39,6 +46,8 @@ export function ListPage() {
     const y = savedScroll;
     requestAnimationFrame(() => scrollTo(0, y));
   }, []);
+  const ptr = useRef<HTMLDivElement>(null);
+  useEffect(() => attachPullToRefresh(ptr.current!, () => refreshData(true)), []);
 
   const data = latest.value;
   const list = filtered.value;
@@ -48,9 +57,12 @@ export function ListPage() {
 
   return (
     <>
+      <div class="ptr" ref={ptr} aria-live="polite" />
       <header class="topbar">
         <h1>CAD Learn</h1>
-        <span class="muted small">{data ? `更新于 ${relTime(data.generatedAt)}` : ''}</span>
+        <button class="linklike muted small" disabled={refreshing.value} onClick={() => refreshData(true)} title="刷新">
+          {refreshing.value ? '刷新中…' : data ? `更新于 ${relTime(data.generatedAt)} ↻` : ''}
+        </button>
       </header>
 
       <div class="filters">

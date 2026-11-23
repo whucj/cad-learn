@@ -1,5 +1,5 @@
 import { buildExportPlan, hashString, sanitizeFolder, type ExportState } from './export';
-import { TOPIC_TAG, type Article, type Note, type Settings, type Starred } from './types';
+import { TOPIC_TAG, type Article, type LearningPath, type Note, type ProgressState, type Settings, type Starred } from './types';
 
 /**
  * 导入 zip（或单独的 cad-learn-backup.json）：
@@ -16,11 +16,13 @@ export interface LocalState {
   notes: Record<string, Note>;
   starred: Record<string, Starred>;
   exportState: ExportState;
+  aiPaths?: Record<string, LearningPath>;
+  progress?: Record<string, ProgressState>;
 }
 
 export interface ImportPlan extends LocalState {
   /** 从备份恢复/更新的条数；undefined 表示 zip 里没有备份 */
-  backup?: { notes: number; starred: number };
+  backup?: { notes: number; starred: number; paths: number };
   /** 用 Obsidian 版本更新的笔记标题 */
   updated: string[];
   /** 新增的笔记（Obsidian 里新建的，或本地没有的） */
@@ -111,7 +113,18 @@ export function planImport(files: Map<string, string>, ctx: ImportContext): Impo
   const articleByUrl = new Map([...ctx.articles.values()].map((a) => [a.url, a]));
   const usedNames = new Set(Object.values(exportState).map((r) => r.name.toLowerCase()));
   const seen = new Set<string>();
-  const result: ImportPlan = { notes, starred: state.starred, exportState, backup, updated: [], added: [], conflicts: [], unchanged: 0 };
+  const result: ImportPlan = {
+    notes,
+    starred: state.starred,
+    exportState,
+    aiPaths: state.aiPaths,
+    progress: state.progress,
+    backup,
+    updated: [],
+    added: [],
+    conflicts: [],
+    unchanged: 0,
+  };
 
   for (const f of mdFiles) {
     const md = parseNoteMarkdown(f.text, f.base);
@@ -177,9 +190,19 @@ export function planImport(files: Map<string, string>, ctx: ImportContext): Impo
   return result;
 }
 
-/** 合并备份：笔记按更新时间较新者优先；收藏只补本地没有的；导出记录本地优先 */
-export function mergeBackup(local: LocalState, json: string): { state: LocalState; counts: { notes: number; starred: number } } {
-  let data: { version?: number; notes?: Note[]; starred?: Starred[]; exportState?: ExportState };
+/** 合并备份：笔记按更新时间较新者优先；收藏、AI 学习路线只补本地没有的；导出记录、学习进度本地优先 */
+export function mergeBackup(
+  local: LocalState,
+  json: string,
+): { state: LocalState; counts: { notes: number; starred: number; paths: number } } {
+  let data: {
+    version?: number;
+    notes?: Note[];
+    starred?: Starred[];
+    exportState?: ExportState;
+    aiPaths?: Record<string, LearningPath>;
+    progress?: Record<string, ProgressState>;
+  };
   try {
     data = JSON.parse(json);
   } catch {
@@ -204,7 +227,16 @@ export function mergeBackup(local: LocalState, json: string): { state: LocalStat
     }
   }
   const exportState = { ...(data.exportState ?? {}), ...local.exportState };
-  return { state: { notes, starred, exportState }, counts: { notes: nc, starred: sc } };
+  const aiPaths = { ...(local.aiPaths ?? {}) };
+  let pc = 0;
+  for (const [id, p] of Object.entries(data.aiPaths ?? {})) {
+    if (p?.id === id && Array.isArray(p.resources) && !aiPaths[id]) {
+      aiPaths[id] = p;
+      pc++;
+    }
+  }
+  const progress = { ...(data.progress ?? {}), ...(local.progress ?? {}) };
+  return { state: { notes, starred, exportState, aiPaths, progress }, counts: { notes: nc, starred: sc, paths: pc } };
 }
 
 // ---------------- Markdown 解析 ----------------

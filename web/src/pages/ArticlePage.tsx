@@ -1,5 +1,6 @@
 import { useEffect } from 'preact/hooks';
-import { articleMap, createNote, latest, markRead, noteForArticle, readIds, starred, toggleStar } from '../store';
+import { shareOrCopy } from '../pwa';
+import { articleMap, ensureArticleNote, latest, markRead, noteForArticle, readIds, starred, toggleStar } from '../store';
 import { TOPIC_LABEL } from '../types';
 import { safeHref } from '../url';
 import { arxivId, navigate, relTime, stars, viaLabel } from '../util';
@@ -27,12 +28,7 @@ export function ArticlePage({ id }: { id: string }) {
   const viaHref = safeHref(a.via?.url);
 
   function openNote() {
-    if (existingNote) return navigate(`#/n/${existingNote.id}`);
-    const body = a!.ai
-      ? `> [!summary] AI 摘要\n> ${a!.ai.summary}\n\n## 我的笔记\n\n`
-      : `## 我的笔记\n\n`;
-    const n = createNote({ title: a!.title, body, articleId: a!.id, tags: [] });
-    navigate(`#/n/${n.id}`);
+    navigate(`#/n/${ensureArticleNote(a!).id}`);
   }
 
   return (
@@ -71,6 +67,11 @@ export function ArticlePage({ id }: { id: string }) {
           <button class="btn" onClick={openNote}>
             {existingNote ? '✎ 打开笔记' : '✎ 写笔记'}
           </button>
+          {href && (
+            <button class="btn" onClick={() => shareOrCopy({ title: a.title, text: a.ai?.summary, url: href })} aria-label="分享">
+              ⤴ 分享
+            </button>
+          )}
         </div>
 
         {arxiv && (

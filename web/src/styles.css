@@ -10,6 +10,11 @@
   --star: #c98a00;
   --danger: #b42318;
   --tag-bg: #eef1f5;
+  --warn: #9a5b00;
+  --warn-bg: #fff6e5;
+  --ok: #1a7f37;
+  --toast-bg: #1b2330;
+  --toast-text: #ffffff;
   --radius: 12px;
   color-scheme: light;
 }
@@ -27,6 +32,11 @@
     --star: #e5b13a;
     --danger: #f97066;
     --tag-bg: #222c38;
+    --warn: #f0b75a;
+    --warn-bg: #2b2414;
+    --ok: #4cc27a;
+    --toast-bg: #e4e9f0;
+    --toast-text: #0f141b;
     color-scheme: dark;
   }
 }
@@ -37,13 +47,27 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 阅读字号（设置 → 手机使用） */
+html[data-font='sm'] {
+  font-size: 15px;
+}
+html[data-font='lg'] {
+  font-size: 18px;
+}
+html[data-font='xl'] {
+  font-size: 20px;
 }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 16px/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', 'PingFang SC', sans-serif;
+  overscroll-behavior-y: none;
+  font: 1rem/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', 'PingFang SC', sans-serif;
 }
 
 a {
@@ -431,6 +455,12 @@ a {
   font-size: 0.88em;
 }
 
+/* 待办列表：只显示复选框，不显示圆点 */
+.markdown li:has(> input[type='checkbox']) {
+  list-style: none;
+  margin-left: -1.2em;
+}
+
 .markdown blockquote {
   margin: 0;
   padding-left: 12px;
@@ -487,4 +517,211 @@ a {
   padding: 8px 10px;
   font-size: 0.9rem;
   overflow-wrap: anywhere;
+}
+
+/* ---------- 安卓 / PWA ---------- */
+/* 输入时隐藏底部导航，给键盘和编辑区腾地方 */
+body.typing .tabbar {
+  display: none;
+}
+body.typing .page {
+  padding-bottom: 24px;
+}
+
+.offline-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: calc(4px + env(safe-area-inset-top)) 16px 4px;
+  background: var(--warn-bg);
+  color: var(--warn);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(72px + env(safe-area-inset-bottom));
+  z-index: 30;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100vw - 32px);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  font-size: 0.9rem;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+}
+body.typing .toast {
+  bottom: 16px;
+}
+.toast button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.ptr {
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  transition: height 0.15s ease-out;
+}
+
+.linklike {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--primary);
+  text-align: left;
+  cursor: pointer;
+}
+.linklike.muted {
+  color: var(--muted);
+}
+
+/* ---------- 学习路线 ---------- */
+.intro-text {
+  margin: 12px 0 4px;
+}
+
+.badge.ai {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+.card-title .badge,
+.article h1 .badge {
+  margin-left: 8px;
+  vertical-align: middle;
+  font-size: 0.72rem;
+}
+.badge.level-新手 {
+  color: var(--ok);
+}
+.badge.level-高级 {
+  color: var(--danger);
+}
+
+.progress {
+  height: 6px;
+  margin: 10px 0 4px;
+  border-radius: 999px;
+  background: var(--tag-bg);
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--ok);
+  transition: width 0.2s;
+}
+
+ol.order {
+  margin: 0;
+  padding-left: 1.4em;
+}
+ol.order li {
+  margin: 8px 0;
+}
+ol.order .linklike {
+  display: block;
+}
+ol.order li.st-done .linklike {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.resource {
+  scroll-margin-top: 72px;
+}
+.resource.st-done {
+  border-left: 4px solid var(--ok);
+}
+.resource.st-doing {
+  border-left: 4px solid var(--primary);
+}
+
+dl.fields {
+  margin: 8px 0 12px;
+}
+dl.fields dt {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+dl.fields dd {
+  margin: 2px 0 0;
+}
+dl.fields .warn {
+  color: var(--warn);
+}
+
+.segmented.small button {
+  font-size: 0.85rem;
+  padding: 6px 4px;
+}
+
+.row .grow {
+  flex: 1;
+  min-width: 0;
+}
+.row input.grow {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  resize: vertical;
+}
+.notice.small {
+  font-size: 0.85rem;
+}
+
+/* ---------- 笔记 Markdown 工具栏 ---------- */
+.md-toolbar {
+  position: sticky;
+  top: calc(56px + env(safe-area-inset-top));
+  z-index: 4;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 6px 0;
+  background: var(--bg);
+  scrollbar-width: none;
+}
+.md-toolbar button {
+  flex: 0 0 auto;
+  min-width: 40px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }

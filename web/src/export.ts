@@ -1,4 +1,4 @@
-import { TOPIC_TAG, type Article, type Note, type Settings, type Starred } from './types';
+import { TOPIC_TAG, type Article, type LearningPath, type Note, type ProgressState, type Settings, type Starred } from './types';
 import { safeHref } from './url';
 
 /**
@@ -11,6 +11,7 @@ import { safeHref } from './url';
  * zip 结构：
  *   <folder>/Notes/<笔记>.md
  *   <folder>/Clippings/<文章>.md      收藏的文章 + 被笔记引用的文章
+ *   <folder>/学习路线/<主题>.md        精选资源、使用顺序和学习进度
  *   <folder>/_待清理.md                （有删除时）
  *   <folder>/cad-learn-backup.json     浏览器本地数据完整备份
  *
@@ -21,7 +22,7 @@ export interface ExportRecord {
   name: string; // 不含 .md
   hash: string;
 }
-/** key：`note:<id>` 或 `clip:<articleId>` */
+/** key：`note:<id>`、`clip:<articleId>` 或 `path:<路线 id>` */
 export type ExportState = Record<string, ExportRecord>;
 
 export interface ExportInput {
@@ -30,6 +31,11 @@ export interface ExportInput {
   /** 当前能查到的最新文章数据（latest.json + 收藏快照），优先于收藏快照使用 */
   articles: Map<string, Article>;
   settings: Settings;
+  /** 学习路线（内置 + AI 生成）及进度 */
+  paths?: LearningPath[];
+  progress?: Record<string, ProgressState>;
+  /** 只进备份、不生成 Markdown 的 AI 路线（内置路线不需要备份） */
+  aiPaths?: Record<string, LearningPath>;
   exported: ExportState;
   /** true：只导出内容有变化的文件；false：全部重新导出 */
   incremental: boolean;
@@ -72,7 +78,7 @@ export function buildExportPlan(input: ExportInput): ExportPlan {
   }
 
   // ---- 分配文件名：已导出过的沿用，新的按创建顺序分配并避开重名 ----
-  const used = { note: new Set<string>(), clip: new Set<string>() };
+  const used = { note: new Set<string>(), clip: new Set<string>(), path: new Set<string>() };
   for (const [key, rec] of Object.entries(exported)) used[kindOf(key)]?.add(rec.name.toLowerCase());
   const names = new Map<string, string>();
   const assign = (key: string, title: string) => {
@@ -91,6 +97,8 @@ export function buildExportPlan(input: ExportInput): ExportPlan {
   [...clipArticles.values()]
     .sort((a, b) => a.fetched.localeCompare(b.fetched) || a.id.localeCompare(b.id))
     .forEach((a) => assign(`clip:${a.id}`, a.title));
+  const paths = input.paths ?? [];
+  paths.forEach((p) => assign(`path:${p.id}`, p.title));
 
   const emit = (key: string, path: string, content: string) => {
     const hash = hashString(content);
@@ -117,6 +125,15 @@ export function buildExportPlan(input: ExportInput): ExportPlan {
     );
   }
 
+  const progress = input.progress ?? {};
+  for (const p of paths) {
+    const key = `path:${p.id}`;
+    const linked = notes
+      .filter((n) => n.ref?.startsWith(`${p.id}::`))
+      .map((n) => ({ res: n.ref!.slice(p.id.length + 2), file: names.get(`note:${n.id}`)! }));
+    emit(key, `${folder}/${KIND_DIR.path}/${names.get(key)}.md`, pathMarkdown(p, progress, linked));
+  }
+
   // 文章数据暂时拿不到，但笔记还在：保留原导出记录，不算删除
   for (const id of referencedMissing) {
     const rec = exported[`clip:${id}`];
@@ -125,14 +142,18 @@ export function buildExportPlan(input: ExportInput): ExportPlan {
 
   const removed = Object.entries(exported)
     .filter(([key]) => !next[key])
-    .map(([key, rec]) => `${folder}/${kindOf(key) === 'note' ? 'Notes' : 'Clippings'}/${rec.name}.md`);
+    .map(([key, rec]) => `${folder}/${KIND_DIR[kindOf(key)]}/${rec.name}.md`);
 
   const changed = files.size;
   if (removed.length) files.set(`${folder}/_待清理.md`, cleanupMarkdown(folder, removed, now));
   if (files.size > 0) {
     files.set(
       `${folder}/cad-learn-backup.json`,
-      JSON.stringify({ version: 2, exportedAt: now.toISOString(), notes, starred, settings, exportState: next }, null, 1),
+      JSON.stringify(
+        { version: 2, exportedAt: now.toISOString(), notes, starred, settings, exportState: next, aiPaths: input.aiPaths ?? {}, progress },
+        null,
+        1,
+      ),
     );
   }
   return { files, changed, removed, nextState: next, entries, exportedAt: now.getTime() };
@@ -188,6 +209,47 @@ export function clippingMarkdown(a: Article, clippedAt: number, noteFiles: strin
   return out.join('\n');
 }
 
+export function pathMarkdown(p: LearningPath, progress: Record<string, ProgressState>, notes: { res: string; file: string }[]): string {
+  const state = (name: string) => progress[`${p.id}::${name}`];
+  const done = p.resources.filter((r) => state(r.name) === 'done').length;
+  const fm = [
+    `title: ${yamlStr(`${p.title} · 学习路线`)}`,
+    `source: ${yamlStr(p.source === 'ai' ? `AI 生成（${p.model ?? 'DeepSeek'}）` : 'CAD Learn 精选')}`,
+  ];
+  if (p.createdAt) fm.push(`created: ${isoDate(p.createdAt)}`);
+  fm.push(`progress: "${done}/${p.resources.length}"`);
+  fm.push('tags:', ...tagList(['cad-learn/path', ...(p.topic ? [TOPIC_TAG[p.topic]] : [])]));
+
+  const out = [`---`, ...fm, `---`, ``, `# ${p.title}：学习杠杆最高的 ${p.resources.length} 个资源`, ``];
+  if (p.source === 'ai') out.push(`> [!warning] AI 生成的推荐，书名和链接请自行核实。`, ``);
+  if (p.background) out.push(`> 我的背景：${p.background}`, ``);
+  if (p.intro) out.push(p.intro, ``);
+
+  out.push(`## 推荐使用顺序`, ``);
+  p.order.forEach((o, i) => {
+    const st = state(o.name);
+    out.push(`${i + 1}. [${st === 'done' ? 'x' : st === 'doing' ? '/' : ' '}] **${o.name}**${o.reason ? `：${o.reason}` : ''}`);
+  });
+  out.push(``);
+
+  p.resources.forEach((r, i) => {
+    const url = safeHref(r.url);
+    const st = state(r.name);
+    out.push(`## ${i + 1}. ${r.name}`, ``);
+    out.push(`- 类型：${r.type} · 难度：${r.level}${url ? ` · [链接](${url})` : ''}`);
+    out.push(`- 进度：${st === 'done' ? '✅ 已完成' : st === 'doing' ? '📖 进行中' : '未开始'}`);
+    out.push(`- **为什么值得花时间**：${r.why}`);
+    out.push(`- **能帮我学会**：${r.teaches}`);
+    out.push(`- **最适合**：${r.bestFor}`);
+    out.push(`- **高效用法**：${r.howTo}`);
+    out.push(`- **别浪费时间在**：${r.avoid}`);
+    const linked = notes.filter((n) => n.res === r.name);
+    if (linked.length) out.push(`- 我的笔记：${linked.map((n) => `[[Notes/${n.file}]]`).join('、')}`);
+    out.push(``);
+  });
+  return out.join('\n');
+}
+
 function cleanupMarkdown(folder: string, removed: string[], now: Date): string {
   const prefix = `${folder}/`;
   return [
@@ -230,8 +292,11 @@ export function hashString(s: string): string {
   return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
 }
 
-function kindOf(key: string): 'note' | 'clip' {
-  return key.startsWith('note:') ? 'note' : 'clip';
+type Kind = 'note' | 'clip' | 'path';
+const KIND_DIR: Record<Kind, string> = { note: 'Notes', clip: 'Clippings', path: '学习路线' };
+
+function kindOf(key: string): Kind {
+  return key.startsWith('note:') ? 'note' : key.startsWith('path:') ? 'path' : 'clip';
 }
 
 function tagList(tags: string[]): string[] {

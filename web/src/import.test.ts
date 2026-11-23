@@ -54,7 +54,7 @@ describe('planImport', () => {
     const { files } = exported([note()]);
     const read = await readImportFile(new File([await zipPlan({ files } as never)], 'x.zip'));
     const p = planImport(read, ctx({ notes: {}, starred: {}, exportState: {} }));
-    expect(p.backup).toEqual({ notes: 1, starred: 0 });
+    expect(p.backup).toEqual({ notes: 1, starred: 0, paths: 0 });
     expect(p.notes.n1).toEqual(note());
     expect(p.updated).toEqual([]);
     expect(p.added).toEqual([]);
@@ -65,7 +65,7 @@ describe('planImport', () => {
   it('same device, nothing changed: no-op', () => {
     const { files, local } = exported([note()]);
     const p = planImport(files, ctx(local));
-    expect(p.backup).toEqual({ notes: 0, starred: 0 });
+    expect(p.backup).toEqual({ notes: 0, starred: 0, paths: 0 });
     expect([p.updated, p.added, p.conflicts]).toEqual([[], [], []]);
   });
 

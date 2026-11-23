@@ -8,6 +8,7 @@ GitHub Actions（按 config.yaml 的更新周期：每天 4/2/1 次、每周或�
   └─ 结果提交到 data/，构建 web/ 并发布到 GitHub Pages
 手机浏览器打开网页（可安装到主屏幕）
   └─ 阅读、收藏、笔记（保存在浏览器本地）
+  └─ 学习路线：每个主题精选 5 个高杠杆资源 + 进度；任意新主题可用 DeepSeek 现场生成
   └─ 设置 → 导出 zip → 解压到 Obsidian 仓库
   └─ 设置 → 从 zip 导入 ← 备份恢复 / Obsidian 里修改、新建的笔记
 ```
@@ -34,11 +35,23 @@ GitHub Actions（按 config.yaml 的更新周期：每天 4/2/1 次、每周或�
   ```
   CADLearn/Notes/<笔记>.md         笔记（frontmatter + 关联文章的 [[双链]]）
   CADLearn/Clippings/<文章>.md     收藏/被笔记引用的文章（AI 摘要、要点、标签）
+  CADLearn/学习路线/<主题>.md       精选资源、使用顺序和学习进度
   CADLearn/_待清理.md              有删除时出现：列出需要在 Obsidian 里手动删除的文件
   CADLearn/cad-learn-backup.json   本地数据备份
   ```
   - 只导出内容有变化的文件（包括收藏后才生成的 AI 摘要）。
   - 文件名在第一次导出后固定：之后改笔记标题不会产生重复文件，新标题写在 frontmatter 的 `aliases` 里，Obsidian 中照样能搜到、链接到。
+- **学习路线**（底部「学习」）：按“专家级学习策展人”模板，为几何内核、实时渲染各精选 5 个学习杠杆最高的资源，
+  每个资源说明为什么值得花时间、能学会哪部分、适合谁、难度、怎么高效使用、别在哪浪费时间，并给出最佳使用顺序。
+  - 每个资源可标记「进行中 / 已完成」，一键写学习笔记；导出时生成 `CADLearn/学习路线/<主题>.md`（带进度复选框和笔记双链）。
+  - **AI 生成**：输入任意主题（可附上自己的背景），浏览器直接调用 DeepSeek 按同一模板生成，每次约 $0.002。
+    API Key 在「设置 → AI 生成学习路线」填写，只保存在本机，不进入导出和备份。AI 可能记错书名或链接，页面会标注“请核实”。
+  - 内置清单写在 `web/src/curated.ts`，链接均已人工核实，可以自行增改。
+- **手机使用（安卓）**：
+  - 安装到主屏幕后：回到 App 时自动刷新数据，列表页下拉刷新，离线时显示缓存内容；长按图标有「新建笔记 / 学习路线 / 我的收藏」快捷方式。
+  - 分享进来：在其它 App 分享链接 → 新建“待读”笔记；如果链接就是 App 里的某篇文章，直接打开它。
+    在 Chrome 里**选中一段文字再分享**，文字会作为引用追加到该文章的笔记里。
+  - 文章和笔记都可以「分享」出去（调用系统分享面板）；笔记编辑器有 Markdown 快捷工具栏；设置里可调阅读字号。
 - **从 zip 导入**：设置 →「从 zip 导入」，先显示会有哪些变化，确认后才写入；不会删除本地内容。
   - **恢复备份**：笔记和收藏只保存在当前浏览器里。换手机或清除浏览器数据前先导出一次；之后导入这个 zip（或其中的 `cad-learn-backup.json`）。
   - **带回 Obsidian 里的修改**：把 Obsidian 仓库里的 `CADLearn` 文件夹压缩成 zip 再导入。`Notes/` 下改过的笔记按 frontmatter 的 `cad-learn-id` 对应回原笔记，新建的笔记会新增（之后导出仍写回原文件名）。
@@ -102,6 +115,9 @@ data/                       采集结果（Actions 自动提交）
 web/                        网页（Preact + Vite，PWA）
   src/export.ts             Obsidian Markdown / zip 生成
   src/import.ts             zip 导入：备份恢复 + Obsidian 修改的笔记
+  src/curated.ts            内置学习路线（精选资源）
+  src/deepseek.ts           浏览器端 DeepSeek 调用：按模板生成学习路线
+  src/pwa.ts / share.ts     安装、离线、刷新、分享进出
   src/store.ts              远程数据 + 本地 IndexedDB
   src/pages/                列表、文章、笔记、设置
 .github/workflows/collect.yml

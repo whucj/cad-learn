@@ -1,37 +1,58 @@
 import { render } from 'preact';
 import { App, route } from './app';
-import { createNote, initLocal, loadRemote } from './store';
+import { initPwa } from './pwa';
+import { appendQuote, planShare, readShareParams } from './share';
+import { articleMap, createNote, ensureArticleNote, initLocal, loadRemote, notes, saveNote, settings, showToast } from './store';
 import './styles.css';
 
-/**
- * 安卓“分享”到本应用（PWA share_target）：manifest 中配置为 GET ./?title=&text=&url=
- * 很多 App 把链接放在 text 里，这里统一提取，生成一条“待读”笔记。
- */
-function handleShare(): boolean {
-  const q = new URLSearchParams(location.search);
-  if (!q.has('title') && !q.has('text') && !q.has('url')) return false;
-  const text = q.get('text') ?? '';
-  const url = q.get('url') || /https?:\/\/\S+/.exec(text)?.[0] || '';
-  const title = q.get('title') || text.replace(url, '').trim() || url || '分享的链接';
-  const note = createNote({
-    title: `待读：${title}`.slice(0, 120),
-    body: `${url ? `<${url}>\n\n` : ''}${text && text !== url ? `> ${text}\n\n` : ''}`,
-    tags: ['待读'],
-  });
-  history.replaceState(null, '', `${location.pathname}#/n/${note.id}`);
-  return true;
+/** 安卓“分享”到本应用：见 share.ts。返回分享后要打开的页面 */
+function handleShare(): string | null {
+  const data = readShareParams(location.search);
+  if (!data) return null;
+  const action = planShare(data, articleMap.value.values(), Object.values(notes.value));
+  switch (action.kind) {
+    case 'article': {
+      if (!action.quote) return `#/a/${action.article.id}`;
+      const n = ensureArticleNote(action.article);
+      saveNote({ ...n, body: appendQuote(notes.value[n.id].body, action.quote) });
+      showToast('已摘录到这篇文章的笔记');
+      return `#/n/${n.id}`;
+    }
+    case 'note':
+      if (action.quote) {
+        saveNote({ ...action.note, body: appendQuote(action.note.body, action.quote) });
+        showToast('已摘录到已有笔记');
+      }
+      return `#/n/${action.note.id}`;
+    default: {
+      const n = createNote({ title: action.title, body: action.body, tags: ['待读'] });
+      return `#/n/${n.id}`;
+    }
+  }
+}
+
+/** 阅读字号 */
+function applyFontSize() {
+  document.documentElement.dataset.font = settings.value.fontSize ?? 'md';
 }
 
 async function start() {
   await initLocal();
-  // 分享处理会改写地址（replaceState 不触发 hashchange），需同步路由
-  if (handleShare()) route.value = location.hash;
+  applyFontSize();
+  settings.subscribe(applyFontSize);
+  initPwa();
+  const shared = readShareParams(location.search) !== null;
+  // 分享的链接可能对应已有文章：先加载数据再处理（离线时用缓存）
+  const loading = loadRemote();
+  if (shared) await loading;
+  const target = handleShare();
+  if (target) {
+    // replaceState 不触发 hashchange，需同步路由；同时去掉 ?title=&text=&url=
+    history.replaceState(null, '', `${location.pathname}${target}`);
+    route.value = location.hash;
+  }
   render(<App />, document.getElementById('app')!);
-  await loadRemote();
+  await loading;
 }
 
 start();
-
-if (import.meta.env.PROD && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch((e) => console.warn('Service worker 注册失败', e));
-}

@@ -1,14 +1,20 @@
 import { useState } from 'preact/hooks';
 import { buildExportPlan, zipPlan, type ExportPlan } from '../export';
 import { planImport, readImportFile, type ImportPlan } from '../import';
+import { DEFAULT_MODEL } from '../deepseek';
+import { installEvent, isStandalone, promptInstall, refreshData } from '../pwa';
 import {
+  aiKey,
+  aiPaths,
+  allPaths,
   applyImport,
   articleMap,
   confirmExport,
   exportState,
   latest,
-  loadRemote,
   notes,
+  progress,
+  setAiKey,
   settings,
   starred,
   status,
@@ -35,6 +41,9 @@ export function SettingsPage() {
       starred: Object.values(starred.value),
       articles: articleMap.value,
       settings: s,
+      paths: allPaths.value,
+      progress: progress.value,
+      aiPaths: aiPaths.value,
       exported: exportState.value,
       incremental,
     });
@@ -80,7 +89,7 @@ export function SettingsPage() {
     setImportMsg(null);
     try {
       const p = planImport(await readImportFile(file), {
-        local: { notes: notes.value, starred: starred.value, exportState: exportState.value },
+        local: { notes: notes.value, starred: starred.value, exportState: exportState.value, aiPaths: aiPaths.value, progress: progress.value },
         articles: articleMap.value,
         settings: s,
       });
@@ -114,7 +123,7 @@ export function SettingsPage() {
       <section class="panel">
         <h2>导出到 Obsidian</h2>
         <p class="muted small">
-          生成 zip，解压到 Obsidian 仓库根目录即可（同名文件覆盖）。包含笔记、收藏的文章（含 AI 摘要）和一份本地数据备份。
+          生成 zip，解压到 Obsidian 仓库根目录即可（同名文件覆盖）。包含笔记、收藏的文章（含 AI 摘要）、学习路线（含进度）和一份本地数据备份。
           文件名在第一次导出后固定，之后改标题不会产生重复文件。
         </p>
         <label class="field">
@@ -189,6 +198,47 @@ export function SettingsPage() {
       </section>
 
       <section class="panel">
+        <h2>手机使用</h2>
+        {isStandalone.value ? (
+          <p class="muted small">已作为 App 安装。回到 App 时会自动刷新数据，列表页也可以下拉刷新。</p>
+        ) : installEvent.value ? (
+          <div class="actions">
+            <button class="btn primary" onClick={() => promptInstall()}>
+              安装到主屏幕
+            </button>
+          </div>
+        ) : (
+          <p class="muted small">
+            安装到主屏幕：用安卓 Chrome 打开本站 → 右上角菜单 →「添加到主屏幕」或「安装应用」。安装后可以从其它 App 把链接或选中的文字「分享」到 CAD Learn。
+          </p>
+        )}
+        <div class="field">
+          <span>阅读字号</span>
+          <div class="segmented" role="radiogroup" aria-label="阅读字号">
+            {(
+              [
+                ['sm', '小'],
+                ['md', '标准'],
+                ['lg', '大'],
+                ['xl', '特大'],
+              ] as const
+            ).map(([v, label]) => (
+              <button
+                role="radio"
+                aria-checked={(s.fontSize ?? 'md') === v}
+                class={(s.fontSize ?? 'md') === v ? 'on' : ''}
+                onClick={() => updateSettings({ fontSize: v })}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <AiSection />
+
+      <section class="panel">
         <h2>推荐</h2>
         <label class="field">
           <span>「推荐」只显示相关度 ≥</span>
@@ -230,7 +280,7 @@ export function SettingsPage() {
             ))}
           </ul>
         )}
-        <button class="btn" onClick={() => loadRemote()}>
+        <button class="btn" onClick={() => refreshData(true)}>
           重新加载数据
         </button>
         <p class="muted small">
@@ -242,16 +292,17 @@ export function SettingsPage() {
 }
 
 function importChanges(p: ImportPlan): number {
-  return (p.backup ? p.backup.notes + p.backup.starred : 0) + p.updated.length + p.added.length + p.conflicts.length;
+  return (p.backup ? p.backup.notes + p.backup.starred + p.backup.paths : 0) + p.updated.length + p.added.length + p.conflicts.length;
 }
 
 function ImportSummary({ plan }: { plan: ImportPlan }) {
   const names = (list: string[]) => list.slice(0, 5).map((t) => `「${t}」`).join('、') + (list.length > 5 ? ` 等 ${list.length} 条` : '');
   return (
     <ul class="plain small">
-      {plan.backup && (plan.backup.notes > 0 || plan.backup.starred > 0) && (
+      {plan.backup && (plan.backup.notes > 0 || plan.backup.starred > 0 || plan.backup.paths > 0) && (
         <li>
-          从备份恢复：笔记 {plan.backup.notes} 条，收藏 {plan.backup.starred} 篇（本地较新的内容保留不变）
+          从备份恢复：笔记 {plan.backup.notes} 条，收藏 {plan.backup.starred} 篇
+          {plan.backup.paths > 0 && `，AI 学习路线 ${plan.backup.paths} 条`}（本地较新的内容保留不变）
         </li>
       )}
       {plan.updated.length > 0 && <li>用 Obsidian 里的修改更新：{names(plan.updated)}</li>}
@@ -263,5 +314,62 @@ function ImportSummary({ plan }: { plan: ImportPlan }) {
       )}
       {plan.unchanged > 0 && <li class="muted">{plan.unchanged} 条笔记无变化</li>}
     </ul>
+  );
+}
+
+function AiSection() {
+  const s = settings.value;
+  const [draft, setDraft] = useState('');
+  const month = new Date().toISOString().slice(0, 7);
+  const local = s.localAi?.month === month ? s.localAi : undefined;
+  return (
+    <section class="panel">
+      <h2>AI 生成学习路线</h2>
+      <p class="muted small">
+        在「学习 → AI 生成」里用 DeepSeek 为任意主题生成精选资源。需要你自己的 API Key：只保存在本机浏览器，不进入导出和备份；
+        可以和 GitHub 上用于文章摘要的 Key 相同。
+      </p>
+      {aiKey.value ? (
+        <div class="row">
+          <span class="grow">
+            Key：{aiKey.value.slice(0, 5)}…{aiKey.value.slice(-4)}
+          </span>
+          <button class="btn small danger" onClick={() => confirm('从本机删除 DeepSeek API Key？') && setAiKey('')}>
+            删除 Key
+          </button>
+        </div>
+      ) : (
+        <div class="row">
+          <input
+            type="password"
+            class="grow"
+            placeholder="sk-…"
+            autocomplete="off"
+            aria-label="DeepSeek API Key"
+            value={draft}
+            onInput={(e) => setDraft((e.target as HTMLInputElement).value)}
+          />
+          <button
+            class="btn small"
+            disabled={!draft.trim()}
+            onClick={() => {
+              setAiKey(draft);
+              setDraft('');
+            }}
+          >
+            保存
+          </button>
+        </div>
+      )}
+      <label class="field">
+        <span>模型</span>
+        <input
+          value={s.aiModel ?? ''}
+          placeholder={DEFAULT_MODEL}
+          onChange={(e) => updateSettings({ aiModel: (e.target as HTMLInputElement).value.trim() || undefined })}
+        />
+      </label>
+      <p class="muted small">本月本机生成：{local ? `${local.calls} 次，估算 $${local.costUsd.toFixed(4)}` : '无'}（不含 GitHub 上的文章摘要）</p>
+    </section>
   );
 }

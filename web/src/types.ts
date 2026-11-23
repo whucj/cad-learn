@@ -70,6 +70,8 @@ export interface Note {
   body: string; // Markdown
   tags: string[];
   articleId?: string;
+  /** 关联的学习资源：`<路线 id>::<资源名称>` */
+  ref?: string;
   created: number;
   updated: number;
 }
@@ -78,7 +80,48 @@ export interface Settings {
   minRelevance: number; // “推荐”视图的最低相关度
   exportFolder: string; // zip 内的根目录，也是 Obsidian 仓库里的文件夹
   lastExportAt?: number;
+  /** 阅读字号 */
+  fontSize?: 'sm' | 'md' | 'lg' | 'xl';
+  /** App 内生成学习路线用的模型 */
+  aiModel?: string;
+  /** 生成学习路线时附带的个人背景（可选） */
+  aiBackground?: string;
+  /** 本机 AI 调用的估算花费（按月） */
+  localAi?: { month: string; calls: number; costUsd: number };
 }
+
+/** ---------- 学习路线：精选资源 ---------- */
+
+export type Level = '新手' | '中级' | '高级';
+
+export interface LearningResource {
+  name: string;
+  type: string; // 书籍 / 网站 / 课程 / newsletter / 社区 / 专家…
+  url?: string;
+  why: string; // 为什么值得花时间
+  teaches: string; // 能学会主题的哪个具体部分
+  bestFor: string; // 最适合的学习者类型
+  level: Level;
+  howTo: string; // 如何高效使用
+  avoid: string; // 不该在什么上浪费时间
+}
+
+export interface LearningPath {
+  id: string;
+  title: string; // 主题，如“几何内核”
+  topic?: Topic;
+  source: 'builtin' | 'ai';
+  intro?: string;
+  resources: LearningResource[];
+  /** 最佳使用顺序（按资源名称引用） */
+  order: { name: string; reason: string }[];
+  createdAt?: number;
+  model?: string;
+  background?: string;
+  costUsd?: number;
+}
+
+export type ProgressState = 'doing' | 'done';
 
 export const TOPIC_LABEL: Record<Topic, string> = {
   geometry: '几何内核',
