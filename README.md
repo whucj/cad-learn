@@ -1,6 +1,6 @@
 # CAD Learn（网页版）
 
-手机上自学**几何内核**与**实时渲染**：自动收集资料 → DeepSeek 中文摘要和相关度打分 → 阅读、收藏、记笔记 → 导出 zip 放进 Obsidian。
+手机上自学**几何内核**与**实时渲染**：自动收集资料 → DeepSeek 中文摘要和相关度打分 → 阅读、收藏、记笔记 → 导出 zip 放进 Obsidian，在 Obsidian 里改过的笔记也能导入回来。
 
 ```
 GitHub Actions（按 config.yaml 的更新周期：每天 4/2/1 次、每周或仅手动）
@@ -9,6 +9,7 @@ GitHub Actions（按 config.yaml 的更新周期：每天 4/2/1 次、每周或�
 手机浏览器打开网页（可安装到主屏幕）
   └─ 阅读、收藏、笔记（保存在浏览器本地）
   └─ 设置 → 导出 zip → 解压到 Obsidian 仓库
+  └─ 设置 → 从 zip 导入 ← 备份恢复 / Obsidian 里修改、新建的笔记
 ```
 
 公开仓库免费：Actions（标准 runner）不限分钟数，Pages 免费托管。唯一花钱的是 DeepSeek。
@@ -38,7 +39,11 @@ GitHub Actions（按 config.yaml 的更新周期：每天 4/2/1 次、每周或�
   ```
   - 只导出内容有变化的文件（包括收藏后才生成的 AI 摘要）。
   - 文件名在第一次导出后固定：之后改笔记标题不会产生重复文件，新标题写在 frontmatter 的 `aliases` 里，Obsidian 中照样能搜到、链接到。
-- **备份**：笔记和收藏只保存在当前浏览器里。换手机或清除浏览器数据前先导出一次；之后在设置里选 `cad-learn-backup.json` 恢复。
+- **从 zip 导入**：设置 →「从 zip 导入」，先显示会有哪些变化，确认后才写入；不会删除本地内容。
+  - **恢复备份**：笔记和收藏只保存在当前浏览器里。换手机或清除浏览器数据前先导出一次；之后导入这个 zip（或其中的 `cad-learn-backup.json`）。
+  - **带回 Obsidian 里的修改**：把 Obsidian 仓库里的 `CADLearn` 文件夹压缩成 zip 再导入。`Notes/` 下改过的笔记按 frontmatter 的 `cad-learn-id` 对应回原笔记，新建的笔记会新增（之后导出仍写回原文件名）。
+  - **两边都改过**同一条笔记时不覆盖：网页里的版本不变，Obsidian 的版本另存为「标题（Obsidian 版本）」，手动合并即可。
+  - `Clippings/` 是生成的文章文件，不会导入；Obsidian 里删除的笔记也不会在网页里删除。
 
 ## 修改订阅源 / 兴趣 / 预算
 
@@ -96,6 +101,7 @@ collector/                  Dart 采集器
 data/                       采集结果（Actions 自动提交）
 web/                        网页（Preact + Vite，PWA）
   src/export.ts             Obsidian Markdown / zip 生成
+  src/import.ts             zip 导入：备份恢复 + Obsidian 修改的笔记
   src/store.ts              远程数据 + 本地 IndexedDB
   src/pages/                列表、文章、笔记、设置
 .github/workflows/collect.yml

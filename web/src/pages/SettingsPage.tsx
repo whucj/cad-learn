@@ -1,10 +1,11 @@
 import { useState } from 'preact/hooks';
 import { buildExportPlan, zipPlan, type ExportPlan } from '../export';
+import { planImport, readImportFile, type ImportPlan } from '../import';
 import {
+  applyImport,
   articleMap,
   confirmExport,
   exportState,
-  importBackup,
   latest,
   loadRemote,
   notes,
@@ -24,6 +25,9 @@ export function SettingsPage() {
   const [busy, setBusy] = useState(false);
   /** 已下载、等待确认“已放入 Obsidian”的导出 */
   const [awaiting, setAwaiting] = useState<{ plan: ExportPlan; name: string } | null>(null);
+  /** 已解析、等待确认的导入 */
+  const [importing, setImporting] = useState<{ plan: ImportPlan; name: string } | null>(null);
+  const [importMsg, setImportMsg] = useState<string | null>(null);
 
   const plan = (incremental: boolean) =>
     buildExportPlan({
@@ -71,13 +75,27 @@ export function SettingsPage() {
     setAwaiting(null);
   }
 
-  async function doImport(file: File) {
+  async function pickImport(file: File) {
+    setImporting(null);
+    setImportMsg(null);
     try {
-      const r = importBackup(await file.text());
-      setMsg(`已恢复：笔记 ${r.notes} 条，收藏 ${r.starred} 篇（已有的较新内容保留不变）`);
+      const p = planImport(await readImportFile(file), {
+        local: { notes: notes.value, starred: starred.value, exportState: exportState.value },
+        articles: articleMap.value,
+        settings: s,
+      });
+      if (importChanges(p) === 0) setImportMsg(`${file.name}：内容与本地一致，没有需要导入的变化。`);
+      else setImporting({ plan: p, name: file.name });
     } catch (e) {
-      setMsg(`恢复失败：${(e as Error).message}`);
+      setImportMsg(`导入失败：${(e as Error).message}`);
     }
+  }
+
+  function doImport() {
+    if (!importing) return;
+    applyImport(importing.plan);
+    setImportMsg(`已导入 ${importing.name}。`);
+    setImporting(null);
   }
 
   const month = new Date().toISOString().slice(0, 7);
@@ -133,20 +151,41 @@ export function SettingsPage() {
       </section>
 
       <section class="panel">
-        <h2>备份恢复</h2>
-        <p class="muted small">笔记和收藏只保存在本浏览器。换手机、清除浏览器数据前请先导出；之后选 zip 里的 cad-learn-backup.json 恢复。</p>
+        <h2>从 zip 导入</h2>
+        <p class="muted small">
+          笔记和收藏只保存在本浏览器，换手机、清除浏览器数据前请先导出。选择导出的 zip（或其中的 cad-learn-backup.json）即可恢复；
+          在 Obsidian 里修改或新建的笔记，把 {s.exportFolder || 'CADLearn'} 文件夹压缩成 zip 后导入，也会同步回来。
+          导入不会删除本地内容，确认前可以先看变化。
+        </p>
         <label class="btn">
-          选择备份文件…
+          选择 zip / 备份文件…
           <input
             type="file"
-            accept="application/json,.json"
+            accept=".zip,application/zip,application/x-zip-compressed,.json,application/json"
             hidden
             onChange={(e) => {
-              const f = (e.target as HTMLInputElement).files?.[0];
-              if (f) doImport(f);
+              const input = e.target as HTMLInputElement;
+              const f = input.files?.[0];
+              input.value = ''; // 允许重复选择同一个文件
+              if (f) pickImport(f);
             }}
           />
         </label>
+        {importing && (
+          <div class="notice">
+            <p>{importing.name} 将导入：</p>
+            <ImportSummary plan={importing.plan} />
+            <div class="actions">
+              <button class="btn primary small" onClick={doImport}>
+                确认导入
+              </button>
+              <button class="btn small" onClick={() => setImporting(null)}>
+                取消
+              </button>
+            </div>
+          </div>
+        )}
+        {importMsg && <p class="notice">{importMsg}</p>}
       </section>
 
       <section class="panel">
@@ -199,5 +238,30 @@ export function SettingsPage() {
         </p>
       </section>
     </>
+  );
+}
+
+function importChanges(p: ImportPlan): number {
+  return (p.backup ? p.backup.notes + p.backup.starred : 0) + p.updated.length + p.added.length + p.conflicts.length;
+}
+
+function ImportSummary({ plan }: { plan: ImportPlan }) {
+  const names = (list: string[]) => list.slice(0, 5).map((t) => `「${t}」`).join('、') + (list.length > 5 ? ` 等 ${list.length} 条` : '');
+  return (
+    <ul class="plain small">
+      {plan.backup && (plan.backup.notes > 0 || plan.backup.starred > 0) && (
+        <li>
+          从备份恢复：笔记 {plan.backup.notes} 条，收藏 {plan.backup.starred} 篇（本地较新的内容保留不变）
+        </li>
+      )}
+      {plan.updated.length > 0 && <li>用 Obsidian 里的修改更新：{names(plan.updated)}</li>}
+      {plan.added.length > 0 && <li>新增笔记：{names(plan.added)}</li>}
+      {plan.conflicts.length > 0 && (
+        <li class="error">
+          本地和 Obsidian 都改过：{names(plan.conflicts)}。本地版本不变，Obsidian 的版本另存为「…（Obsidian 版本）」，请手动合并。
+        </li>
+      )}
+      {plan.unchanged > 0 && <li class="muted">{plan.unchanged} 条笔记无变化</li>}
+    </ul>
   );
 }

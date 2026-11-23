@@ -13,6 +13,8 @@ import { safeHref } from './url';
  *   <folder>/Clippings/<文章>.md      收藏的文章 + 被笔记引用的文章
  *   <folder>/_待清理.md                （有删除时）
  *   <folder>/cad-learn-backup.json     浏览器本地数据完整备份
+ *
+ * 笔记 frontmatter 带 cad-learn-id，导入 zip 时据此把 Obsidian 里的修改对应回原笔记（见 import.ts）。
  */
 
 export interface ExportRecord {
@@ -42,6 +44,8 @@ export interface ExportPlan {
   removed: string[];
   /** 用户确认后保存的导出记录 */
   nextState: ExportState;
+  /** 每个笔记/文章当前应有的完整内容（不受增量影响），key 同 ExportState */
+  entries: Map<string, { path: string; content: string }>;
   exportedAt: number;
 }
 
@@ -50,6 +54,7 @@ export function buildExportPlan(input: ExportInput): ExportPlan {
   const now = input.now ?? new Date();
   const folder = sanitizeFolder(settings.exportFolder) || 'CADLearn';
   const files = new Map<string, string>();
+  const entries = new Map<string, { path: string; content: string }>();
   const next: ExportState = {};
 
   // ---- 需要导出的文章：收藏的 + 笔记引用的；都优先用最新数据（可能后来才有 AI 摘要） ----
@@ -90,6 +95,7 @@ export function buildExportPlan(input: ExportInput): ExportPlan {
   const emit = (key: string, path: string, content: string) => {
     const hash = hashString(content);
     next[key] = { name: names.get(key)!, hash };
+    entries.set(key, { path, content });
     if (!incremental || exported[key]?.hash !== hash) files.set(path, content);
   };
 
@@ -129,7 +135,7 @@ export function buildExportPlan(input: ExportInput): ExportPlan {
       JSON.stringify({ version: 2, exportedAt: now.toISOString(), notes, starred, settings, exportState: next }, null, 1),
     );
   }
-  return { files, changed, removed, nextState: next, exportedAt: now.getTime() };
+  return { files, changed, removed, nextState: next, entries, exportedAt: now.getTime() };
 }
 
 export function noteMarkdown(n: Note, fileName: string, a: Article | undefined, clipFile: string | undefined): string {
@@ -137,7 +143,7 @@ export function noteMarkdown(n: Note, fileName: string, a: Article | undefined, 
   const fm: string[] = [`title: ${yamlStr(title)}`];
   // 文件名首次导出后固定；标题改过时写入 aliases，Obsidian 里仍可按新标题搜索和链接
   if (safeFileName(title) !== fileName.replace(/ \(\d+\)$/, '')) fm.push('aliases:', `  - ${yamlStr(title)}`);
-  fm.push(`created: ${isoDate(n.created)}`, `updated: ${isoDate(n.updated)}`);
+  fm.push(`created: ${isoDate(n.created)}`, `updated: ${isoDate(n.updated)}`, `cad-learn-id: ${n.id}`);
   const url = a ? safeHref(a.url) : undefined;
   if (a) {
     if (url) fm.push(`url: ${yamlStr(url)}`);
@@ -251,7 +257,7 @@ function isoDate(ms: number): string {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 }
 
-function sanitizeFolder(f: string): string {
+export function sanitizeFolder(f: string): string {
   return f
     .split('/')
     .map((seg) => safeFileName(seg).replace(/^untitled$/, ''))

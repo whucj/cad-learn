@@ -1,6 +1,7 @@
 import { computed, signal } from '@preact/signals';
 import { get, set } from 'idb-keyval';
 import type { ExportPlan, ExportState } from './export';
+import type { ImportPlan } from './import';
 import type { Article, LatestData, Note, Settings, Starred, StatusData, UsageData } from './types';
 
 /** ---------- 远程数据（采集器生成的静态 JSON） ---------- */
@@ -161,41 +162,15 @@ export function updateSettings(patch: Partial<Settings>) {
   persist('settings', settings.value);
 }
 
-/** 从导出的 cad-learn-backup.json 恢复：按“更新时间较新者优先”合并，不会删除本地已有内容 */
-export function importBackup(json: string): { notes: number; starred: number } {
-  const data = JSON.parse(json) as {
-    version?: number;
-    notes?: Note[];
-    starred?: Starred[];
-    settings?: Settings;
-    exportState?: ExportState;
-  };
-  if ((data.version !== 1 && data.version !== 2) || !Array.isArray(data.notes)) throw new Error('不是 CAD Learn 的备份文件');
-  const n = { ...notes.value };
-  let nc = 0;
-  for (const note of data.notes) {
-    if (!n[note.id] || n[note.id].updated < note.updated) {
-      n[note.id] = note;
-      nc++;
-    }
-  }
-  const s = { ...starred.value };
-  let sc = 0;
-  for (const st of data.starred ?? []) {
-    if (!s[st.article.id]) {
-      s[st.article.id] = st;
-      sc++;
-    }
-  }
-  // 导出记录：补上本地没有的条目，保证换设备后导出的文件名与 Obsidian 里已有的一致
-  const ex = { ...(data.exportState ?? {}), ...exportState.value };
-  notes.value = n;
-  starred.value = s;
-  exportState.value = ex;
-  persist('notes', n);
-  persist('starred', s);
-  persist('exportState', ex);
-  return { notes: nc, starred: sc };
+/** 应用导入预览（import.ts 的 planImport 结果）：整体替换笔记、收藏和导出记录 */
+export function applyImport(plan: ImportPlan) {
+  notes.value = plan.notes;
+  starred.value = plan.starred;
+  exportState.value = plan.exportState;
+  persist('notes', plan.notes);
+  persist('starred', plan.starred);
+  persist('exportState', plan.exportState);
+  requestPersistentStorage();
 }
 
 let persistAsked = false;
