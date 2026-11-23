@@ -44,7 +44,7 @@ export const BUILTIN_PATHS: LearningPath[] = [
         bestFor: '会 C++ 或 Python、想把理论落到工程，或工作中会处理 CAD 数据的人。',
         level: '高级',
         howTo: '先用 build123d 或 CadQuery（都基于 OCCT 的 Python 库）做几个小模型熟悉概念；再挑一个博客主题（如“容差”“布尔为什么失败”）读对应 OCCT 源码，用 Analysis Situs 可视化调试。本 App 已订阅 OCCT 发布说明。',
-        avoid: '不要通读 OCCT 源码或参考手册（规模巨大）；不要在可视化（AIS / V3d）和 GUI 框架上花时间，它们与内核算法无关。',
+        avoid: '不要通读 OCCT 源码或参考手册（规模巨大）；不要在可视化（AIS / V3d）和 GUI 框架上花时间，它们与内核算法无关。博客里俄语的月度杂记可以跳过，技术文章大多是英文。',
       },
       {
         name: 'Robust Predicates（Jonathan Shewchuk）',

@@ -44,13 +44,23 @@ class FeedParseException implements Exception {
 /// 解析 RSS 2.0 / RSS 1.0 (RDF) / Atom。
 /// [baseUrl] 为订阅源地址，用于补全相对链接；无法得到 http(s) 链接的条目会被丢弃。
 class FeedParser {
-  static List<FeedItem> parse(String xmlText, {String? baseUrl}) {
-    final XmlDocument doc;
+  static XmlDocument _parseXml(String xmlText) {
     try {
-      doc = XmlDocument.parse(xmlText);
+      return XmlDocument.parse(xmlText);
     } on XmlException catch (e) {
-      throw FeedParseException('不是有效的 XML：${e.message}');
+      // 有些站点（如插件出错的 WordPress）会在 XML 前面输出 <script> 等内容：从 XML 声明或订阅源根元素处截取后重试
+      final start = RegExp(r'<\?xml\s|<(?:rss|feed|rdf:RDF)[\s>]').firstMatch(xmlText)?.start ?? 0;
+      if (start == 0) throw FeedParseException('不是有效的 XML：${e.message}');
+      try {
+        return XmlDocument.parse(xmlText.substring(start));
+      } on XmlException catch (e2) {
+        throw FeedParseException('不是有效的 XML：${e2.message}');
+      }
     }
+  }
+
+  static List<FeedItem> parse(String xmlText, {String? baseUrl}) {
+    final doc = _parseXml(xmlText);
     final root = doc.rootElement;
     switch (root.name.local) {
       case 'feed':

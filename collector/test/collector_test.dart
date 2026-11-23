@@ -77,6 +77,11 @@ void main() {
       expect(i.author, 'Bob');
     });
 
+    test('tolerates junk before the XML (broken WordPress feeds)', () {
+      final i = FeedParser.parse('<script>\nMathJax = {};\n</script>\n\n$_rss').single;
+      expect(i.title, 'Ray Tracing Gems');
+    });
+
     test('rejects non-feed', () {
       expect(() => FeedParser.parse('<html/>'), throwsA(isA<FeedParseException>()));
       expect(() => FeedParser.parse('not xml'), throwsA(isA<FeedParseException>()));
