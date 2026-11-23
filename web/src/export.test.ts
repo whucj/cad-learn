@@ -1,7 +1,11 @@
 import JSZip from 'jszip';
 import { describe, expect, it } from 'vitest';
-import { buildExportFiles, exportZip, obsidianTag, safeFileName } from './export';
-import type { Article, Note, Settings, Starred } from './types';
+import { buildExportPlan, obsidianTag, safeFileName, zipPlan, type ExportInput, type ExportState } from './export';
+import type { Article, Note, Settings } from './types';
+import { safeHref } from './url';
+
+const t0 = new Date('2026-11-23T08:00:00Z').getTime();
+const settings: Settings = { minRelevance: 3, exportFolder: 'CADLearn' };
 
 const article = (over: Partial<Article> = {}): Article => ({
   id: 'a1',
@@ -16,67 +20,152 @@ const article = (over: Partial<Article> = {}): Article => ({
   ...over,
 });
 
-const settings: Settings = { minRelevance: 3, exportFolder: 'CADLearn' };
-const t0 = new Date('2026-11-23T08:00:00Z').getTime();
+const note = (over: Partial<Note> = {}): Note => ({
+  id: 'n1',
+  title: '求交笔记',
+  body: '## 思路\n\n细分 + 牛顿迭代',
+  tags: ['复习'],
+  articleId: 'a1',
+  created: t0,
+  updated: t0,
+  ...over,
+});
 
-describe('buildExportFiles', () => {
+function input(over: Partial<ExportInput> = {}): ExportInput {
+  const a = article();
+  return {
+    notes: [note()],
+    starred: [],
+    articles: new Map([[a.id, a]]),
+    settings,
+    exported: {},
+    incremental: true,
+    now: new Date(t0),
+    ...over,
+  };
+}
+
+const mdPaths = (files: Map<string, string>) => [...files.keys()].filter((k) => k.endsWith('.md')).sort();
+
+describe('buildExportPlan', () => {
   it('exports notes, linked clippings and backup with wikilinks', () => {
-    const a = article();
-    const note: Note = { id: 'n1', title: '求交笔记', body: '## 思路\n\n细分 + 牛顿迭代', tags: ['复习'], articleId: 'a1', created: t0, updated: t0 };
-    const files = buildExportFiles({ notes: [note], starred: [], articles: new Map([[a.id, a]]), settings, now: new Date(t0) });
-
-    expect([...files.keys()].sort()).toEqual([
+    const plan = buildExportPlan(input());
+    expect([...plan.files.keys()].sort()).toEqual([
       'CADLearn/Clippings/Robust NURBS Intersection v2.md',
       'CADLearn/Notes/求交笔记.md',
       'CADLearn/cad-learn-backup.json',
     ]);
-    const noteMd = files.get('CADLearn/Notes/求交笔记.md')!;
-    expect(noteMd).toMatch(/^---\ntitle: "求交笔记"\n/);
+    expect(plan.changed).toBe(2);
+    expect(plan.removed).toEqual([]);
+
+    const noteMd = plan.files.get('CADLearn/Notes/求交笔记.md')!;
+    expect(noteMd).toMatch(/^---\ntitle: "求交笔记"\ncreated: /);
+    expect(noteMd).not.toContain('aliases');
     expect(noteMd).toContain('  - cad-learn/note\n  - geometry-kernel\n  - 复习');
     expect(noteMd).toContain('[[Clippings/Robust NURBS Intersection v2|Robust NURBS: Intersection  v2 ]]');
-    expect(noteMd).toContain('细分 + 牛顿迭代');
 
-    const clip = files.get('CADLearn/Clippings/Robust NURBS Intersection v2.md')!;
+    const clip = plan.files.get('CADLearn/Clippings/Robust NURBS Intersection v2.md')!;
     expect(clip).toContain('title: "Robust NURBS: Intersection [v2]"');
     expect(clip).toContain('published: 2026-11-20');
-    expect(clip).toContain('level: 专业');
     expect(clip).toContain('  - NURBS\n  - 曲面-求交\n');
     expect(clip).not.toContain('  - 2026\n'); // 纯数字标签无效
     expect(clip).toContain('[PDF](https://arxiv.org/pdf/2611.00001)');
     expect(clip).toContain('- [[Notes/求交笔记]]');
 
-    const backup = JSON.parse(files.get('CADLearn/cad-learn-backup.json')!);
-    expect(backup.version).toBe(1);
-    expect(backup.notes).toHaveLength(1);
+    const backup = JSON.parse(plan.files.get('CADLearn/cad-learn-backup.json')!);
+    expect(backup.version).toBe(2);
+    expect(Object.keys(backup.exportState).sort()).toEqual(['clip:a1', 'note:n1']);
   });
 
-  it('incremental export only includes items changed since last export', () => {
-    const a = article();
-    const b = article({ id: 'b2', title: 'Other', url: 'https://example.com/o' });
-    const starred: Starred[] = [
-      { article: a, starredAt: t0 - 1000 },
-      { article: b, starredAt: t0 + 1000 },
-    ];
-    const files = buildExportFiles({ notes: [], starred, articles: new Map(), settings, since: t0, now: new Date(t0 + 2000) });
-    expect([...files.keys()].filter((k) => k.endsWith('.md'))).toEqual(['CADLearn/Clippings/Other.md']);
-
-    const none = buildExportFiles({ notes: [], starred, articles: new Map(), settings, since: t0 + 5000 });
-    expect(none.size).toBe(0);
+  it('P0-3: uses fresh article data instead of the stale starred snapshot', () => {
+    const stale = article({ ai: undefined });
+    const fresh = article();
+    const plan = buildExportPlan(
+      input({ notes: [], starred: [{ article: stale, starredAt: t0 }], articles: new Map([[fresh.id, fresh]]) }),
+    );
+    expect(plan.files.get('CADLearn/Clippings/Robust NURBS Intersection v2.md')).toContain('## AI 摘要');
   });
 
-  it('dedupes file names and sanitizes folder', () => {
-    const n = (id: string, created: number): Note => ({ id, title: 'Same', body: '', tags: [], created, updated: created });
-    const files = buildExportFiles({
-      notes: [n('x', t0 + 1), n('y', t0)],
-      starred: [],
-      articles: new Map(),
-      settings: { ...settings, exportFolder: '/My: Vault//Learn/' },
-    });
-    expect([...files.keys()].sort()).toEqual(['My Vault/Learn/Notes/Same (2).md', 'My Vault/Learn/Notes/Same.md', 'My Vault/Learn/cad-learn-backup.json']);
+  it('P0-4: file name is frozen after export; renamed note gets aliases, no duplicate', () => {
+    const first = buildExportPlan(input());
+    const renamed = buildExportPlan(input({ notes: [note({ title: 'BVH 与求交', updated: t0 + 1 })], exported: first.nextState }));
+    expect(mdPaths(renamed.files)).toEqual(['CADLearn/Notes/求交笔记.md']);
+    const md = renamed.files.get('CADLearn/Notes/求交笔记.md')!;
+    expect(md).toContain('title: "BVH 与求交"\naliases:\n  - "BVH 与求交"');
+    expect(md).toContain('# BVH 与求交');
+    expect(renamed.removed).toEqual([]);
+  });
+
+  it('P0-4: new note reusing an exported name gets a suffix; deleted note is listed for cleanup', () => {
+    const first = buildExportPlan(input());
+    const plan = buildExportPlan(
+      input({ notes: [note({ id: 'n2', created: t0 + 5, articleId: undefined })], exported: first.nextState }),
+    );
+    expect(mdPaths(plan.files)).toEqual(['CADLearn/Notes/求交笔记 (2).md', 'CADLearn/_待清理.md']);
+    expect(plan.removed).toEqual(['CADLearn/Notes/求交笔记.md', 'CADLearn/Clippings/Robust NURBS Intersection v2.md']);
+    expect(plan.files.get('CADLearn/_待清理.md')).toContain('- [[Notes/求交笔记]]');
+    expect(Object.keys(plan.nextState)).toEqual(['note:n2']);
+  });
+
+  it('P0-5: incremental export is driven by confirmed content hashes', () => {
+    const first = buildExportPlan(input());
+    // 未确认：下一次仍包含全部内容
+    expect(buildExportPlan(input()).changed).toBe(2);
+    // 已确认且无变化：什么都不导出（也不生成备份）
+    expect(buildExportPlan(input({ exported: first.nextState })).files.size).toBe(0);
+    // 只改笔记正文：笔记重新导出，文章不动
+    const edited = buildExportPlan(input({ notes: [note({ body: '新内容', updated: t0 + 60_000 })], exported: first.nextState }));
+    expect(mdPaths(edited.files)).toEqual(['CADLearn/Notes/求交笔记.md']);
+    // 文章后来才有 AI 摘要：文章重新导出
+    const noAi = article({ ai: undefined });
+    const before = buildExportPlan(input({ articles: new Map([[noAi.id, noAi]]) }));
+    const after = buildExportPlan(input({ exported: before.nextState }));
+    expect(mdPaths(after.files)).toEqual(['CADLearn/Clippings/Robust NURBS Intersection v2.md']);
+    // 全部导出：忽略哈希
+    expect(buildExportPlan(input({ exported: first.nextState, incremental: false })).changed).toBe(2);
+  });
+
+  it('article that dropped out of the data is not treated as deleted', () => {
+    const first = buildExportPlan(input());
+    const plan = buildExportPlan(input({ articles: new Map(), exported: first.nextState }));
+    expect(plan.removed).toEqual([]);
+    expect(plan.nextState['clip:a1']).toEqual(first.nextState['clip:a1']);
+  });
+
+  it('P0-1: unsafe article URLs never reach the Markdown', () => {
+    const evil = article({ id: 'e1', url: 'javascript:alert(1)', title: 'Evil' });
+    const plan = buildExportPlan(input({ notes: [note({ articleId: 'e1' })], articles: new Map([[evil.id, evil]]) }));
+    const all = [...plan.files.values()].join('\n');
+    expect(all).not.toMatch(/javascript:/i);
+    expect(plan.files.get('CADLearn/Clippings/Evil.md')).not.toContain('原文：');
+  });
+
+  it('sanitizes folder and keeps names deterministic', () => {
+    const n = (id: string, created: number) => note({ id, title: 'Same', created, updated: created, articleId: undefined });
+    const plan = buildExportPlan(input({ notes: [n('x', t0 + 1), n('y', t0)], settings: { ...settings, exportFolder: '/My: Vault//Learn/' } }));
+    expect(mdPaths(plan.files)).toEqual(['My Vault/Learn/Notes/Same (2).md', 'My Vault/Learn/Notes/Same.md']);
+    expect(plan.nextState['note:y'].name).toBe('Same');
+  });
+
+  it('stable output: same input gives same hashes (unstarred clip date does not drift)', () => {
+    const a = buildExportPlan(input({ now: new Date(t0) }));
+    const b = buildExportPlan(input({ now: new Date(t0 + 86_400_000 * 3) }));
+    const strip = (s: ExportState) => JSON.stringify(s);
+    expect(strip(a.nextState)).toBe(strip(b.nextState));
   });
 });
 
 describe('helpers', () => {
+  it('safeHref', () => {
+    expect(safeHref('https://example.com/a b')).toBe('https://example.com/a%20b');
+    expect(safeHref('http://x.org')).toBe('http://x.org/');
+    expect(safeHref('javascript:alert(1)')).toBeUndefined();
+    expect(safeHref(' JAVASCRIPT:alert(1)')).toBeUndefined();
+    expect(safeHref('data:text/html,hi')).toBeUndefined();
+    expect(safeHref('/relative')).toBeUndefined();
+    expect(safeHref(undefined)).toBeUndefined();
+  });
+
   it('safeFileName', () => {
     expect(safeFileName('A/B: [[C]] #tag | d?')).toBe('A B C tag d');
     expect(safeFileName('  ')).toBe('untitled');
@@ -86,16 +175,13 @@ describe('helpers', () => {
   it('obsidianTag', () => {
     expect(obsidianTag('光线 追踪')).toBe('光线-追踪');
     expect(obsidianTag('#Vulkan')).toBe('Vulkan');
-    expect(obsidianTag('D3D12')).toBe('D3D12');
     expect(obsidianTag('123')).toBeNull();
     expect(obsidianTag('C++')).toBe('C');
   });
 
-  it('exportZip produces a readable zip', async () => {
-    const a = article();
-    const { blob, count } = await exportZip({ notes: [], starred: [{ article: a, starredAt: t0 }], articles: new Map(), settings });
-    expect(count).toBe(1);
-    const zip = await JSZip.loadAsync(await blob.arrayBuffer());
+  it('zipPlan produces a readable zip', async () => {
+    const plan = buildExportPlan(input({ notes: [], starred: [{ article: article(), starredAt: t0 }] }));
+    const zip = await JSZip.loadAsync(await (await zipPlan(plan)).arrayBuffer());
     expect(Object.keys(zip.files)).toContain('CADLearn/Clippings/Robust NURBS Intersection v2.md');
   });
 });

@@ -69,7 +69,7 @@ class Collector {
     Future<void> one(SourceConfig s) async {
       final now = clock().toUtc();
       try {
-        final items = FeedParser.parse(await fetch(s.url))
+        final items = FeedParser.parse(await fetch(s.url), baseUrl: s.url)
           ..sort((a, b) => (b.publishedAt ?? DateTime(0)).compareTo(a.publishedAt ?? DateTime(0)));
         var added = 0;
         for (final i in items.take(maxItemsPerSource)) {

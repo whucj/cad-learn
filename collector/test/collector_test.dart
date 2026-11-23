@@ -82,6 +82,31 @@ void main() {
       expect(() => FeedParser.parse('not xml'), throwsA(isA<FeedParseException>()));
     });
 
+    test('drops unsafe links and resolves relative ones', () {
+      const rss = '''<rss><channel>
+        <item><title>xss</title><link>javascript:alert(document.domain)</link></item>
+        <item><title>xss2</title><link> JavaScript:alert(1)</link></item>
+        <item><title>data</title><link>data:text/html,hi</link></item>
+        <item><title>mail</title><link>mailto:a@b.c</link></item>
+        <item><title>rel</title><link>/posts/bvh?utm_source=rss</link></item>
+        <item><title>proto</title><link>//cdn.example.org/a</link></item>
+        <item><title>ok</title><link>https://example.com/ok</link></item>
+      </channel></rss>''';
+      final items = FeedParser.parse(rss, baseUrl: 'https://blog.example.com/feed.xml');
+      expect(items.map((i) => i.title), ['rel', 'proto', 'ok']);
+      expect(items.map((i) => i.url), [
+        'https://blog.example.com/posts/bvh',
+        'https://cdn.example.org/a',
+        'https://example.com/ok',
+      ]);
+      // 没有 baseUrl 时相对链接、协议相对链接都无法补全，丢弃
+      expect(FeedParser.parse(rss).map((i) => i.title), ['ok']);
+
+      const atom = '<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>a</title>'
+          '<link href="javascript:void(0)"/></entry><entry><title>b</title><link href="b.html"/></entry></feed>';
+      expect(FeedParser.parse(atom, baseUrl: 'https://x.org/blog/atom.xml').single.url, 'https://x.org/blog/b.html');
+    });
+
     test('normalizeUrl / parseDate', () {
       expect(normalizeUrl('https://example.com/a?utm_medium=x&id=3'), 'https://example.com/a?id=3');
       expect(parseDate('Mon, 17 Nov 2026 08:00:00 PST'), DateTime.utc(2026, 11, 17, 16));

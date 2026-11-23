@@ -1,6 +1,19 @@
 import { useState } from 'preact/hooks';
-import { buildExportFiles, exportZip } from '../export';
-import { articleMap, importBackup, latest, loadRemote, notes, settings, starred, status, updateSettings, usage } from '../store';
+import { buildExportPlan, zipPlan, type ExportPlan } from '../export';
+import {
+  articleMap,
+  confirmExport,
+  exportState,
+  importBackup,
+  latest,
+  loadRemote,
+  notes,
+  settings,
+  starred,
+  status,
+  updateSettings,
+  usage,
+} from '../store';
 import { TOPIC_LABEL } from '../types';
 import { relTime } from '../util';
 
@@ -8,41 +21,53 @@ export function SettingsPage() {
   const s = settings.value;
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  /** 已下载、等待确认“已放入 Obsidian”的导出 */
+  const [awaiting, setAwaiting] = useState<{ plan: ExportPlan; name: string } | null>(null);
 
-  const input = () => ({
-    notes: Object.values(notes.value),
-    starred: Object.values(starred.value),
-    articles: articleMap.value,
-    settings: s,
-  });
-  const pending = [...buildExportFiles({ ...input(), since: s.lastExportAt ?? 0 }).keys()].filter((k) => k.endsWith('.md')).length;
+  const plan = (incremental: boolean) =>
+    buildExportPlan({
+      notes: Object.values(notes.value),
+      starred: Object.values(starred.value),
+      articles: articleMap.value,
+      settings: s,
+      exported: exportState.value,
+      incremental,
+    });
+  const pendingPlan = plan(true);
+  const pending = pendingPlan.changed + pendingPlan.removed.length;
 
   async function doExport(incremental: boolean) {
     setBusy(true);
     setMsg(null);
+    setAwaiting(null);
     try {
-      const now = Date.now();
-      const { blob, count } = await exportZip({ ...input(), since: incremental ? s.lastExportAt ?? 0 : 0 });
-      if (count === 0) {
+      const p = plan(incremental);
+      if (p.files.size === 0) {
         setMsg('没有需要导出的内容。');
         return;
       }
-      const d = new Date(now);
-      const p = (n: number) => String(n).padStart(2, '0');
-      const name = `cad-learn-${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}.zip`;
-      const url = URL.createObjectURL(blob);
+      const d = new Date(p.exportedAt);
+      const pad = (n: number) => String(n).padStart(2, '0');
+      const name = `cad-learn-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}.zip`;
+      const url = URL.createObjectURL(await zipPlan(p));
       const a = Object.assign(document.createElement('a'), { href: url, download: name });
       document.body.appendChild(a);
       a.click();
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 10_000);
-      updateSettings({ lastExportAt: now });
-      setMsg(`已导出 ${count} 个 Markdown 文件：${name}`);
+      setAwaiting({ plan: p, name });
     } catch (e) {
       setMsg(`导出失败：${(e as Error).message}`);
     } finally {
       setBusy(false);
     }
+  }
+
+  function confirm() {
+    if (!awaiting) return;
+    confirmExport(awaiting.plan);
+    setMsg(`已记录。下次「导出更新」只包含之后的变化。`);
+    setAwaiting(null);
   }
 
   async function doImport(file: File) {
@@ -68,21 +93,39 @@ export function SettingsPage() {
       <section class="panel">
         <h2>导出到 Obsidian</h2>
         <p class="muted small">
-          生成 zip，解压到 Obsidian 仓库根目录即可。包含笔记、收藏的文章（含 AI 摘要）和一份本地数据备份。同名文件直接覆盖即为更新。
+          生成 zip，解压到 Obsidian 仓库根目录即可（同名文件覆盖）。包含笔记、收藏的文章（含 AI 摘要）和一份本地数据备份。
+          文件名在第一次导出后固定，之后改标题不会产生重复文件。
         </p>
         <label class="field">
-          <span>zip 内的文件夹</span>
+          <span>zip 内的文件夹（修改后请「全部导出」一次）</span>
           <input value={s.exportFolder} onChange={(e) => updateSettings({ exportFolder: (e.target as HTMLInputElement).value })} />
         </label>
         <div class="actions">
           <button class="btn primary" disabled={busy || pending === 0} onClick={() => doExport(true)}>
-            导出新增/修改（{pending}）
+            导出更新（{pending}）
           </button>
           <button class="btn" disabled={busy} onClick={() => doExport(false)}>
             全部导出
           </button>
         </div>
-        <p class="muted small">上次导出：{s.lastExportAt ? relTime(s.lastExportAt) : '从未'}</p>
+        <p class="muted small">上次确认导出：{s.lastExportAt ? relTime(s.lastExportAt) : '从未'}</p>
+        {awaiting && (
+          <div class="notice">
+            <p>
+              已下载 {awaiting.name}：{awaiting.plan.changed} 个 Markdown 文件
+              {awaiting.plan.removed.length > 0 && `，另有 ${awaiting.plan.removed.length} 个已删除的文件需在 Obsidian 中手动删除（见 _待清理.md）`}。
+            </p>
+            <p>解压到 Obsidian 仓库后点「已放入」；如果下载失败或还没解压，点「稍后」，下次导出仍会包含这些内容。</p>
+            <div class="actions">
+              <button class="btn primary small" onClick={confirm}>
+                已放入 Obsidian
+              </button>
+              <button class="btn small" onClick={() => setAwaiting(null)}>
+                稍后
+              </button>
+            </div>
+          </div>
+        )}
         {msg && <p class="notice">{msg}</p>}
       </section>
 

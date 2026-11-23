@@ -28,8 +28,9 @@ class FeedParseException implements Exception {
 }
 
 /// 解析 RSS 2.0 / RSS 1.0 (RDF) / Atom。
+/// [baseUrl] 为订阅源地址，用于补全相对链接；无法得到 http(s) 链接的条目会被丢弃。
 class FeedParser {
-  static List<FeedItem> parse(String xmlText) {
+  static List<FeedItem> parse(String xmlText, {String? baseUrl}) {
     final XmlDocument doc;
     try {
       doc = XmlDocument.parse(xmlText);
@@ -39,26 +40,39 @@ class FeedParser {
     final root = doc.rootElement;
     switch (root.name.local) {
       case 'feed':
-        return root.childElements.where((e) => e.name.local == 'entry').map(_atomEntry).nonNulls.toList();
+        return root.childElements
+            .where((e) => e.name.local == 'entry')
+            .map((e) => _atomEntry(e, baseUrl))
+            .nonNulls
+            .toList();
       case 'rss':
         final channel = _child(root, 'channel');
         if (channel == null) throw FeedParseException('RSS 缺少 channel');
-        return channel.childElements.where((e) => e.name.local == 'item').map(_rssItem).nonNulls.toList();
+        return channel.childElements
+            .where((e) => e.name.local == 'item')
+            .map((e) => _rssItem(e, baseUrl))
+            .nonNulls
+            .toList();
       case 'RDF':
-        return root.childElements.where((e) => e.name.local == 'item').map(_rssItem).nonNulls.toList();
+        return root.childElements
+            .where((e) => e.name.local == 'item')
+            .map((e) => _rssItem(e, baseUrl))
+            .nonNulls
+            .toList();
       default:
         throw FeedParseException('不支持的 feed 格式：<${root.name.qualified}>');
     }
   }
 
-  static FeedItem? _rssItem(XmlElement item) {
-    final link = _text(item, 'link') ?? _permalinkGuid(item);
+  static FeedItem? _rssItem(XmlElement item, String? baseUrl) {
+    final raw = _text(item, 'link') ?? _permalinkGuid(item);
     final title = _text(item, 'title');
+    final link = raw == null ? null : cleanItemUrl(raw, baseUrl: baseUrl);
     if (link == null || title == null) return null;
     final description = _text(item, 'description');
     final encoded = _text(item, 'encoded'); // content:encoded
     return FeedItem(
-      url: normalizeUrl(link),
+      url: link,
       title: cleanTitle(title),
       author: _text(item, 'creator') ?? _text(item, 'author'),
       publishedAt: parseDate(_text(item, 'pubDate') ?? _text(item, 'date')),
@@ -67,7 +81,7 @@ class FeedParser {
     );
   }
 
-  static FeedItem? _atomEntry(XmlElement entry) {
+  static FeedItem? _atomEntry(XmlElement entry, String? baseUrl) {
     final links = entry.childElements.where((e) => e.name.local == 'link').toList();
     String? href;
     for (final l in links) {
@@ -78,12 +92,13 @@ class FeedParser {
     }
     href ??= links.isEmpty ? null : links.first.getAttribute('href');
     final title = _text(entry, 'title');
-    if (href == null || title == null) return null;
+    final link = href == null ? null : cleanItemUrl(href, baseUrl: baseUrl);
+    if (link == null || title == null) return null;
     final summary = _text(entry, 'summary');
     final content = _text(entry, 'content');
     final author = _child(entry, 'author');
     return FeedItem(
-      url: normalizeUrl(href),
+      url: link,
       title: cleanTitle(title),
       author: author == null ? null : _text(author, 'name'),
       publishedAt: parseDate(_text(entry, 'published') ?? _text(entry, 'updated')),
@@ -112,6 +127,23 @@ class FeedParser {
     final t = e.innerText.trim();
     return t.isEmpty ? null : t;
   }
+}
+
+/// 条目链接：补全相对链接（相对于订阅源地址）→ 只接受 http(s) → 规范化。
+/// 返回 null 表示不安全或无效（如 javascript:、data:、mailto:），该条目应丢弃。
+/// 网页会把这个链接直接用作“阅读原文”的 href，所以这里是第一道安全关口。
+String? cleanItemUrl(String raw, {String? baseUrl}) {
+  final ref = Uri.tryParse(raw.trim());
+  if (ref == null) return null;
+  final base = baseUrl == null ? null : Uri.tryParse(baseUrl);
+  final Uri abs;
+  try {
+    abs = ref.hasScheme || base == null ? ref : base.resolveUri(ref);
+  } on FormatException {
+    return null;
+  }
+  if ((abs.scheme != 'http' && abs.scheme != 'https') || abs.host.isEmpty) return null;
+  return normalizeUrl(abs.toString());
 }
 
 /// 去掉常见追踪参数和锚点，用于按 URL 去重。

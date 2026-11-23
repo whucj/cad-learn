@@ -1,91 +1,162 @@
 import { TOPIC_TAG, type Article, type Note, type Settings, type Starred } from './types';
+import { safeHref } from './url';
 
 /**
- * 生成导出到 Obsidian 的文件（路径 → 内容）。纯函数，便于测试；打包 zip 在 exportZip()。
+ * 导出到 Obsidian。zip 只能新增/覆盖文件，不能删除或改名，所以：
+ * - 文件名在首次（确认过的）导出时固定，之后改标题也不变，新标题写进 aliases；
+ * - 记录每个文件上次导出内容的哈希，增量导出只包含内容变化的文件；
+ * - 用户确认“已放入 Obsidian”后才提交导出记录（nextState）；
+ * - 已删除的笔记/收藏列在 _待清理.md 里，提示手动删除。
  *
- * <folder>/Notes/<笔记标题>.md        笔记
- * <folder>/Clippings/<文章标题>.md    收藏的文章 + 被笔记引用的文章
- * <folder>/cad-learn-backup.json      浏览器本地数据完整备份（可在设置页恢复）
+ * zip 结构：
+ *   <folder>/Notes/<笔记>.md
+ *   <folder>/Clippings/<文章>.md      收藏的文章 + 被笔记引用的文章
+ *   <folder>/_待清理.md                （有删除时）
+ *   <folder>/cad-learn-backup.json     浏览器本地数据完整备份
  */
+
+export interface ExportRecord {
+  name: string; // 不含 .md
+  hash: string;
+}
+/** key：`note:<id>` 或 `clip:<articleId>` */
+export type ExportState = Record<string, ExportRecord>;
+
 export interface ExportInput {
   notes: Note[];
   starred: Starred[];
-  /** 当前能查到的文章（latest.json + 收藏快照），用于解析笔记关联的文章 */
+  /** 当前能查到的最新文章数据（latest.json + 收藏快照），优先于收藏快照使用 */
   articles: Map<string, Article>;
   settings: Settings;
-  /** 只导出该时间之后新增/修改的内容 */
-  since?: number;
+  exported: ExportState;
+  /** true：只导出内容有变化的文件；false：全部重新导出 */
+  incremental: boolean;
   now?: Date;
 }
 
-export function buildExportFiles(input: ExportInput): Map<string, string> {
-  const { notes, starred, articles, settings, since = 0 } = input;
+export interface ExportPlan {
+  files: Map<string, string>;
+  /** 本次包含的笔记/文章 Markdown 数 */
+  changed: number;
+  /** 需要在 Obsidian 中手动删除的文件（zip 内路径） */
+  removed: string[];
+  /** 用户确认后保存的导出记录 */
+  nextState: ExportState;
+  exportedAt: number;
+}
+
+export function buildExportPlan(input: ExportInput): ExportPlan {
+  const { notes, starred, articles, settings, exported, incremental } = input;
   const now = input.now ?? new Date();
   const folder = sanitizeFolder(settings.exportFolder) || 'CADLearn';
   const files = new Map<string, string>();
+  const next: ExportState = {};
 
-  // 文件名需全局稳定：基于全部数据分配，而不是只基于本次增量
+  // ---- 需要导出的文章：收藏的 + 笔记引用的；都优先用最新数据（可能后来才有 AI 摘要） ----
+  const starredAt = new Map(starred.map((s) => [s.article.id, s.starredAt]));
   const clipArticles = new Map<string, Article>();
-  for (const s of starred) clipArticles.set(s.article.id, s.article);
-  for (const n of notes) {
-    const a = n.articleId ? articles.get(n.articleId) : undefined;
-    if (a) clipArticles.set(a.id, a);
-  }
-  const clipName = assignNames([...clipArticles.values()].map((a) => ({ id: a.id, title: a.title, key: a.fetched })));
-  const noteName = assignNames(notes.map((n) => ({ id: n.id, title: n.title || '未命名笔记', key: String(n.created) })));
-
+  for (const s of starred) clipArticles.set(s.article.id, articles.get(s.article.id) ?? s.article);
   const notesByArticle = new Map<string, Note[]>();
+  const referencedMissing = new Set<string>(); // 被笔记引用、但文章数据已不可得（滚出最新列表且未收藏）
   for (const n of notes) {
     if (!n.articleId) continue;
-    const list = notesByArticle.get(n.articleId) ?? [];
-    list.push(n);
-    notesByArticle.set(n.articleId, list);
+    notesByArticle.set(n.articleId, [...(notesByArticle.get(n.articleId) ?? []), n]);
+    const a = articles.get(n.articleId) ?? clipArticles.get(n.articleId);
+    if (a) clipArticles.set(a.id, a);
+    else referencedMissing.add(n.articleId);
   }
-  const starredAt = new Map(starred.map((s) => [s.article.id, s.starredAt]));
+
+  // ---- 分配文件名：已导出过的沿用，新的按创建顺序分配并避开重名 ----
+  const used = { note: new Set<string>(), clip: new Set<string>() };
+  for (const [key, rec] of Object.entries(exported)) used[kindOf(key)]?.add(rec.name.toLowerCase());
+  const names = new Map<string, string>();
+  const assign = (key: string, title: string) => {
+    const prev = exported[key]?.name;
+    if (prev) return names.set(key, prev);
+    const set = used[kindOf(key)];
+    const base = safeFileName(title);
+    let name = base;
+    for (let i = 2; set.has(name.toLowerCase()); i++) name = `${base} (${i})`;
+    set.add(name.toLowerCase());
+    names.set(key, name);
+  };
+  [...notes]
+    .sort((a, b) => a.created - b.created || a.id.localeCompare(b.id))
+    .forEach((n) => assign(`note:${n.id}`, n.title || '未命名笔记'));
+  [...clipArticles.values()]
+    .sort((a, b) => a.fetched.localeCompare(b.fetched) || a.id.localeCompare(b.id))
+    .forEach((a) => assign(`clip:${a.id}`, a.title));
+
+  const emit = (key: string, path: string, content: string) => {
+    const hash = hashString(content);
+    next[key] = { name: names.get(key)!, hash };
+    if (!incremental || exported[key]?.hash !== hash) files.set(path, content);
+  };
 
   for (const n of notes) {
-    if (n.updated <= since) continue;
+    const key = `note:${n.id}`;
     const a = n.articleId ? clipArticles.get(n.articleId) : undefined;
-    files.set(`${folder}/Notes/${noteName.get(n.id)}.md`, noteMarkdown(n, a, a ? clipName.get(a.id) : undefined));
+    emit(key, `${folder}/Notes/${names.get(key)}.md`, noteMarkdown(n, names.get(key)!, a, a ? names.get(`clip:${a.id}`) : undefined));
   }
 
   for (const a of clipArticles.values()) {
+    const key = `clip:${a.id}`;
     const related = notesByArticle.get(a.id) ?? [];
-    const changed = (starredAt.get(a.id) ?? 0) > since || related.some((n) => n.updated > since);
-    if (!changed) continue;
-    files.set(
-      `${folder}/Clippings/${clipName.get(a.id)}.md`,
-      clippingMarkdown(a, starredAt.get(a.id) ?? now.getTime(), related.map((n) => noteName.get(n.id)!)),
+    // 未收藏、仅被笔记引用的文章：用最早那条笔记的创建时间，保证内容稳定（不会每天都“有变化”）
+    const clipped = starredAt.get(a.id) ?? Math.min(...related.map((n) => n.created));
+    emit(
+      key,
+      `${folder}/Clippings/${names.get(key)}.md`,
+      clippingMarkdown(a, clipped, related.map((n) => names.get(`note:${n.id}`)!)),
     );
   }
 
-  if (files.size > 0 || since === 0) {
-    files.set(`${folder}/cad-learn-backup.json`, JSON.stringify({ version: 1, exportedAt: now.toISOString(), notes, starred, settings }, null, 1));
+  // 文章数据暂时拿不到，但笔记还在：保留原导出记录，不算删除
+  for (const id of referencedMissing) {
+    const rec = exported[`clip:${id}`];
+    if (rec) next[`clip:${id}`] = rec;
   }
-  return files;
+
+  const removed = Object.entries(exported)
+    .filter(([key]) => !next[key])
+    .map(([key, rec]) => `${folder}/${kindOf(key) === 'note' ? 'Notes' : 'Clippings'}/${rec.name}.md`);
+
+  const changed = files.size;
+  if (removed.length) files.set(`${folder}/_待清理.md`, cleanupMarkdown(folder, removed, now));
+  if (files.size > 0) {
+    files.set(
+      `${folder}/cad-learn-backup.json`,
+      JSON.stringify({ version: 2, exportedAt: now.toISOString(), notes, starred, settings, exportState: next }, null, 1),
+    );
+  }
+  return { files, changed, removed, nextState: next, exportedAt: now.getTime() };
 }
 
-export function noteMarkdown(n: Note, a: Article | undefined, clipFile: string | undefined): string {
-  const fm: string[] = [
-    `title: ${yamlStr(n.title || '未命名笔记')}`,
-    `created: ${isoDate(n.created)}`,
-    `updated: ${isoDate(n.updated)}`,
-  ];
-  if (a) fm.push(`url: ${yamlStr(a.url)}`, `source: ${yamlStr(a.source)}`);
+export function noteMarkdown(n: Note, fileName: string, a: Article | undefined, clipFile: string | undefined): string {
+  const title = n.title || '未命名笔记';
+  const fm: string[] = [`title: ${yamlStr(title)}`];
+  // 文件名首次导出后固定；标题改过时写入 aliases，Obsidian 里仍可按新标题搜索和链接
+  if (safeFileName(title) !== fileName.replace(/ \(\d+\)$/, '')) fm.push('aliases:', `  - ${yamlStr(title)}`);
+  fm.push(`created: ${isoDate(n.created)}`, `updated: ${isoDate(n.updated)}`);
+  const url = a ? safeHref(a.url) : undefined;
+  if (a) {
+    if (url) fm.push(`url: ${yamlStr(url)}`);
+    fm.push(`source: ${yamlStr(a.source)}`);
+  }
   fm.push('tags:', ...tagList(['cad-learn/note', ...(a ? [TOPIC_TAG[a.topic]] : []), ...n.tags]));
 
-  const body = [`---`, ...fm, `---`, ``, `# ${n.title || '未命名笔记'}`, ``];
-  if (a) body.push(`> 关联文章：[[Clippings/${clipFile}|${escapeLinkText(a.title)}]] · [原文](${a.url})`, ``);
+  const body = [`---`, ...fm, `---`, ``, `# ${title}`, ``];
+  if (a && clipFile) {
+    body.push(`> 关联文章：[[Clippings/${clipFile}|${escapeLinkText(a.title)}]]${url ? ` · [原文](${url})` : ''}`, ``);
+  }
   body.push(n.body.trim(), ``);
   return body.join('\n');
 }
 
 export function clippingMarkdown(a: Article, clippedAt: number, noteFiles: string[]): string {
-  const fm: string[] = [
-    `title: ${yamlStr(a.title)}`,
-    `source: ${yamlStr(a.source)}`,
-    `url: ${yamlStr(a.url)}`,
-  ];
+  const url = safeHref(a.url);
+  const fm: string[] = [`title: ${yamlStr(a.title)}`, `source: ${yamlStr(a.source)}`];
+  if (url) fm.push(`url: ${yamlStr(url)}`);
   if (a.author) fm.push(`author: ${yamlStr(a.author)}`);
   if (a.published) fm.push(`published: ${a.published.slice(0, 10)}`);
   fm.push(`clipped: ${isoDate(clippedAt)}`);
@@ -93,8 +164,9 @@ export function clippingMarkdown(a: Article, clippedAt: number, noteFiles: strin
   if (a.ai?.relevance) fm.push(`relevance: ${a.ai.relevance}`);
   fm.push('tags:', ...tagList(['cad-learn/clipping', TOPIC_TAG[a.topic], ...(a.ai?.tags ?? [])]));
 
-  const out = [`---`, ...fm, `---`, ``, `# ${a.title}`, ``, `> 原文：[${escapeLinkText(a.source)}](${a.url})`, ``];
-  const arxiv = /arxiv\.org\/abs\/([\d.]+)/.exec(a.url)?.[1];
+  const out = [`---`, ...fm, `---`, ``, `# ${a.title}`, ``];
+  if (url) out.push(`> 原文：[${escapeLinkText(a.source)}](${url})`, ``);
+  const arxiv = url && /^https:\/\/arxiv\.org\/abs\/([\d.]+)$/.exec(url)?.[1];
   if (arxiv) out.push(`> [PDF](https://arxiv.org/pdf/${arxiv}) · [HTML](https://arxiv.org/html/${arxiv})`, ``);
   if (a.ai) {
     out.push(`## AI 摘要`, ``, a.ai.summary, ``);
@@ -105,7 +177,20 @@ export function clippingMarkdown(a: Article, clippedAt: number, noteFiles: strin
   return out.join('\n');
 }
 
-/** 去掉文件系统和 Obsidian 链接不允许的字符；重名时追加序号 */
+function cleanupMarkdown(folder: string, removed: string[], now: Date): string {
+  const prefix = `${folder}/`;
+  return [
+    `# 待清理的文件`,
+    ``,
+    `${isoDate(now.getTime())} 导出时发现：以下笔记或收藏已在 CAD Learn 中删除，但 Obsidian 里的文件不会自动删除。`,
+    `点开链接确认后，可在 Obsidian 中手动删除；全部处理完也可以删除本文件。`,
+    ``,
+    ...removed.map((p) => `- [[${p.slice(prefix.length).replace(/\.md$/, '')}]]`),
+    ``,
+  ].join('\n');
+}
+
+/** 去掉文件系统和 Obsidian 链接不允许的字符 */
 export function safeFileName(title: string): string {
   let name = title.replace(/[\\/:*?"<>|#^[\]]/g, ' ').replace(/\s+/g, ' ').trim();
   if (name.length > 80) name = name.slice(0, 80).trim();
@@ -113,25 +198,29 @@ export function safeFileName(title: string): string {
   return name || 'untitled';
 }
 
-function assignNames(items: { id: string; title: string; key: string }[]): Map<string, string> {
-  const sorted = [...items].sort((a, b) => a.key.localeCompare(b.key) || a.id.localeCompare(b.id));
-  const used = new Map<string, number>();
-  const out = new Map<string, string>();
-  for (const it of sorted) {
-    const base = safeFileName(it.title);
-    const k = base.toLowerCase();
-    const n = (used.get(k) ?? 0) + 1;
-    used.set(k, n);
-    out.set(it.id, n === 1 ? base : `${base} (${n})`);
-  }
-  return out;
-}
-
 /** Obsidian 标签：不能有空格和大多数标点，不能纯数字 */
 export function obsidianTag(t: string): string | null {
   const tag = t.trim().replace(/^#/, '').replace(/[^\p{L}\p{N}_\-/]+/gu, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
   if (!tag || /^\d+$/.test(tag)) return null;
   return tag;
+}
+
+/** 非加密哈希（cyrb53），只用于判断内容是否变化 */
+export function hashString(s: string): string {
+  let h1 = 0xdeadbeef;
+  let h2 = 0x41c6ce57;
+  for (let i = 0; i < s.length; i++) {
+    const ch = s.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+
+function kindOf(key: string): 'note' | 'clip' {
+  return key.startsWith('note:') ? 'note' : 'clip';
 }
 
 function tagList(tags: string[]): string[] {
@@ -165,11 +254,9 @@ function sanitizeFolder(f: string): string {
     .join('/');
 }
 
-export async function exportZip(input: ExportInput): Promise<{ blob: Blob; count: number }> {
+export async function zipPlan(plan: ExportPlan): Promise<Blob> {
   const { default: JSZip } = await import('jszip');
-  const files = buildExportFiles(input);
   const zip = new JSZip();
-  for (const [path, content] of files) zip.file(path, content);
-  const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
-  return { blob, count: [...files.keys()].filter((k) => k.endsWith('.md')).length };
+  for (const [path, content] of plan.files) zip.file(path, content);
+  return zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
 }

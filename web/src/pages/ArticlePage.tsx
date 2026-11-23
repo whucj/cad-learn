@@ -1,6 +1,7 @@
 import { useEffect } from 'preact/hooks';
 import { articleMap, createNote, latest, markRead, noteForArticle, readIds, starred, toggleStar } from '../store';
 import { TOPIC_LABEL } from '../types';
+import { safeHref } from '../url';
 import { arxivId, navigate, relTime, stars } from '../util';
 
 export function ArticlePage({ id }: { id: string }) {
@@ -21,7 +22,8 @@ export function ArticlePage({ id }: { id: string }) {
 
   const isStarred = !!starred.value[a.id];
   const existingNote = noteForArticle(a.id);
-  const arxiv = arxivId(a.url);
+  const href = safeHref(a.url);
+  const arxiv = href && arxivId(href);
 
   function openNote() {
     if (existingNote) return navigate(`#/n/${existingNote.id}`);
@@ -45,9 +47,15 @@ export function ArticlePage({ id }: { id: string }) {
         </div>
 
         <div class="actions">
-          <a class="btn primary" href={a.url} target="_blank" rel="noopener noreferrer">
-            阅读原文 ↗
-          </a>
+          {href ? (
+            <a class="btn primary" href={href} target="_blank" rel="noopener noreferrer">
+              阅读原文 ↗
+            </a>
+          ) : (
+            <button class="btn" disabled title="原文链接不是安全的 http(s) 地址">
+              原文链接无效
+            </button>
+          )}
           <button class={isStarred ? 'btn on' : 'btn'} onClick={() => toggleStar(a)} aria-pressed={isStarred}>
             {isStarred ? '★ 已收藏' : '☆ 收藏'}
           </button>
