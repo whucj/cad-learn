@@ -38,8 +38,17 @@ export interface SourceStatus {
   added?: number;
 }
 
+/** 更新周期（采集器写入 status.json） */
+export interface ScheduleInfo {
+  every: '4x-daily' | '2x-daily' | 'daily' | 'weekly' | 'manual';
+  label: string; // 如 "每周 1 次（周日）"
+  slotsUtc: number[]; // 运行时段（UTC 小时，xx:30 运行）
+  weekday?: number; // weekly：1=周一 … 7=周日
+}
+
 export interface StatusData {
   generatedAt: string;
+  schedule?: ScheduleInfo;
   sources: SourceStatus[];
 }
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:yaml/yaml.dart';
 
 import 'digest.dart';
+import 'schedule.dart';
 
 class SourceConfig {
   SourceConfig({required this.name, required this.url, required this.topic, this.split});
@@ -44,7 +45,16 @@ class AiConfig {
 }
 
 class Config {
-  Config({required this.interests, required this.tags, required this.ai, required this.sources});
+  Config({
+    required this.interests,
+    required this.tags,
+    required this.ai,
+    required this.sources,
+    this.schedule = const ScheduleConfig(),
+  });
+
+  /// 更新周期
+  final ScheduleConfig schedule;
 
   final String interests;
   final List<String> tags;
@@ -89,14 +99,17 @@ class Config {
     double d(Object? v, double def) => v == null ? def : (v as num).toDouble();
     int i(Object? v, int def) => v == null ? def : (v as num).toInt();
 
+    final schedule = ScheduleConfig.parse(y['schedule'] as Map?);
     return Config(
+      schedule: schedule,
       interests: (y['interests'] ?? '').toString().trim(),
       tags: [for (final t in (y['tags'] as YamlList? ?? YamlList())) t.toString()],
       ai: AiConfig(
         model: (ai['model'] ?? 'deepseek-flash').toString(),
         baseUrl: (ai['base_url'] ?? 'https://api.deepseek.com').toString(),
         monthlyBudgetUsd: d(ai['monthly_budget_usd'], 4.5),
-        maxPerRun: i(ai['max_per_run'], 40),
+        // 未设置时随更新周期放大（每周一次就每次多处理一些），见 ScheduleConfig.defaultMaxPerRun
+        maxPerRun: i(ai['max_per_run'], schedule.defaultMaxPerRun),
         maxAgeDays: i(ai['max_age_days'], 30),
         maxInputChars: i(ai['max_input_chars'], 6000),
         offpeak: Prices(

@@ -183,7 +183,7 @@ class Store {
 
   MonthUsage usageFor(DateTime t) => usage.putIfAbsent(monthKey(t), MonthUsage.new);
 
-  void save({required List<Map<String, Object?>> sourceStatus, DateTime? now}) {
+  void save({required List<Map<String, Object?>> sourceStatus, DateTime? now, Map<String, Object?>? schedule}) {
     now ??= DateTime.now().toUtc();
     const enc = JsonEncoder.withIndent(' ');
     final articlesDir = Directory(p.join(dir, 'articles'))..createSync(recursive: true);
@@ -208,6 +208,7 @@ class Store {
 
     File(p.join(dir, 'status.json')).writeAsStringSync(enc.convert({
       'generatedAt': now.toIso8601String(),
+      'schedule': ?schedule,
       'sources': sourceStatus,
     }));
   }

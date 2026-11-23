@@ -18,7 +18,7 @@ Future<void> main(List<String> args) async {
   final summarizer = key.isEmpty ? null : Summarizer(config: config, apiKey: key);
 
   final report = await Collector(config: config, store: store, summarizer: summarizer).run();
-  store.save(sourceStatus: report.sourceStatus);
+  store.save(sourceStatus: report.sourceStatus, schedule: config.schedule.toJson());
   summarizer?.close();
 
   // 写给 GitHub Actions 的提交信息

@@ -3,7 +3,7 @@
 手机上自学**几何内核**与**实时渲染**：自动收集资料 → DeepSeek 中文摘要和相关度打分 → 阅读、收藏、记笔记 → 导出 zip 放进 Obsidian。
 
 ```
-GitHub Actions（每天 4 次）
+GitHub Actions（按 config.yaml 的更新周期：每天 4/2/1 次、每周或仅手动）
   └─ collector/：抓取 config.yaml 里的订阅源，DeepSeek 生成中文摘要/标签/相关度
   └─ 结果提交到 data/，构建 web/ 并发布到 GitHub Pages
 手机浏览器打开网页（可安装到主屏幕）
@@ -44,6 +44,9 @@ GitHub Actions（每天 4 次）
 
 都在 `config.yaml`，可以直接在 GitHub 网页上编辑，提交后会自动重新运行：
 
+- `schedule`：更新周期。`every` 可选 `4x-daily` / `2x-daily` / `daily` / `weekly` / `manual`；
+  `hour_utc` 选运行时段（4 / 12 / 18 / 23，UTC），`weekday` 选每周哪天。网页「设置 → 数据状态」显示换算后的本地时间和下次更新时间。
+  原理：Actions 每天在这 4 个时段触发，不到更新时间的触发几秒内跳过；错过的更新会在下一个时段补跑
 - `sources`：RSS/Atom 地址，或 `arxiv:` 查询语句（如 `abs:"ray tracing"`）。GitHub 项目发布：`https://github.com/<owner>/<repo>/releases.atom`
 - `split`（可选）：合集类订阅源的拆分规则。例如 Graphics Programming Weekly 每期约 10 篇精选，按 CSS 选择器拆成独立文章，
   各自去重、打分和摘要，编辑写的要点作为“编辑推荐语”保留，并注明收录于第几期
@@ -54,7 +57,7 @@ GitHub Actions（每天 4 次）
 ## 费用估算（DeepSeek）
 
 按 2026-11 官方价格（deepseek-flash，非高峰：输入 $0.15/百万 token，缓存命中 $0.003，输出 $0.6），每篇摘要约 $0.0005–0.001。
-定时任务安排在非高峰时段运行。每月新增几百篇相关文章，**预计 $0.3–1/月**。实际用量见网页「设置 → 数据状态」，以 DeepSeek 控制台账单为准。
+定时任务安排在非高峰时段运行。每月新增几百篇相关文章，**预计 $0.3–1/月**。更新周期不影响 AI 费用（摘要的文章数相同），只影响内容多久出现一次。实际用量见网页「设置 → 数据状态」，以 DeepSeek 控制台账单为准。
 
 首次运行会抓到约 300 篇历史内容，但只给最近 30 天的文章做摘要，每次最多 40 篇，几次运行后补齐。
 

@@ -14,6 +14,7 @@ import {
   updateSettings,
   usage,
 } from '../store';
+import { formatNext, localSlots, nextRun } from '../schedule';
 import { TOPIC_LABEL } from '../types';
 import { relTime } from '../util';
 
@@ -83,6 +84,8 @@ export function SettingsPage() {
   const thisMonth = usage.value?.months[month];
   const failed = status.value?.sources.filter((x) => !x.ok) ?? [];
   const summarized = latest.value?.articles.filter((a) => a.ai).length ?? 0;
+  const sched = status.value?.schedule;
+  const next = sched ? nextRun(sched) : null;
 
   return (
     <>
@@ -162,6 +165,13 @@ export function SettingsPage() {
         <h2>数据状态</h2>
         <ul class="plain">
           <li>数据生成于：{latest.value ? relTime(latest.value.generatedAt) : '—'}</li>
+          {sched && (
+            <li>
+              更新周期：{sched.label}
+              {sched.every !== 'manual' && `，本地时间 ${localSlots(sched)}`}
+              {next ? `；下次约 ${formatNext(next)}` : '；仅在 GitHub 上手动运行时更新'}
+            </li>
+          )}
           <li>
             文章：{latest.value?.articles.length ?? 0} 篇，已有 AI 摘要 {summarized} 篇
           </li>
@@ -184,7 +194,9 @@ export function SettingsPage() {
         <button class="btn" onClick={() => loadRemote()}>
           重新加载数据
         </button>
-        <p class="muted small">订阅源和 AI 预算在仓库的 config.yaml 中修改；数据由 GitHub Actions 每天定时更新 4 次。</p>
+        <p class="muted small">
+          更新周期、订阅源和 AI 预算都在仓库的 config.yaml 中修改（可直接在 GitHub 网页上编辑），提交后自动生效。
+        </p>
       </section>
     </>
   );

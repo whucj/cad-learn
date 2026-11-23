@@ -2,9 +2,15 @@ name: 采集并发布
 
 on:
   schedule:
-    # UTC 时间，每天 4 次；避开 DeepSeek 高峰（工作日 UTC 01–04、06–10 价格翻倍）
-    - cron: '30 4,12,18,23 * * *'
-  workflow_dispatch: # 可在 Actions 页面手动运行
+    # 每天 4 个时段触发（UTC，都避开 DeepSeek 高峰：工作日 01–04、06–10）。
+    # 实际是否运行由 config.yaml 的 schedule（更新周期）决定，不到时间的触发几秒内跳过。
+    # 每个时段单独一行，脚本据此识别是哪个时段（即使 GitHub 延迟触发也不会认错）。
+    # 修改时段需同时修改 collector/lib/schedule.dart 的 slotHours。
+    - cron: '30 4 * * *'
+    - cron: '30 12 * * *'
+    - cron: '30 18 * * *'
+    - cron: '30 23 * * *'
+  workflow_dispatch: # 可在 Actions 页面手动运行（总是执行）
   push:
     branches: [main]
     paths: ['config.yaml', 'collector/**', 'web/**', '.github/workflows/**']
@@ -21,7 +27,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
     steps:
       - uses: actions/checkout@v7
 
@@ -29,22 +37,30 @@ jobs:
         with:
           sdk: stable
 
+      - name: 检查是否到了更新时间
+        id: gate
+        working-directory: collector
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          dart pub get
+          dart run bin/should_run.dart --root ..
+
       - name: 采集器测试（仅代码变更时）
         if: github.event_name == 'push'
         working-directory: collector
-        run: |
-          dart pub get
-          dart test
+        run: dart test
 
       - name: 抓取订阅源 + AI 摘要
+        if: steps.gate.outputs.run == 'true'
         working-directory: collector
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: |
-          dart pub get
-          dart run bin/collect.dart --root ..
+        run: dart run bin/collect.dart --root ..
 
       - name: 提交数据
+        if: steps.gate.outputs.run == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -58,12 +74,14 @@ jobs:
           fi
 
       - uses: actions/setup-node@v7
+        if: steps.gate.outputs.run == 'true'
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
 
       - name: 构建网页
+        if: steps.gate.outputs.run == 'true'
         working-directory: web
         run: |
           npm ci
@@ -71,12 +89,15 @@ jobs:
           npm run build
 
       - uses: actions/configure-pages@v6
+        if: steps.gate.outputs.run == 'true'
       - uses: actions/upload-pages-artifact@v5
+        if: steps.gate.outputs.run == 'true'
         with:
           path: web/dist
 
   deploy:
     needs: build
+    if: needs.build.outputs.run == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
