@@ -1,0 +1,12 @@
+{
+ "note": "costUsd 为按配置价格估算的费用，以 DeepSeek 控制台账单为准",
+ "months": {
+  "2026-11": {
+   "calls": 40,
+   "cacheHitTokens": 14976,
+   "cacheMissTokens": 33329,
+   "outputTokens": 10355,
+   "costUsd": 0.0113
+  }
+ }
+}
