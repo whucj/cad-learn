@@ -1,5 +1,112 @@
 [
  {
+  "id": "87b9643b6277",
+  "url": "https://developer.nvidia.com/blog/how-to-run-nvidia-cosmos-3-on-local-ai-devices-using-hugging-face-diffusers/",
+  "title": "How to Run NVIDIA Cosmos 3 on Local AI Devices Using Hugging Face Diffusers",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Atharva Joshi",
+  "published": "2026-11-24T18:44:05.000Z",
+  "fetched": "2026-11-24T22:42:12.541051Z",
+  "snippet": "Running video generation models locally can be challenging when model weights and intermediate data exceed available GPU memory. NVIDIA Cosmos 3 Nano is a world...",
+  "ai": {
+   "summary": "NVIDIA 技术博客介绍如何用 Hugging Face Diffusers 在本地 GPU 上运行 Cosmos 3 Nano 视频生成世界模型。核心是 Cosmos-Framework 的 offloading 包：把大部分模型权重放在系统内存，按需通过 PCIe 传到 GPU，使 12 GB 显存即可生成 720p 视频；同时提供 FP8 checkpoint 降低峰值显存。文中给出 text-to-video 等七种生成模态的代码示例，并在 RTX 5070/5080/4090/5090 上给出延迟与峰值显存基准。",
+   "points": [
+    "通过 CPU offloading 将权重存于系统 RAM、按需传输到 GPU，使 12 GB 显存可跑 720p 视频生成",
+    "FP8 checkpoint 与 BF16 SDPA 混合精度降低峰值显存，代价是系统内存占用和 PCIe 传输开销",
+    "支持 text-to-video、image-to-video、video-to-video、声音/动作生成等七种模态",
+    "给出 RTX 5070 等消费级 GPU 的延迟与峰值显存基准数据"
+   ],
+   "tags": [
+    "性能优化",
+    "GPU架构"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "941c74fda5ef",
+  "url": "https://gpuopen.com/learn/amd-rt-mlas-vulkan/",
+  "title": "Ray tracing large, dynamic worlds with RT-MLAS",
+  "source": "AMD GPUOpen",
+  "topic": "rendering",
+  "published": "2026-11-24T18:00:00.000Z",
+  "fetched": "2026-11-24T22:42:12.068255Z",
+  "snippet": "Learn how RT-MLAS, a new AMD Vulkan® extension, lets you reuse acceleration structures to cut memory use and rebuild time in large, dynamic ray traced scenes, then try it on AMD Radeon™ GPUs with our new sample app.",
+  "ai": {
+   "summary": "AMD GPUOpen 介绍新的 Vulkan 扩展 RT-MLAS，用于光线追踪大型动态场景。该扩展允许复用加速结构（acceleration structures），从而降低内存占用并缩短每帧重建 BVH 的时间。文章配套提供示例程序，可在 AMD Radeon GPU 上试用。核心价值在于解决动态几何下光追加速结构更新开销大的问题，属于 GPU 驱动渲染与光线追踪交叉方向。",
+   "points": [
+    "RT-MLAS 是 AMD 提出的 Vulkan 扩展，支持加速结构复用。",
+    "面向大型动态场景，减少加速结构内存占用与重建时间。",
+    "配套示例程序可在 Radeon GPU 上运行验证。",
+    "与 CAD 超大装配体动态更新的光追渲染思路相关。"
+   ],
+   "tags": [
+    "光线追踪",
+    "Vulkan",
+    "性能优化",
+    "GPU驱动渲染"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "28665cf52342",
+  "url": "https://developer.nvidia.com/blog/whats-new-for-game-developers-ai-animation-and-rtx-tools/",
+  "title": "What’s New for Game Developers: AI Animation and RTX Tools",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Phillip Singh",
+  "published": "2026-11-24T17:00:00.000Z",
+  "fetched": "2026-11-24T22:42:12.541051Z",
+  "snippet": "This month’s NVIDIA game development updates help teams bring new graphics, animation, and local AI capabilities into their engines while balancing image...",
+  "ai": {
+   "summary": "NVIDIA 面向游戏开发者的月度更新汇总，涵盖 DLSS 5 与 3D-Guided Neural Rendering 在《战争雷霆》Dagor 引擎中的集成经验（sRGB 与线性 HDR 色彩管线适配）、Kimodo AI 动作生成模型接入 Unreal Engine 5.9 预览版、In-Game Inferencing SDK 1.8 的平台与后端更新，以及 RTX Dynamic Illumination 3.2、RTX Path Tracing 1.9 和 Real-Time BVH Viewer 1.0 等渲染与调试工具改进。其中 BVH Viewer 可实时可视化 D3D12/Vulkan 光线追踪加速结构，Path Tracing 1.9 新增 ReSTIR DI、SHaRC 与 DLSS Ray Reconstruction 的渐进式示例。整体偏游戏渲染与 AI 工具链，与 CAD 几何内核无直接关系。",
+   "points": [
+    "Real-Time BVH Viewer 1.0 可在独立窗口中实时显示 D3D12/Vulkan 应用的加速结构，支持 primitive ID、追踪耗时热力图与几何过滤等可视化模式。",
+    "RTX Path Tracing 1.9 提供九步渐进式入门示例，逐步组合 ReSTIR DI、SHaRC 辐射缓存与 DLSS Ray Reconstruction，并加入实时子采样与 GPU 端加速结构实例生成优化。",
+    "RTX Dynamic Illumination 3.2 为 ReSTIR DI 空间重采样引入分层低差异采样，并增强 reservoir 可视化。",
+    "Kimodo 成为首个接入 Unreal Engine 5.9 引导式动画框架的 AI 动作生成模型，支持文本提示、样条路径与目标姿态约束。"
+   ],
+   "tags": [
+    "光线追踪",
+    "GPU驱动渲染",
+    "神经渲染",
+    "性能优化",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "38bacf944f62",
+  "url": "https://developer.nvidia.com/blog/prepare-market-data-for-forecasting-with-nvidia-megatron-core/",
+  "title": "Prepare Market Data for Forecasting with NVIDIA Megatron Core",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Liana Mikaelyan",
+  "published": "2026-11-24T17:00:00.000Z",
+  "fetched": "2026-11-24T22:42:12.541051Z",
+  "snippet": "Market data arrives as a stream of trades and quotes: every execution, bid, and ask, timestamped to the microsecond. Preparing this data for AI-based market...",
+  "ai": {
+   "summary": "该文介绍如何用 NVIDIA Megatron Core 与 Megatron-LM 为金融时间序列预测准备市场数据。核心方法是将日内行情 bar 的 Parquet 文件按品种和交易日分组为 patch，再滑动固定长度上下文窗口，并计算多预测周期的收益与成交量目标，保存为 train/val/test/meta 张量。数据加载器通过内存映射在各 tensor-parallel 组内共享批次，并以按日期切分加 embargo 期、仅用训练集统计目标等方式防止前视偏差。整体将数据接口与模型架构解耦，便于替换自定义预测模型。",
+   "points": [
+    "预处理脚本把市场 bar 转为模型可用的 patch 序列张量，并记录 patch 大小、上下文长度与预测周期等元数据。",
+    "按日期切分并设置 embargo 期、仅用训练集计算目标统计，避免跨切分泄漏与前视偏差。",
+    "内存映射数据加载器在 tensor-parallel 组内共享批次，提升分布式训练效率。",
+    "数据接口与模型架构分离，可复用同一预处理与目标掩码逻辑训练自定义模型。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "b6cdcfec359a",
   "url": "https://developer.nvidia.com/blog/qa-how-everstone-brings-where-winds-meet-to-life-with-nvidia-dlss-5/",
   "title": "Q&A: How Everstone Brings Where Winds Meet to Life with NVIDIA DLSS 5",
@@ -2224,6 +2331,32 @@
   }
  },
  {
+  "id": "abadf42522dd",
+  "url": "https://developer.nvidia.com/blog/nvidia-vera-rubin-nvl72-achieves-up-to-2x-blackwell-ultra-performance-in-mlperf-training-v6-1/",
+  "title": "NVIDIA Vera Rubin NVL72 Achieves up to 2x Blackwell Ultra Performance in MLPerf Training v6.1",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Farshad Ghodsian",
+  "published": "2026-11-16T16:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "As AI agents tackle increasingly complex workflows, reducing time-to-train is critical for rapidly iterating on both models and the agents they power. MLPerf...",
+  "ai": {
+   "summary": "该文是 NVIDIA 关于 Vera Rubin NVL72 在 MLPerf Training v6.1 中的 AI 训练性能发布说明，核心是 DeepSeek-V3 671B MoE 等基准上相比 GB300 NVL72 最高 2x 的每 GPU 性能提升，以及 256 到 1024 GPU 扩展时超过 97% 的扩展效率。文章重点在 NVLink 6、ConnectX-9 等互连与 CUDA 软件栈成熟度，不涉及几何内核或 GPU 图形渲染管线。",
+   "points": [
+    "Vera Rubin NVL72 在七个 MLPerf Training 基准中的六个取得最快训练时间，DeepSeek-V3 671B 上 1024 GPU 用时 4.14 分钟，约为 GB300 的一半。",
+    "从 256 扩展到 1024 GPU 保持 97% 以上扩展效率，依赖 NVLink 6 铜缆骨干与 ConnectX-9 SuperNIC。",
+    "新增 Qwen 3.5 397B GRPO 强化学习后训练基准，并同时提交 TensorRT-LLM 与 vLLM 两种推理后端。",
+    "内容属于 AI 训练性能与数据中心互连，与 CAD 几何内核、GPU 图形渲染无直接关系。"
+   ],
+   "tags": [
+    "性能优化",
+    "GPU架构"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "06bf46d7e5a7",
   "url": "https://developer.nvidia.com/blog/post-training-nvidia-nemotron-to-increase-accuracy-in-your-scientific-domain/",
   "title": "Post-Training NVIDIA Nemotron to Increase Accuracy in Your Scientific Domain",
@@ -2269,32 +2402,6 @@
    "tags": [
     "GPU架构",
     "性能优化"
-   ],
-   "relevance": 1,
-   "level": "进阶"
-  }
- },
- {
-  "id": "abadf42522dd",
-  "url": "https://developer.nvidia.com/blog/nvidia-vera-rubin-nvl72-achieves-up-to-2x-blackwell-ultra-performance-in-mlperf-training-v6-1/",
-  "title": "NVIDIA Vera Rubin NVL72 Achieves up to 2x Blackwell Ultra Performance in MLPerf Training v6.1",
-  "source": "NVIDIA Technical Blog",
-  "topic": "rendering",
-  "author": "Farshad Ghodsian",
-  "published": "2026-11-16T16:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "As AI agents tackle increasingly complex workflows, reducing time-to-train is critical for rapidly iterating on both models and the agents they power. MLPerf...",
-  "ai": {
-   "summary": "该文是 NVIDIA 关于 Vera Rubin NVL72 在 MLPerf Training v6.1 中的 AI 训练性能发布说明，核心是 DeepSeek-V3 671B MoE 等基准上相比 GB300 NVL72 最高 2x 的每 GPU 性能提升，以及 256 到 1024 GPU 扩展时超过 97% 的扩展效率。文章重点在 NVLink 6、ConnectX-9 等互连与 CUDA 软件栈成熟度，不涉及几何内核或 GPU 图形渲染管线。",
-   "points": [
-    "Vera Rubin NVL72 在七个 MLPerf Training 基准中的六个取得最快训练时间，DeepSeek-V3 671B 上 1024 GPU 用时 4.14 分钟，约为 GB300 的一半。",
-    "从 256 扩展到 1024 GPU 保持 97% 以上扩展效率，依赖 NVLink 6 铜缆骨干与 ConnectX-9 SuperNIC。",
-    "新增 Qwen 3.5 397B GRPO 强化学习后训练基准，并同时提交 TensorRT-LLM 与 vLLM 两种推理后端。",
-    "内容属于 AI 训练性能与数据中心互连，与 CAD 几何内核、GPU 图形渲染无直接关系。"
-   ],
-   "tags": [
-    "性能优化",
-    "GPU架构"
    ],
    "relevance": 1,
    "level": "进阶"
@@ -2510,37 +2617,6 @@
   }
  },
  {
-  "id": "8cb2d0d26950",
-  "url": "https://vulkan.org/events/vulkanised-2027",
-  "title": "Vulkanised and Real-Time Shading Symposium 2027",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
-   "points": [
-    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
-    "设有光线追踪、神经渲染与生产案例分享",
-    "包含 Slang、着色器语言、工具链与性能优化专题",
-    "早鸟注册截止 2027 年 1 月 15 日"
-   ],
-   "tags": [
-    "Vulkan",
-    "GPU驱动渲染",
-    "着色器",
-    "光线追踪"
-   ],
-   "relevance": 2,
-   "level": "入门"
-  }
- },
- {
   "id": "6899e55b962c",
   "url": "https://arxiv.org/abs/2611.12650",
   "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
@@ -2566,64 +2642,6 @@
     "神经渲染",
     "纹理压缩",
     "各向异性过滤"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
-  "id": "0fe388cf8c03",
-  "url": "https://arxiv.org/abs/2611.13677",
-  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
-   "points": [
-    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
-    "随变形选择性更新纹理缓存，而非每帧全量重建。",
-    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
-    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
-   ],
-   "tags": [
-    "神经渲染",
-    "渲染管线"
-   ],
-   "relevance": 2,
-   "level": "专业"
-  }
- },
- {
-  "id": "6390edbe9e91",
-  "url": "https://www.linkedin.com/pulse/sss-tricky-play-albedo-remapping-maximilian-tarpini-avhff/",
-  "title": "SSS and The Tricky Play of Albedo Remapping",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains albedo remapping for subsurface scattering, tracing the physics behind the mappings used in practical subsurface scattering (SSS) shaders\n• compares the remapping approaches and derives how artist-facing parameters are converted into the scattering coefficients required by the model",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "文章讲解次表面散射（SSS）中的 albedo remapping 问题：从物理原理出发，解释实际 SSS 着色器为何需要把美术可调的反照率参数映射为散射系数，并比较不同映射方案，推导面向美术的参数如何转换为模型所需的散射系数。内容属于通用着色与材质渲染细节，不涉及 CAD 几何内核或 CAD 渲染管线。",
-   "points": [
-    "解释 SSS 着色器中 albedo remapping 的物理依据",
-    "比较多种 remapping 方案并推导参数转换关系",
-    "面向美术参数到散射系数的映射流程",
-    "属于通用材质着色话题，与 CAD 渲染核心关联弱"
-   ],
-   "tags": [
-    "着色器",
-    "PBR"
    ],
    "relevance": 2,
    "level": "进阶"
@@ -2802,6 +2820,95 @@
    ],
    "relevance": 2,
    "level": "进阶"
+  }
+ },
+ {
+  "id": "6390edbe9e91",
+  "url": "https://www.linkedin.com/pulse/sss-tricky-play-albedo-remapping-maximilian-tarpini-avhff/",
+  "title": "SSS and The Tricky Play of Albedo Remapping",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains albedo remapping for subsurface scattering, tracing the physics behind the mappings used in practical subsurface scattering (SSS) shaders\n• compares the remapping approaches and derives how artist-facing parameters are converted into the scattering coefficients required by the model",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "文章讲解次表面散射（SSS）中的 albedo remapping 问题：从物理原理出发，解释实际 SSS 着色器为何需要把美术可调的反照率参数映射为散射系数，并比较不同映射方案，推导面向美术的参数如何转换为模型所需的散射系数。内容属于通用着色与材质渲染细节，不涉及 CAD 几何内核或 CAD 渲染管线。",
+   "points": [
+    "解释 SSS 着色器中 albedo remapping 的物理依据",
+    "比较多种 remapping 方案并推导参数转换关系",
+    "面向美术参数到散射系数的映射流程",
+    "属于通用材质着色话题，与 CAD 渲染核心关联弱"
+   ],
+   "tags": [
+    "着色器",
+    "PBR"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "0fe388cf8c03",
+  "url": "https://arxiv.org/abs/2611.13677",
+  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
+   "points": [
+    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
+    "随变形选择性更新纹理缓存，而非每帧全量重建。",
+    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
+    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
+   ],
+   "tags": [
+    "神经渲染",
+    "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "8cb2d0d26950",
+  "url": "https://vulkan.org/events/vulkanised-2027",
+  "title": "Vulkanised and Real-Time Shading Symposium 2027",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
+   "points": [
+    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
+    "设有光线追踪、神经渲染与生产案例分享",
+    "包含 Slang、着色器语言、工具链与性能优化专题",
+    "早鸟注册截止 2027 年 1 月 15 日"
+   ],
+   "tags": [
+    "Vulkan",
+    "GPU驱动渲染",
+    "着色器",
+    "光线追踪"
+   ],
+   "relevance": 2,
+   "level": "入门"
   }
  },
  {
@@ -3013,107 +3120,6 @@
   }
  },
  {
-  "id": "beb7913eb994",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-wasm-v30.0.2",
-  "title": "wgpu-core-deps-wasm-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu 项目的一个发布标签 wgpu-core-deps-wasm-v30.0.2，属于 wgpu-core 的 WASM 依赖子 crate 的版本发布。页面正文只有 GitHub Releases 的模板内容与加载错误提示，没有列出任何具体变更、修复或新功能说明。因此该发布对几何内核与 CAD 渲染方向没有可提取的技术信息，只能视为 WebGPU 生态的常规版本号更新。",
-   "points": [
-    "wgpu-core-deps-wasm 子 crate 发布 v30.0.2 版本标签",
-    "发布说明正文为空，未列出任何功能或修复条目",
-    "属于 WebGPU 实现 wgpu 的依赖版本维护，与几何建模算法无关"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "入门"
-  }
- },
- {
-  "id": "79dc44a97034",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-windows-linux-android-v30.0.2",
-  "title": "wgpu-core-deps-windows-linux-android-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu 仓库中 wgpu-core-deps-windows-linux-android 子 crate 的 v30.0.2 发布标签页，正文仅包含 GitHub 的签名验证与标签比较界面，没有提供任何实际的变更说明或发布内容。该 crate 负责为 wgpu-core 在 Windows、Linux、Android 平台拉取依赖，属于 WebGPU 实现的构建与依赖管理层面。由于缺少具体改动信息，无法判断其与几何内核或 CAD 渲染的关联。",
-   "points": [
-    "发布页无实质内容，仅显示 GitHub 签名验证与标签比较 UI",
-    "该 crate 是 wgpu-core 在 Windows/Linux/Android 上的依赖聚合包",
-    "未包含任何渲染管线、着色器或几何处理相关的变更说明",
-    "对 CAD 渲染或几何内核学习无直接参考价值"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 1,
-   "level": "入门"
-  }
- },
- {
-  "id": "478c2f46545c",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-v30.0.2",
-  "title": "wgpu-core-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu-core 的补丁版本发布（v30.0.2），但发布页面未能加载出具体变更内容，正文只有 GitHub 的签名验证与标签选择界面，没有可读的更新说明。wgpu 是 Rust 生态的跨平台 GPU 抽象层，wgpu-core 是其核心校验与资源管理层，支撑 WebGPU 及 Vulkan/D3D12/Metal 后端。由于缺少实际 changelog，无法判断本次修复涉及几何建模还是渲染管线细节。",
-   "points": [
-    "发布为 wgpu-core v30.0.2 补丁版本，由 Connor Fitzgerald 签名提交",
-    "页面正文未加载出变更日志，无法获知具体修复内容",
-    "wgpu-core 是 WebGPU 在 Rust 中的核心实现，可映射到 Vulkan/D3D12/Metal 后端"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
-  "id": "1f70bbc78b52",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-info-v30.0.2",
-  "title": "wgpu-info-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu 仓库中 wgpu-info 工具 v30.0.2 的发布标签页面，正文只包含 GitHub 的提交签名验证信息和页面加载错误提示，没有任何关于功能变更、修复或性能改进的实质内容。wgpu-info 是用于查询 GPU 适配器与后端信息的诊断工具，与 WebGPU 生态相关，但本次发布说明未提供可学习的技术细节。",
-   "points": [
-    "发布页正文仅有提交签名验证信息与页面加载错误，无实际变更日志",
-    "wgpu-info 是 wgpu/WebGPU 生态中查询 GPU 适配器与后端能力的诊断工具",
-    "未涉及几何内核、渲染算法或性能优化的具体内容"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "入门"
-  }
- },
- {
   "id": "60ccb3943776",
   "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
   "title": "wgpu-v30.0.2",
@@ -3269,6 +3275,107 @@
     "版本发布"
    ],
    "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "beb7913eb994",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-wasm-v30.0.2",
+  "title": "wgpu-core-deps-wasm-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目的一个发布标签 wgpu-core-deps-wasm-v30.0.2，属于 wgpu-core 的 WASM 依赖子 crate 的版本发布。页面正文只有 GitHub Releases 的模板内容与加载错误提示，没有列出任何具体变更、修复或新功能说明。因此该发布对几何内核与 CAD 渲染方向没有可提取的技术信息，只能视为 WebGPU 生态的常规版本号更新。",
+   "points": [
+    "wgpu-core-deps-wasm 子 crate 发布 v30.0.2 版本标签",
+    "发布说明正文为空，未列出任何功能或修复条目",
+    "属于 WebGPU 实现 wgpu 的依赖版本维护，与几何建模算法无关"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "79dc44a97034",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-windows-linux-android-v30.0.2",
+  "title": "wgpu-core-deps-windows-linux-android-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 仓库中 wgpu-core-deps-windows-linux-android 子 crate 的 v30.0.2 发布标签页，正文仅包含 GitHub 的签名验证与标签比较界面，没有提供任何实际的变更说明或发布内容。该 crate 负责为 wgpu-core 在 Windows、Linux、Android 平台拉取依赖，属于 WebGPU 实现的构建与依赖管理层面。由于缺少具体改动信息，无法判断其与几何内核或 CAD 渲染的关联。",
+   "points": [
+    "发布页无实质内容，仅显示 GitHub 签名验证与标签比较 UI",
+    "该 crate 是 wgpu-core 在 Windows/Linux/Android 上的依赖聚合包",
+    "未包含任何渲染管线、着色器或几何处理相关的变更说明",
+    "对 CAD 渲染或几何内核学习无直接参考价值"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "478c2f46545c",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-v30.0.2",
+  "title": "wgpu-core-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu-core 的补丁版本发布（v30.0.2），但发布页面未能加载出具体变更内容，正文只有 GitHub 的签名验证与标签选择界面，没有可读的更新说明。wgpu 是 Rust 生态的跨平台 GPU 抽象层，wgpu-core 是其核心校验与资源管理层，支撑 WebGPU 及 Vulkan/D3D12/Metal 后端。由于缺少实际 changelog，无法判断本次修复涉及几何建模还是渲染管线细节。",
+   "points": [
+    "发布为 wgpu-core v30.0.2 补丁版本，由 Connor Fitzgerald 签名提交",
+    "页面正文未加载出变更日志，无法获知具体修复内容",
+    "wgpu-core 是 WebGPU 在 Rust 中的核心实现，可映射到 Vulkan/D3D12/Metal 后端"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "1f70bbc78b52",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-info-v30.0.2",
+  "title": "wgpu-info-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 仓库中 wgpu-info 工具 v30.0.2 的发布标签页面，正文只包含 GitHub 的提交签名验证信息和页面加载错误提示，没有任何关于功能变更、修复或性能改进的实质内容。wgpu-info 是用于查询 GPU 适配器与后端信息的诊断工具，与 WebGPU 生态相关，但本次发布说明未提供可学习的技术细节。",
+   "points": [
+    "发布页正文仅有提交签名验证信息与页面加载错误，无实际变更日志",
+    "wgpu-info 是 wgpu/WebGPU 生态中查询 GPU 适配器与后端能力的诊断工具",
+    "未涉及几何内核、渲染算法或性能优化的具体内容"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
    "level": "入门"
   }
  },
@@ -3654,31 +3761,6 @@
   }
  },
  {
-  "id": "c71df7975ea8",
-  "url": "https://developer.nvidia.com/blog/manage-kubernetes-clusters-for-gpu-infrastructure-with-nvidia-kubernetes-engine/",
-  "title": "Manage Kubernetes Clusters for GPU Infrastructure with NVIDIA Kubernetes Engine",
-  "source": "NVIDIA Technical Blog",
-  "topic": "rendering",
-  "author": "Nathan Taber",
-  "published": "2026-11-10T15:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "NVIDIA is announcing two open source projects for building and operating managed Kubernetes services on GPU infrastructure—NVIDIA Kubernetes Engine (NVKE) and...",
-  "ai": {
-   "summary": "NVIDIA 发布两个开源项目 NVKE 与 NVKR，用于在 GPU 基础设施上构建和运营托管 Kubernetes 服务。NVKR 从固定版本源码构建可复现的节点镜像、容器镜像与软件包；NVKE 通过 REST API 与管理集群上的控制器，利用这些产物来创建和运维客户工作负载集群。管理平面由 nvkectl 引导，经 CAPNICo 从 NVIDIA Infra Controller 申请裸金属服务器，节点需通过 SPIFFE 身份认证后才能加入。两者以 Apache 2.0 公开预览，API 与行为可能变化，暂不建议用于生产。",
-   "points": [
-    "NVKR 负责可复现构建：节点镜像、容器镜像、Helm chart 均从版本固定的源码生成并记录构建输入。",
-    "NVKE 管理平面运行在管理集群上，通过 REST API 与控制器为租户创建各自带控制平面和节点池的工作负载集群。",
-    "nvkectl 先拉起临时 seed 集群，再经 CAPNICo 从 NICo 申请裸金属机器组建管理集群，节点需 SPIFFE 认证。",
-    "项目处于 public preview，已通过 Kubernetes 1.36 一致性测试，但 API 可能变动，尚不推荐生产使用。"
-   ],
-   "tags": [
-    "版本发布"
-   ],
-   "relevance": 1,
-   "level": "进阶"
-  }
- },
- {
   "id": "ce98a6a1f234",
   "url": "https://developer.nvidia.com/blog/start-and-restore-gpu-workloads-in-seconds-with-nvidia-snapshot/",
   "title": "Start and Restore GPU Workloads in Seconds with NVIDIA Snapshot",
@@ -3701,6 +3783,31 @@
    ],
    "relevance": 1,
    "level": "入门"
+  }
+ },
+ {
+  "id": "c71df7975ea8",
+  "url": "https://developer.nvidia.com/blog/manage-kubernetes-clusters-for-gpu-infrastructure-with-nvidia-kubernetes-engine/",
+  "title": "Manage Kubernetes Clusters for GPU Infrastructure with NVIDIA Kubernetes Engine",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Nathan Taber",
+  "published": "2026-11-10T15:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "NVIDIA is announcing two open source projects for building and operating managed Kubernetes services on GPU infrastructure—NVIDIA Kubernetes Engine (NVKE) and...",
+  "ai": {
+   "summary": "NVIDIA 发布两个开源项目 NVKE 与 NVKR，用于在 GPU 基础设施上构建和运营托管 Kubernetes 服务。NVKR 从固定版本源码构建可复现的节点镜像、容器镜像与软件包；NVKE 通过 REST API 与管理集群上的控制器，利用这些产物来创建和运维客户工作负载集群。管理平面由 nvkectl 引导，经 CAPNICo 从 NVIDIA Infra Controller 申请裸金属服务器，节点需通过 SPIFFE 身份认证后才能加入。两者以 Apache 2.0 公开预览，API 与行为可能变化，暂不建议用于生产。",
+   "points": [
+    "NVKR 负责可复现构建：节点镜像、容器镜像、Helm chart 均从版本固定的源码生成并记录构建输入。",
+    "NVKE 管理平面运行在管理集群上，通过 REST API 与控制器为租户创建各自带控制平面和节点池的工作负载集群。",
+    "nvkectl 先拉起临时 seed 集群，再经 CAPNICo 从 NICo 申请裸金属机器组建管理集群，节点需 SPIFFE 认证。",
+    "项目处于 public preview，已通过 Kubernetes 1.36 一致性测试，但 API 可能变动，尚不推荐生产使用。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "进阶"
   }
  },
  {
@@ -4241,7 +4348,23 @@
   "author": "Jonathan Bentz",
   "published": "2026-11-04T18:46:07.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "As artificial intelligence and accelerated computing continue to push the boundaries of what's possible, the latest NVIDIA CUDA release arrives to unlock..."
+  "snippet": "As artificial intelligence and accelerated computing continue to push the boundaries of what's possible, the latest NVIDIA CUDA release arrives to unlock...",
+  "ai": {
+   "summary": "CUDA 13.5 正式发布，核心是为 NVIDIA Vera Rubin GPU 架构提供生产级支持，并扩展 Windows on Arm 至 DGX Station。调度层面新增 locality domain 的 SM 分区选择（可包含补充 SM）与 MPS v3 的加权时间片、SM 分区借还、cgroup 路由等资源管理能力。库与工具方面，CUDA Tile 支持多 GPU 单播/组播通信与 SIMT 互操作预览，CUDA Python cuda.core 1.2 增加批量拷贝与 PDL，CCCL 3.5 提供 CUB 调优 API 与可复现浮点扫描。整体面向 AI 与加速计算的大规模性能与调度控制，未涉及图形渲染或 CAD 几何。",
+   "points": [
+    "CUDA 13.5 GA 支持 Vera Rubin GPU 架构，并扩展 Windows on Arm 至 DGX Station。",
+    "locality domain 允许选择统一 SM 分区或包含全部 SM 的分区，通过 cudaDevSmResourceSplit() 查询各分区 SM 数。",
+    "MPS v3 新增加权时间片、SM 分区借还负载均衡、cgroup 路由与按命名空间的 SM 分区分配。",
+    "CUDA Tile 支持 NVLink/NVSwitch 多 GPU 单播与组播通信，CUDA Python 与 CCCL 3.5 增加批量拷贝、PDL 与 CUB 调优 API。"
+   ],
+   "tags": [
+    "GPU架构",
+    "性能优化",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
  },
  {
   "id": "a0a290cb0928",
@@ -4252,7 +4375,21 @@
   "author": "Samuel Ochoa",
   "published": "2026-11-04T17:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "A Siemens report estimates that unplanned downtime costs an average large plant in the surveyed sectors $253 million per year. Whether investigating a failed..."
+  "snippet": "A Siemens report estimates that unplanned downtime costs an average large plant in the surveyed sectors $253 million per year. Whether investigating a failed...",
+  "ai": {
+   "summary": "NVIDIA Factory Operations Blueprint (FOX) 是一套面向工厂运维的 AI Agent 参考架构，通过 Factory Manager Agent 协调多个专用 Agent（视觉检测、车队管理、根因分析），连接 MES/ERP 等现有工厂数据与工具，完成缺陷排查、返工调度与原因分析。系统基于 LLM（如 Nemotron）、NemoClaw agent harness 与 OpenShell 隔离执行环境，并支持在 DGX Station 上全本地部署。文章以 SMT 产线 AOI 告警为例演示端到端流程，属于工业 AI 与机器人/仿真应用，与 CAD 几何内核及 GPU 渲染无直接关系。",
+   "points": [
+    "FOX 提供工厂管理 Agent 的参考架构，协调视觉检测、车队管理与根因分析等专用 Agent。",
+    "系统通过适配器接入 MES/ERP 与设备数据库，并用 Elasticsearch 保存调查上下文。",
+    "示例流程覆盖 SMT 产线从 AOI 告警到二次检测、机器人返工与根因报告生成。",
+    "支持基于 DGX Station 的全本地部署，数据不出工厂网络。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "ce98a1849bc9",
@@ -4263,7 +4400,21 @@
   "author": "Patrick Moorhead",
   "published": "2026-11-04T16:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Turn production evidence into prioritized issues and custom evaluations that help you improve prompts, tools, models, memory, skills, and harness code. When you..."
+  "snippet": "Turn production evidence into prioritized issues and custom evaluations that help you improve prompts, tools, models, memory, skills, and harness code. When you...",
+  "ai": {
+   "summary": "本文介绍如何利用 NVIDIA NeMo 工具链（NeMo Compass、NeMo Eval Author）将 AI Agent 的生产失败案例转化为测试用例，并优化 Agent 的 harness 代码。通过分析存储的 Agent 轨迹，识别重复问题并生成定制化评估，最终在 Dassault Systèmes 的工程示例中，将格式错误的工具调用从 142 次降至 0，整体评估分数相对提升 28%，每次运行的工具调用减少 35%。",
+   "points": [
+    "NeMo Compass 分析 Agent 轨迹，识别异常行为、工具使用偏差和与预期行为的偏离，并关联具体 trace ID。",
+    "NeMo Eval Author 提供编码 Agent 技能和工作流，用于创建 Harbor 或 NeMo Gym 格式的自定义评估，衡量 Agent 行为是否符合领域要求。",
+    "完整的优化循环包括更新 Agent harness（如修改系统提示），并在开发集和保留集上重新运行评估以验证改进和检测回归。",
+    "在 Dassault Systèmes 的工程示例中，该循环将格式错误的工具调用从 142 次减少到 0，整体评估分数相对提升 28%，每次运行的工具调用减少 35%。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "046cb5212e15",
@@ -4273,7 +4424,22 @@
   "topic": "rendering",
   "published": "2026-11-04T12:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.427065Z",
-  "snippet": "AMD FSR™ Upscaling 4.1.2 is now available on XBOX® Series X|S with the October 2026 GDK. See what's in the new AMD FSR GDK sample, how it uses the same FSR SDK API as on PC, and how to bring it to ROG XBOX Ally handhelds."
+  "snippet": "AMD FSR™ Upscaling 4.1.2 is now available on XBOX® Series X|S with the October 2026 GDK. See what's in the new AMD FSR GDK sample, how it uses the same FSR SDK API as on PC, and how to bring it to ROG XBOX Ally handhelds.",
+  "ai": {
+   "summary": "AMD 宣布 FSR Upscaling 4.1.2 随 2026 年 10 月版 GDK 登陆 XBOX Series X|S，并提供新的 GDK 示例，展示其与 PC 端相同的 FSR SDK API 用法，同时说明如何将其移植到 ROG XBOX Ally 掌机。内容属于超分辨率后处理技术的平台适配与集成说明，不涉及 CAD 几何内核或 CAD 渲染管线。",
+   "points": [
+    "FSR Upscaling 4.1.2 通过 GDK 支持 XBOX Series X|S 主机。",
+    "主机端与 PC 端共用同一套 FSR SDK API，降低跨平台集成成本。",
+    "提供 GDK 示例并说明向 ROG XBOX Ally 掌机移植的路径。",
+    "属于通用游戏超分技术，与 CAD 渲染、GPU 剔除或几何内核无关。"
+   ],
+   "tags": [
+    "渲染管线",
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "ce43667aa282",
@@ -4284,7 +4450,21 @@
   "author": "github-actions[bot]",
   "published": "2026-11-04T05:58:49.000Z",
   "fetched": "2026-11-23T12:05:15.526313Z",
-  "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.10.28...weekly-2026.11.04 How-to use Download the appropriate asset for your OS below Unpack the bund…"
+  "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.10.28...weekly-2026.11.04 How-to use Download the appropriate asset for your OS below Unpack the bund…",
+  "ai": {
+   "summary": "这是 FreeCAD 每周开发构建（weekly-2026.11.04）的发布说明，属于供测试 bugfix、回归问题和近期新功能的 bleeding edge 版本，明确不建议用于生产环境。正文只给出各平台下载与启动方式（Windows 的 bin\\freecad.exe、macOS 的 FreeCAD.app、Linux 的 AppImage），未列出任何具体功能变更或修复内容。由于变更日志加载失败，无法判断本次构建在几何内核或渲染方面有何实质改动。",
+   "points": [
+    "FreeCAD 每周开发构建，定位为测试 bugfix 与回归问题，不适合生产使用",
+    "提供 Windows、macOS、Linux（AppImage）三平台打包下载与启动说明",
+    "变更日志区域加载失败，未披露自 weekly-2026.10.28 以来的具体改动",
+    "未涉及 B-Rep、NURBS、布尔运算或 GPU 渲染等具体技术内容"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "7718b7e9203e",
@@ -4294,7 +4474,23 @@
   "topic": "rendering",
   "published": "2026-11-03T18:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.427065Z",
-  "snippet": "Microsoft DirectX® 12 Agility SDK 1.620 brings DirectX Dump Files, Extended PIX Markers and more to retail, and 1.722-preview adds new DXR features. See which AMD Radeon™ GPUs support each feature and which AMD driver you need."
+  "snippet": "Microsoft DirectX® 12 Agility SDK 1.620 brings DirectX Dump Files, Extended PIX Markers and more to retail, and 1.722-preview adds new DXR features. See which AMD Radeon™ GPUs support each feature and which AMD driver you need.",
+  "ai": {
+   "summary": "AMD 宣布其 Radeon 驱动支持最新的 DirectX 12 Agility SDK 1.620 与 1.722-preview。1.620 将 DirectX Dump Files、扩展 PIX Marker 等功能带入零售版；1.722-preview 新增 DXR 光线追踪特性。文章列出各特性对应的 AMD GPU 支持情况与所需驱动版本。内容偏驱动与 API 支持公告，与 CAD 几何内核无直接关系，对 GPU 渲染方向仅属外围信息。",
+   "points": [
+    "Agility SDK 1.620 正式版引入 DirectX Dump Files 与扩展 PIX Marker",
+    "1.722-preview 增加新的 DXR 光线追踪特性",
+    "文中给出各特性支持的 AMD Radeon GPU 型号与驱动版本要求",
+    "未涉及 CAD 渲染、B-Rep 细分或几何建模算法"
+   ],
+   "tags": [
+    "D3D12",
+    "光线追踪",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "a2ba61e3ed25",
@@ -4305,7 +4501,22 @@
   "author": "Matteo Ballegeer",
   "published": "2026-11-03T17:51:02.000Z",
   "fetched": "2026-11-24T00:15:57.047443Z",
-  "snippet": "Learning on boundary representations (B-reps) requires robustness to the pose of a part, since CAD models are not stored in a canonical orientation. Existing B-rep networks either operate on world-frame coordinates and normals, and thus degrade under rotation, or encode each face in a local referenc…"
+  "snippet": "Learning on boundary representations (B-reps) requires robustness to the pose of a part, since CAD models are not stored in a canonical orientation. Existing B-rep networks either operate on world-frame coordinates and normals, and thus degrade under rotation, or encode each face in a local referenc…",
+  "ai": {
+   "summary": "针对 B-Rep 神经网络对零件姿态敏感的问题，提出在 SO(3) 等变框架下学习 B-Rep 表示。现有方法要么直接使用世界坐标与法向，导致旋转下性能下降；要么为每个面建立局部参考系，但难以保证全局一致性。该方法将面、边几何与拓扑编码为对旋转等变的特征，使模型在任意朝向下保持稳定。意义在于为 CAD B-Rep 的深度学习提供姿态鲁棒的表示，可服务于分割、检索等下游任务。",
+   "points": [
+    "指出现有 B-Rep 网络依赖世界坐标或局部参考系，旋转下鲁棒性不足。",
+    "在 SO(3) 等变约束下编码 B-Rep 的面几何、边几何与拓扑关系。",
+    "目标是让 B-Rep 学习对零件姿态不敏感，无需规范化朝向。",
+    "属于几何深度学习与 B-Rep 表示交叉方向，偏研究性。"
+   ],
+   "tags": [
+    "B-Rep",
+    "几何鲁棒性"
+   ],
+   "relevance": 3,
+   "level": "专业"
+  }
  },
  {
   "id": "53eb05fac6dd",
@@ -4316,7 +4527,21 @@
   "author": "Gargi Prasad",
   "published": "2026-11-02T23:39:34.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "In distributed AI workloads, a single error can produce a cascade of symptoms. A GPU or fabric event may surface as NCCL errors on other ranks, scheduler state..."
+  "snippet": "In distributed AI workloads, a single error can produce a cascade of symptoms. A GPU or fabric event may surface as NCCL errors on other ranks, scheduler state...",
+  "ai": {
+   "summary": "NVIDIA Attribution 是用于诊断分布式 AI 训练作业失败的开源工具，它把与单个工作负载相关的日志、指标、遥测和调度器状态关联起来，输出结构化诊断，包括结果、根因、受影响节点、症状链和证据。系统由 Attribution Service（REST API 核心引擎）和 Attribution Blueprint（Python 编排器，连接 Slurm/Kueue、Loki、PromQL 等）组成，采用确定性规则保证可复现。文中以某节点 NVLink 信号完整性故障为例，说明它能把下游 NCCL 报错保留为症状，而将 XID 149 定位为根因。该工具已在 NVIDIA 生产环境分析数百万工作负载，用于定位 fabric 故障。",
+   "points": [
+    "将工作负载级日志、指标、调度器状态关联为单一结构化诊断，区分根因与下游症状。",
+    "由 Attribution Service 与 Blueprint 两部分组成，支持 Slurm/Kueue 及 Loki、PromQL 等数据源。",
+    "确定性规则引擎保证诊断可复现、可定制，输出含 terminal_state、sub_domain 与证据链。",
+    "生产环境每周分析数百万工作负载，可识别特定主机/交换机端口的 fabric 故障模式。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "039049f22ea9",
@@ -4327,7 +4552,21 @@
   "author": "Ripple Patel",
   "published": "2026-11-02T22:43:05.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "As distributed AI training scales, failures across hardware and software dependencies increasingly disrupt training progress, making fast, reliable recovery..."
+  "snippet": "As distributed AI training scales, failures across hardware and software dependencies increasingly disrupt training progress, making fast, reliable recovery...",
+  "ai": {
+   "summary": "NVIDIA 发布开源的工作负载级恢复服务 NVIDIA Recovery，用于自动化分布式 AI 训练作业的故障恢复。它通过应用日志、GPU 指标和调度器信号检测中断，执行“检测异常—归因故障—隔离节点—重启或停止作业”的四阶段恢复循环，并与 Slurm 集成。新部署默认处于 monitor 模式，仅输出恢复建议而不执行调度动作，便于运维验证信号质量。生产集群三个月监控显示日均近 200 个作业、约 8550 次异常检测，平均检测与恢复动作延迟分别为 69 秒和 94 秒。",
+   "points": [
+    "通过日志、GPU 指标与调度器信号自动检测训练中断，并归因到具体故障资源。",
+    "四阶段恢复循环：检测、归因、隔离节点、按策略重启或停止作业。",
+    "与 Slurm 集成采用 Advisor Controller，支持 in-cluster 与 SSH 两种部署模式。",
+    "默认 monitor 模式先验证信号质量，再启用自主恢复，并提供审计轨迹与 Recovery Console。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "e7a0e40d1f22",
@@ -4338,7 +4577,24 @@
   "author": "poweifeng",
   "published": "2026-11-02T22:16:44.000Z",
   "fetched": "2026-11-23T12:05:14.414577Z",
-  "snippet": "filamat: convert FOG variant into a specialization constant. [⚠️ Recompile Materials] engine: in AsynchronousMode::AMORTIZATION, queued async operations now run at the end of each frame and in Renderer::skipFrame(), within a per-frame time budget set by the new Engine::Config::asynchronousFrameBudge…"
+  "snippet": "filamat: convert FOG variant into a specialization constant. [⚠️ Recompile Materials] engine: in AsynchronousMode::AMORTIZATION, queued async operations now run at the end of each frame and in Renderer::skipFrame(), within a per-frame time budget set by the new Engine::Config::asynchronousFrameBudge…",
+  "ai": {
+   "summary": "Filament v1.80.0 发布，主要改动包括：将 FOG 变体转为 specialization constant（需重编译材质）；异步操作改为按帧时间预算（默认 2ms）在帧末执行，Metal 也每帧执行；新增 View::setMotionVectorsOptions() 渲染运动向量供 TAA 重投影以减少鬼影；Vulkan 修复超过 32 个计时查询时的崩溃。",
+   "points": [
+    "FOG 变体改为 specialization constant，需重新编译材质。",
+    "异步操作改为按帧时间预算（默认 2ms）在帧末执行，Metal 也每帧执行。",
+    "新增运动向量渲染选项，TAA 利用其重投影减少移动物体鬼影。",
+    "Vulkan 修复计时查询池耗尽时的崩溃问题。"
+   ],
+   "tags": [
+    "版本发布",
+    "渲染管线",
+    "Vulkan",
+    "抗锯齿"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
  },
  {
   "id": "316405c01061",
@@ -4349,7 +4605,22 @@
   "author": "poweifeng",
   "published": "2026-11-02T21:29:27.000Z",
   "fetched": "2026-11-23T12:05:14.414577Z",
-  "snippet": "Release Filament 1.80.0"
+  "snippet": "Release Filament 1.80.0",
+  "ai": {
+   "summary": "这是 Google Filament 渲染引擎的 1.80.1-cut 候选发布标签页面，正文内容基本是 GitHub 页面加载失败后的占位文本，没有提供任何实质性的更新说明、新功能或修复列表。Filament 是面向移动端和桌面端的实时 PBR 渲染引擎，与 CAD 渲染管线有一定关联，但本条信息本身不包含可学习的技术内容。",
+   "points": [
+    "发布页正文为空，仅有 GitHub 加载错误提示，无法获取 1.80.1 的具体变更",
+    "Filament 是 Google 开源的实时 PBR 渲染引擎，支持 Vulkan、OpenGL 等后端",
+    "该版本为 rc 候选分支标签，正式发布说明需查阅 1.80.0 的 release notes"
+   ],
+   "tags": [
+    "渲染管线",
+    "PBR",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "0a321f63fbd6",
@@ -4360,7 +4631,23 @@
   "author": "Mark Chmarny",
   "published": "2026-11-02T18:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Configuring and optimizing Kubernetes for new GPU hardware such as NVIDIA Vera Rubin is complex and error-prone. Drivers, kernels, runtimes, networking,..."
+  "snippet": "Configuring and optimizing Kubernetes for new GPU hardware such as NVIDIA Vera Rubin is complex and error-prone. Drivers, kernels, runtimes, networking,...",
+  "ai": {
+   "summary": "NVIDIA 发布 AI Cluster Runtime (AICR)，将 Kubernetes 上针对 Vera Rubin NVL72 的调优配置固化为可复用 recipe，并生成部署包、验证运行中的集群。文章列出相对 GB200 NVL72 的关键变化：新驱动分支 R615.23、ConnectX-9/BlueField-4 与 DOCA 3.3.0、变化的 NIC/GPU/DMA 拓扑与 NUMA 亲和、DRA 管理的 IMEX 以及新 MIG profile。在早期硬件上用 GPU Operator v26.7.0 与 DRA driver v0.5.0 完成部署、一致性与跨节点 NCCL all-reduce 性能验证（16 GiB 下 744.71 GB/s）。验证还发现 go-nvlib 未映射 Rubin 架构值导致 DRA kubelet 插件崩溃重启，修复已进入官方 v0.5.0。",
+   "points": [
+    "AICR 以 recipe 形式固化 Vera Rubin 的驱动、内核、网络与调度器调优组合，并支持生成部署包与集群校验。",
+    "Vera Rubin NVL72 相对 GB200 更换 ConnectX-9/BlueField-4、DOCA 3.3.0，且 NIC/GPU/DMA 拓扑与 NUMA 亲和需重新核对。",
+    "端到端验证覆盖部署、一致性和跨节点 NCCL all-reduce 性能门限，16 GiB 下达到 744.71 GB/s。",
+    "早期芯片验证暴露 go-nvlib 缺少 Rubin 架构映射导致 DRA 插件崩溃，修复已随 DRA driver v0.5.0 发布。"
+   ],
+   "tags": [
+    "GPU架构",
+    "性能优化",
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "70cecf2cdf07",
@@ -4371,7 +4658,21 @@
   "author": "Pranjali Joshi",
   "published": "2026-11-02T17:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Physical AI developers working with world models face two distinct challenges: adapting models to their sensors, tasks, and data, and getting those models into..."
+  "snippet": "Physical AI developers working with world models face two distinct challenges: adapting models to their sensors, tasks, and data, and getting those models into...",
+  "ai": {
+   "summary": "NVIDIA Cosmos 是面向物理 AI 的世界基础模型与开发平台，本文介绍 Cosmos Framework 与 Cosmos NIM 两部分：前者提供模块化、开放的训练、强化学习、优化与推理工具，支持 Cosmos 3、GR00T、Qwen 等模型；后者通过量化、投机解码与 KV-cache 感知路由实现约 2–3 倍加速推理。文中给出 Cosmos 3 Nano 仿真配方，可生成同步的相机视频与 LiDAR 观测，用于自动驾驶、机器人与手术场景。文章还说明了不同模型与任务的 GPU 显存需求（如 Cosmos3-Nano 在 BF16 下需 58 GiB）。整体属于 AI 世界模型与仿真方向，与 CAD 几何内核及 GPU 驱动渲染无直接关系。",
+   "points": [
+    "Cosmos Framework 提供训练、RL（DPO/GRPO/PPO）、蒸馏量化与推理的模块化工具链。",
+    "Cosmos 3 Nano 仿真配方可生成同步多相机视频与 LiDAR 观测，用于 AV 与机器人场景。",
+    "Cosmos NIM 微服务通过量化、投机解码与 KV-cache 路由在 H200 上获得约 2–3 倍加速。",
+    "文中给出 BF16/FP8 下的显存需求与部署配置建议。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "452b3e36e8f5",
@@ -4382,7 +4683,21 @@
   "author": "Alon Lavian",
   "published": "2026-11-02T16:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "NVIDIA DSX AI Factory Platform brings together technologies to help the ecosystem design, build, and operate more efficient AI factories, including open source,..."
+  "snippet": "NVIDIA DSX AI Factory Platform brings together technologies to help the ecosystem design, build, and operate more efficient AI factories, including open source,...",
+  "ai": {
+   "summary": "NVIDIA Workload Map 提出了一个通用的 Kubernetes 工作负载描述（CRD 加 Go 库），用于统一解析 JobSet、PyTorchJob、RayCluster 等分布式 AI 框架的工作负载结构。它通过预置定义目录，让调度器、控制器和平台无需为每种框架编写专用解析代码，即可提取 pod 模板、副本数、状态并聚合资源请求。KAI Scheduler 和 NVIDIA Run:ai 已基于同一描述实现 gang scheduling 与统一管理。该工作解决的是 AI 基础设施层面的框架适配问题，与 CAD 几何内核和 GPU 渲染无关。",
+   "points": [
+    "提供 Kubernetes CRD 与 Go 库，统一描述分布式工作负载的结构与状态",
+    "预置 JobSet、PyTorchJob、RayCluster、MPIJob 等框架的定义目录",
+    "同一份定义可复用于工作负载检查、gang scheduling 和平台管理",
+    "属于 AI 集群调度与运维工具，不涉及几何建模或图形渲染"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "d8562ead568f",
@@ -4396,6 +4711,23 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "文章提出一种阴影投射体剔除技术：通过把视锥向光源方向延伸，构造出“阴影投射体体积”（shadow caster volume），只保留可能对当前视野产生阴影的物体，从而减少阴影渲染的候选对象。该方法进一步扩展到平行光（directional light）以及半透明物体的包围体处理。核心价值在于降低阴影 pass 的绘制与遍历开销，属于渲染管线中的可见性剔除优化。",
+   "points": [
+    "用视锥向光源延伸构造 shadow caster volume，剔除不可能投影到视野内的物体",
+    "方法可推广到 directional light，并处理半透明物体的包围体",
+    "属于阴影渲染前的可见性剔除优化，可减少阴影 pass 的绘制量",
+    "与 GPU 剔除、间接绘制等管线优化思路相通，但偏通用渲染而非 CAD 专用"
+   ],
+   "tags": [
+    "剔除",
+    "阴影",
+    "渲染管线",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
   }
  },
  {
@@ -4410,20 +4742,20 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  }
- },
- {
-  "id": "75df9c3de10c",
-  "url": "https://lisyarus.github.io/blog/posts/revisiting-importance-sampling.html",
-  "title": "Revisiting importance sampling",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explores the theoretical variance bounds of Monte-Carlo importance sampling for sign-changing functions\n• derives the optimal sampling distribution using calculus of variations and Lagrange multipliers",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "文章介绍了一个名为 ScratchyToy 的原型着色器编辑器，把 Shadertoy 风格的 GLSL 文本编程与 Scratch 式可视化积木结合起来。核心实现是文本与积木两种表示之间的双向 AST 映射，使两者保持同步。还支持内联表达式预览，并能在循环和函数上下文中进行多次求值。整体偏着色器创作工具与教学交互，与 CAD 几何内核和 GPU 驱动渲染关系较远。",
+   "points": [
+    "将 GLSL 文本编辑与 Scratch 式积木编程融合在同一编辑器中",
+    "通过双向 AST 映射保证文本与积木表示实时同步",
+    "支持内联表达式预览，可针对循环与函数上下文多次求值",
+    "属于着色器创作/教学工具，未涉及渲染管线性能或几何算法"
+   ],
+   "tags": [
+    "着色器"
+   ],
+   "relevance": 2,
+   "level": "入门"
   }
  },
  {
@@ -4438,6 +4770,23 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "文章系统分析了 3D Gaussian Splatting (3DGS) 在整合现有文献优化后仍存在的 GPU 硬件级性能瓶颈，并给出五个针对 warp 执行、寄存器压力、L2 缓存和 SIMT 分歧的优化步骤。作者将 DISTWAR、gsplat、StopThePop 等五类优化合并为 s01_literature 基线，在 Mip-NeRF 360 场景上比 Inria 原实现快 4.09×；随后通过 s02–s06 逐步优化，最终达到 7.30× 端到端加速且图像质量不变。文章从 A100 的 SM 子分区、warp 调度器、寄存器文件、执行管道和 L2 缓存扇区等硬件细节出发，解释每个性能悬崖的成因与消除方法。",
+   "points": [
+    "整合文献优化得到 s01_literature 基线，比 Inria 原实现快 4.09×，且优于现有开源实现。",
+    "剩余 1.78× 加速空间来自 warp 执行模型、寄存器压力、L2 缓存扇区和算术执行管道等硬件级瓶颈。",
+    "五个独立优化步骤（s02–s06）逐一解决上述瓶颈，最终实现 7.30× 端到端加速且图像质量不变。",
+    "文章以 A100 为例详细解释 SM 子分区、warp 调度、寄存器分配与缓存层次对 3DGS 内核性能的影响。"
+   ],
+   "tags": [
+    "GPU驱动渲染",
+    "性能优化",
+    "GPU架构",
+    "高斯泼溅"
+   ],
+   "relevance": 3,
+   "level": "专业"
   }
  },
  {
@@ -4452,6 +4801,22 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "Bento 是一个新的着色语言及编译器基础设施，可直接 lowering 到 SPIR-V、AIR 或 GLSL。它内置 uniformity 分析、自动 workgroup barrier、带内存空间标记的引用、泛型和编译期 const 求值等特性。项目计划以 C 库形式提供 linker、optimizer、validator 和 language server 等工具。整体面向着色器编写与着色器工具链构建，属于通用 GPU 编程基础设施，而非 CAD 几何或 CAD 渲染专门技术。",
+   "points": [
+    "提供直接 lowering 到 SPIR-V、AIR、GLSL 的着色语言与编译器基础设施",
+    "内置 uniformity 分析、自动 workgroup barrier 与内存空间标记引用",
+    "支持泛型与编译期 const 求值等现代语言特性",
+    "计划以 C 库发布 linker、optimizer、validator 和 language server"
+   ],
+   "tags": [
+    "着色器",
+    "渲染管线",
+    "性能优化"
+   ],
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -4466,6 +4831,24 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "本文深入分析了游戏 Endfield 的 Vulkan 渲染管线，重点介绍了其混合延迟与正向的角色着色方案：先通过 base pass 写入 G-buffer，再对角色进行逐 mesh 的正向光照。文章还涵盖了延迟 G-buffer 布局、虚拟纹理、屏幕空间效果、体积雾、辐照度体积等特性，并讨论了该架构在长期运营的动漫风格游戏中的可维护性优势。",
+   "points": [
+    "Endfield 采用混合渲染路径：环境使用延迟着色，角色在 base pass 后单独进行正向光照，以隔离角色材质与光照的复杂性。",
+    "管线包含虚拟纹理、屏幕空间效果、体积雾和辐照度体积等高级特性，并穿插大量 compute dispatch 与绘制交替执行。",
+    "顶点阶段处理压缩属性解码、蒙皮和角色描边，不同材质（头发、身体、眼睛、描边）有各自的布局。",
+    "文章认为这种分离角色光照的方案比统一延迟光照更适应长期内容扩展，能控制存储与寄存器开销。"
+   ],
+   "tags": [
+    "CAD渲染",
+    "渲染管线",
+    "Vulkan",
+    "GPU驱动渲染",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
   }
  },
  {
@@ -4480,6 +4863,23 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "文章介绍神经着色器（neural shader）的概念，并以体积云为例完整实现：用小型神经网络替代云中单次散射的近似计算。网络输入为 mip 金字塔密度采样，采用两层隐藏层 MLP，在 HLSL 中直接求值。作者将神经模型与路径追踪参考结果对比，测量误差与性能，说明神经着色器能在实时帧率下达到接近正确解的效果。云形状由约 40 行 SDF 函数生成，便于渲染器与路径追踪器共享同一几何。",
+   "points": [
+    "神经着色器用训练好的小型网络替代着色器中难以解析推导的计算，如云中多次散射。",
+    "网络输入为 mip 金字塔密度采样，采用两层隐藏层 MLP，在 HLSL 中直接求值，可实时运行。",
+    "云形状由约 40 行 SDF 函数生成，渲染器烘焙为体素网格，路径追踪器直接采样同一函数，保证对比一致。",
+    "与路径追踪参考对比，神经模型在误差和性能上取得平衡，但文章未给出具体数值。"
+   ],
+   "tags": [
+    "神经渲染",
+    "着色器",
+    "光线追踪",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
   }
  },
  {
@@ -4494,6 +4894,24 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "微软发布 DXR Clustered Geometry 与 Partitioned TLAS 预览，将 BLAS 构建单元细化为最多 256 三角形的 CLAS，支持 GPU 驱动的间接加速结构构建；PTLAS 将 TLAS 更新限制在变化的分区，降低大场景更新开销。两者可独立或组合使用，无需新硬件，但依赖厂商驱动支持。配套 Shader Model 6.10 内建函数与官方示例，并改善动画网格的光线追踪支持。",
+   "points": [
+    "CLAS 以最多 256 三角形/顶点为构建单元，可复用组装 Cluster BLAS，降低动画、流式与生成几何的 BLAS 重建成本。",
+    "PTLAS 将 TLAS 划分为稀疏分区，仅更新变化区域，适合大规模场景的增量更新。",
+    "新增 GPU 驱动的 ExecuteIndirectRTASOperations 与 GetRTASOperationPrebuildInfo，支持间接构建与仅尺寸查询。",
+    "Shader Model 6.10 提供 ClusterID()、TriangleObjectPositions() 等内建函数，便于命中着色器访问簇级数据。"
+   ],
+   "tags": [
+    "光线追踪",
+    "GPU驱动渲染",
+    "LOD",
+    "D3D12",
+    "性能优化"
+   ],
+   "relevance": 4,
+   "level": "进阶"
   }
  },
  {
@@ -4508,6 +4926,24 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "Agility SDK 1.620 正式版和 1.722 预览版发布，为 D3D12 带来多项新特性。1.620 正式版包含 DirectX Dump Files、Fence Barriers Tier 1、批量异步命令列表 API 和部分图形程序（Partial Graphics Programs）等，提升诊断、命令提交和着色器交付效率。1.722 预览版重点增强 DirectX Raytracing，引入 Clustered Geometry、分区 TLAS 和间接加速结构构建，以支持高度细节的动态场景。这些更新为 GPU 驱动渲染和 CAD 渲染中的大规模场景管理、光线追踪和性能优化提供了新工具。",
+   "points": [
+    "Agility SDK 1.620 正式版新增 DirectX Dump Files、Fence Barriers Tier 1 和批量异步命令列表，改善 GPU 诊断与命令提交并行性。",
+    "Partial Graphics Programs 允许跨管线变体重用编译后的程序部分，减少下载大小和编译时间。",
+    "1.722 预览版为 DXR 引入 Clustered Geometry 和分区 TLAS，支持高度细节动态场景的光线追踪。",
+    "新增 GPU Timeline CopyDescriptors 和间接加速结构构建，提升描述符堆操作和光追构建的灵活性。"
+   ],
+   "tags": [
+    "D3D12",
+    "GPU驱动渲染",
+    "光线追踪",
+    "性能优化",
+    "版本发布"
+   ],
+   "relevance": 4,
+   "level": "进阶"
   }
  },
  {
@@ -4522,6 +4958,50 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "这是一期面向初学者的视频，用可视化方式讲解虚拟内存、分页（paging）和内存分配策略等系统基础概念。内容属于通用系统知识科普，不涉及 GPU 驱动渲染、显存管理或 CAD 几何内核的具体技术。对已有基础的学习者来说，信息密度低，与两个核心方向都只有间接关联。",
+   "points": [
+    "讲解虚拟内存、分页与分配策略等通用操作系统内存概念",
+    "定位为面向初学者的可视化科普，不含 GPU 或图形 API 相关内容",
+    "与显存管理、GPU 资源分配等渲染侧主题没有直接对应",
+    "对 CAD 几何内核方向无实质关联"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "75df9c3de10c",
+  "url": "https://lisyarus.github.io/blog/posts/revisiting-importance-sampling.html",
+  "title": "Revisiting importance sampling",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explores the theoretical variance bounds of Monte-Carlo importance sampling for sign-changing functions\n• derives the optimal sampling distribution using calculus of variations and Lagrange multipliers",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "文章从变分法和拉格朗日乘子出发，推导了 Monte-Carlo 重要性采样在函数可取负值时的最优采样分布，证明最优 p(x) 正比于 |f(x)| 而非 f(x)，并给出了归一化形式。结论澄清了符号变化函数下重要性采样的理论方差下界，对体积路径追踪等渲染积分问题有指导意义。",
+   "points": [
+    "用变分法对方差泛函求一阶变分，结合拉格朗日乘子处理概率归一化约束。",
+    "推导出最优采样分布 p(x) ∝ |f(x)|，纠正了 p(x) ∝ f(x) 的常见误解。",
+    "指出 f(x) 可取负值时平方项隐藏符号，概率密度非负性强制取绝对值。",
+    "给出归一化常数 I_+ = ∫|f(x)|dx，明确了理论方差下界的可达形式。"
+   ],
+   "tags": [
+    "光线追踪",
+    "全局光照",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
   }
  },
  {
@@ -4533,7 +5013,21 @@
   "author": "Stefan Schimanski",
   "published": "2026-10-30T21:35:31.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Teams building AI applications need a repeatable path from a model configuration to a working inference endpoint. NVIDIA Dynamo is a distributed inference..."
+  "snippet": "Teams building AI applications need a repeatable path from a model configuration to a working inference endpoint. NVIDIA Dynamo is a distributed inference...",
+  "ai": {
+   "summary": "文章介绍 NVIDIA DSX AI Factory 平台中的 AI Cluster Runtime (AICR)，它把 NVIDIA Dynamo 分布式推理框架及其依赖的 GPU 驱动栈、DRA、gang scheduling、节点健康信号和 Prometheus 监控等基础设施打包成可复现的验证配方。Dynamo 1.4.2 使用 TCP 请求面与 ZMQ KV-cache 事件，支持原生 Frontend 路由和 GAIE/EPP 两种缓存感知路由路径。AICR 通过快照集群、生成配方、渲染部署包、Helmfile/GitOps 部署、验证运行时五步流程，将运行时搭建与应用部署分离。内容属于 AI 推理基础设施运维，与 CAD 几何内核及 GPU 图形渲染无关。",
+   "points": [
+    "AICR 将 Dynamo 推理框架与 GPU 驱动、DRA、调度、监控等运行时依赖打包为带版本锁定的可复现配方。",
+    "Dynamo 1.4.2 采用 TCP 请求面与 ZMQ KV-cache 事件，支持 Frontend 路由和 GAIE/EPP 两种缓存感知路由。",
+    "五步流程实现运行时配置与应用部署解耦，并通过验证检查保证集群一致性。",
+    "全文聚焦 Kubernetes 上的 AI 推理部署，不涉及几何建模或图形渲染技术。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "e060e1d45f14",
@@ -4544,7 +5038,21 @@
   "author": "Joe Halabi",
   "published": "2026-10-30T20:33:18.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "AI is expanding beyond the data center as developers build a new generation of agents to act at the edge: monitoring driver attention and cabin conditions,..."
+  "snippet": "AI is expanding beyond the data center as developers build a new generation of agents to act at the edge: monitoring driver attention and cabin conditions,...",
+  "ai": {
+   "summary": "NVIDIA 发布 TensorRT Edge-LLM，为嵌入式设备提供轻量级 C++ 推理运行时，并配套 trtedge CLI，可在 DGX Spark 64GB 上用几条命令下载模型、构建 TensorRT 引擎并启动聊天或 OpenAI 兼容 API 服务。文章以 Nemotron-3.5 Lightning 为例演示了部署流程，并介绍 DSpark 投机解码可将生成速度从 73.4 提升到 126.9 tokens/s。内容属于边缘 AI 推理部署教程，与 CAD 几何内核和 GPU 图形渲染无关。",
+   "points": [
+    "TensorRT Edge-LLM 提供跨 DGX Spark 开发与 Jetson Thor 等平台部署的统一 C++ 推理运行时。",
+    "trtedge CLI 可自动下载模型并构建优化后的 TensorRT 引擎，支持本地 API 服务。",
+    "DSpark 投机解码用三个 draft token 提升生成吞吐，峰值显存约 27.9GB。",
+    "全文为边缘 LLM 部署操作指南，不涉及几何建模或图形渲染技术。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "a4deda0c79cc",
@@ -4555,7 +5063,21 @@
   "author": "Nicola Sessions",
   "published": "2026-10-30T16:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Building an autonomous agent requires a model, a harness, and domain-specific tools. To deploy an agent more securely, developers need a runtime that enforces..."
+  "snippet": "Building an autonomous agent requires a model, a harness, and domain-specific tools. To deploy an agent more securely, developers need a runtime that enforces...",
+  "ai": {
+   "summary": "该文介绍 NVIDIA NemoClaw 开放蓝图，用于在开发者自选的 agent harness（OpenClaw、Hermes Agent、LangChain Deep Agents）之上组装完整 agent 栈，整合 Nemotron 模型、NeMo 优化工具与 OpenShell 安全运行时。核心思路是模型与 harness 协同调优：LangChain 通过调整 prompt、工具与中间件，使 Nemotron 3 Ultra 达到接近前沿的性能，且每次运行成本约低 10 倍。OpenShell 负责对文件、网络、凭据与工具的访问进行策略管控。全文属于 AI agent 平台与部署治理内容，与图形学、CAD 几何内核及 GPU 渲染无关。",
+   "points": [
+    "NemoClaw 是蓝图集合而非 harness 或运行时，可在既有 harness 上叠加模型优化、遥测与治理。",
+    "模型与 harness 协同调优可显著降低成本并提升 agent 执行稳定性。",
+    "OpenShell 运行时以策略约束 agent 对文件、网络、凭据和工具的访问。",
+    "内容面向 AI agent 部署，不涉及几何建模或 GPU 渲染技术。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "d93744a18e63",
@@ -4566,7 +5088,23 @@
   "author": "Phil Carns",
   "published": "2026-10-30T15:01:36.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "NVIDIA GPUDirect Storage (GDS) accelerates GPU storage access in on-premises and cloud environments. It provides a robust, portable, and efficient data path..."
+  "snippet": "NVIDIA GPUDirect Storage (GDS) accelerates GPU storage access in on-premises and cloud environments. It provides a robust, portable, and efficient data path...",
+  "ai": {
+   "summary": "NVIDIA 发布开源命令行工具 gds-diag，用于检查并配置 GPUDirect Storage (GDS) 环境。该工具提供端到端检查、安装前验证、安装后验证以及容器与挂载点深度诊断等多类子命令，并以 FAIL/WARN/INFO/PASS 状态徽章给出问题解释与缓解方案。它还附带可选的 AI agent skill，提供自然语言接口来编排多步诊断流程并解读结果。工具以 Python 脚本形式分发在 Magnum IO 仓库中，不直接修改系统，只负责识别问题与优化机会。",
+   "points": [
+    "gds-diag 是开源 Python 命令行工具，用于评估 GDS 部署环境并给出改进建议。",
+    "子命令分为端到端检查、安装前准备、安装后验证和容器/挂载点深度诊断四类。",
+    "可选 agent skill 提供自然语言交互，能选择子命令、编排诊断流程并解释结果。",
+    "输出以 FAIL/WARN/INFO/PASS 徽章呈现，每条发现附带解释与缓解方案，但工具不会自动修改系统。"
+   ],
+   "tags": [
+    "性能优化",
+    "GPU架构",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "a7556efc3b56",
@@ -4577,7 +5115,24 @@
   "author": "mrdoob",
   "published": "2026-10-30T08:03:18.000Z",
   "fetched": "2026-11-23T12:05:13.672123Z",
-  "snippet": "https://github.com/mrdoob/three.js/wiki/Migration-Guide#186--187 https://github.com/mrdoob/three.js/milestone/100?closed=1 Global Remove code deprecated in r177. #34517 (@linbingquan, @Mugen87) AnimationUtils Fix cubic spline additive reference sampling. #34860 (@gjija) Backend Keep occlusion query …"
+  "snippet": "https://github.com/mrdoob/three.js/wiki/Migration-Guide#186--187 https://github.com/mrdoob/three.js/milestone/100?closed=1 Global Remove code deprecated in r177. #34517 (@linbingquan, @Mugen87) AnimationUtils Fix cubic spline additive reference sampling. #34860 (@gjija) Backend Keep occlusion query …",
+  "ai": {
+   "summary": "three.js r187 是一次以修复和内部优化为主的版本发布，没有引入重大新特性。核心改动包括：移除 r177 中已废弃的代码；BatchedMesh 修复排序损坏、setGeometrySize() 后的绘制范围、矩阵内存泄漏，并让阴影更兼容节点材质；渲染后端修复遮挡查询按相机保存、反向深度缓冲下的 polygon offset 与对数深度冲突、MSAA 深度纹理、RenderTarget 各附件独立 TextureSource 等。PMREMGenerator 用 cube render targets 替换 CubeUV atlas，MeshPhysicalMaterial 新增 EON 粗糙漫反射 BRDF 与虹彩厚度属性。整体提升了渲染正确性与内存管理健壮性。",
+   "points": [
+    "BatchedMesh 修复排序损坏、绘制范围与矩阵内存泄漏，并增强阴影的节点材质兼容性",
+    "渲染后端修复遮挡查询按相机隔离、反向深度缓冲下的 polygon offset 与对数深度冲突、MSAA 深度纹理问题",
+    "PMREMGenerator 将 CubeUV atlas 替换为 cube render targets，并恢复最小粗糙度与改进粗糙度渐变",
+    "MeshPhysicalMaterial 新增 EON rough diffuse BRDF 和 iridescence thickness 最小/最大属性"
+   ],
+   "tags": [
+    "版本发布",
+    "渲染管线",
+    "性能优化",
+    "PBR"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
  },
  {
   "id": "f53c4ba6d50a",
@@ -4588,7 +5143,24 @@
   "author": "mrdoob",
   "published": "2026-10-30T07:59:19.000Z",
   "fetched": "2026-11-23T12:05:13.672123Z",
-  "snippet": "https://github.com/mrdoob/three.js/wiki/Migration-Guide#185--186 https://github.com/mrdoob/three.js/milestone/99?closed=1 Global Remove deprecated code. #33886 (@linbingquan) Improve retroreflection nomenclature. #34079 (@WestLangley) AnimationObjectGroup Fix stale index bookkeeping in uncache() and…"
+  "snippet": "https://github.com/mrdoob/three.js/wiki/Migration-Guide#185--186 https://github.com/mrdoob/three.js/milestone/99?closed=1 Global Remove deprecated code. #33886 (@linbingquan) Improve retroreflection nomenclature. #34079 (@WestLangley) AnimationObjectGroup Fix stale index bookkeeping in uncache() and…",
+  "ai": {
+   "summary": "three.js r186 是一次常规版本更新，主要包含代码清理、Bug 修复和若干渲染功能增强。核心改动包括：新增水密三角形求交 Ray.intersectTriangle()、Object3D 增加 intersectsFrustum() 与 dispose()、PMREMGenerator 改用螺旋模糊、MeshPhysicalMaterial 支持逆反射（retroreflectivity）、WebGLRenderer 新增 SunLight 级联阴影（cascade 数降为 2）、WebGPU 后端支持非计算阶段的 read_write 存储缓冲与原子操作。整体偏向 Web 渲染引擎的维护与性能优化，与 CAD 几何内核关联较弱。",
+   "points": [
+    "Ray 新增水密（watertight）intersectTriangle()，提升射线-三角形求交的鲁棒性。",
+    "Object3D 新增 intersectsFrustum()，便于视锥剔除判断；BatchedMesh 在 setGeometryIdAt() 中标记可见性脏。",
+    "PMREMGenerator 用螺旋模糊替代可分离模糊，优化环境贴图预过滤。",
+    "WebGLRenderer 新增 SunLight 与级联阴影（cascade 数减至 2），并修复多项渲染状态与排序问题。"
+   ],
+   "tags": [
+    "渲染管线",
+    "性能优化",
+    "WebGPU",
+    "阴影"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
  },
  {
   "id": "a2355c48d824",
@@ -4599,7 +5171,22 @@
   "author": "Anoushka Bhutani",
   "published": "2026-10-29T15:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Atomistic simulations help researchers understand how molecules and materials behave, from chemical reactions and phase transitions to mechanical failure. These..."
+  "snippet": "Atomistic simulations help researchers understand how molecules and materials behave, from chemical reactions and phase transitions to mechanical failure. These...",
+  "ai": {
+   "summary": "NVIDIA 博客介绍用 Tensor Core FP32 模拟方法加速机器学习原子间势（MLIP）推理：Blackwell 上用 cuBLAS 的 BF16x9（每个 FP32 操作数拆成三个 BF16 分量、九组乘积重组），Ampere 上用 CUTLASS 的 TF32x3（前导 TF32 加残差 TF32、三组交叉积）。在 Point Edge Transformer（PET）上，BF16x9 对大体系 GEMM 提速 2.2–2.5x，TF32x3 使完整分子动力学步最高提速 1.5x，且力误差接近 FP32 基线。TF32x3 保持势能光滑性与 NVE 能量守恒，而单次 TF32 会出现漂移；结构弛豫中 TF32x3 在 218–222 步收敛，单次 TF32 千步仍不达标。",
+   "points": [
+    "BF16x9 通过 cuBLAS 环境变量启用，无需改模型结构即可让 PyTorch GEMM 走 Tensor Core 低精度分解路径。",
+    "TF32x3 用前导+残差 TF32 的三组交叉积近似 FP32 矩阵乘，输入输出仍为 FP32。",
+    "精度敏感场景（力计算、能量守恒、结构弛豫）必须用多分量分解，单次 TF32 会破坏轨迹稳定性。",
+    "该评估针对 MLIP 科学计算，与 CAD 几何内核及 GPU 渲染管线无直接关系。"
+   ],
+   "tags": [
+    "GPU架构",
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "4b9eed233f22",
@@ -4609,7 +5196,23 @@
   "topic": "rendering",
   "published": "2026-10-28T13:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.427065Z",
-  "snippet": "AMD FSR™ \"Redstone\" SDK 2.4 brings ML-based FSR Upscaling 4.1.2 to AMD Radeon™ RX 6000 Series GPUs and select AMD Ryzen processors, adds Vulkan® support, and updates FSR Frame Generation with improved frame pacing on AMD Radeon RX 9000 Series GPUs."
+  "snippet": "AMD FSR™ \"Redstone\" SDK 2.4 brings ML-based FSR Upscaling 4.1.2 to AMD Radeon™ RX 6000 Series GPUs and select AMD Ryzen processors, adds Vulkan® support, and updates FSR Frame Generation with improved frame pacing on AMD Radeon RX 9000 Series GPUs.",
+  "ai": {
+   "summary": "AMD 发布 FSR \"Redstone\" SDK 2.4，将基于机器学习的 FSR Upscaling 4.1.2 下放到 Radeon RX 6000 系列 GPU 与部分 Ryzen 处理器，并新增 Vulkan 支持；同时更新 FSR Frame Generation，在 RX 9000 系列上改善帧节奏（frame pacing）。该版本属于超分辨率与帧生成类渲染技术更新，与 CAD 几何内核及 CAD 渲染管线无直接关系。",
+   "points": [
+    "ML 超分 FSR Upscaling 4.1.2 扩展支持 RX 6000 与部分 Ryzen APU",
+    "SDK 新增 Vulkan 后端支持",
+    "FSR Frame Generation 在 RX 9000 上改进帧节奏",
+    "内容为游戏向超分/帧生成，不涉及几何建模或 CAD 显示"
+   ],
+   "tags": [
+    "版本发布",
+    "渲染管线",
+    "Vulkan"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "bb1dba98c826",
@@ -4620,7 +5223,21 @@
   "author": "github-actions[bot]",
   "published": "2026-10-28T10:02:45.000Z",
   "fetched": "2026-11-23T12:05:15.526313Z",
-  "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.10.21...weekly-2026.10.28 How-to use Download the appropriate asset for your OS below Unpack the bund…"
+  "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.10.21...weekly-2026.10.28 How-to use Download the appropriate asset for your OS below Unpack the bund…",
+  "ai": {
+   "summary": "这是 FreeCAD 每周开发构建（weekly-2026.10.28）的发布说明页，属于面向测试者的前沿版本，明确不建议用于生产环境。页面只提供各平台（Windows、macOS、Linux AppImage）的下载与解压运行方式，并链接到与上一周构建的变更对比，但正文中变更列表因加载错误未显示，因此没有可提取的具体功能或修复内容。对几何内核与渲染方向而言，本条信息量极低，仅可作为关注 FreeCAD 开发动态的入口。",
+   "points": [
+    "FreeCAD 发布 weekly-2026.10.28 开发构建，用于测试 bugfix 与回归问题",
+    "提供 Windows、macOS、Linux AppImage 三种平台包及解压运行说明",
+    "变更对比链接指向 weekly-2026.10.21...weekly-2026.10.28，但页面加载失败未列出具体改动",
+    "无几何建模或渲染相关的实质技术内容"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "eaf326f446d7",
@@ -4631,7 +5248,24 @@
   "author": "z3moon",
   "published": "2026-10-27T00:13:03.000Z",
   "fetched": "2026-11-23T12:05:14.414577Z",
-  "snippet": "java: Fixed support for quaternions in JNI bindings java: Properly set default values inside structures such as LightManager.ShadowOptions materials: Flat interpolation now works with user-defined variables filamat: completely remove the DIR variant bit [⚠️ New Material Version] matc: the directiona…"
+  "snippet": "java: Fixed support for quaternions in JNI bindings java: Properly set default values inside structures such as LightManager.ShadowOptions materials: Flat interpolation now works with user-defined variables filamat: completely remove the DIR variant bit [⚠️ New Material Version] matc: the directiona…",
+  "ai": {
+   "summary": "Filament v1.79.0 是 Google 开源实时渲染引擎的常规版本更新，主要涉及材质系统、引擎 API 和 Java 绑定。材质方面，移除了 DIR variant bit，弃用 directionalLighting 和 dynamicLighting 变体过滤器，WGSL 外部采样器改用 texture_external 声明，并修复了 LiSPSM 阴影法线偏移不稳定的问题。引擎方面，TransformManager 改为在 endFrame/skipFrame 时增量重排序组件，FrameHistoryStream 的帧消费语义发生变化，Texture::setImage 拒绝 2 GiB 以上上传。整体属于渲染引擎维护性更新，与 CAD 几何内核无关，对 CAD 渲染仅有间接参考价值。",
+   "points": [
+    "材质系统移除 DIR variant bit 并弃用方向光/动态光变体过滤器，需要重新编译材质",
+    "修复 LiSPSM 阴影法线偏移不稳定，涉及阴影渲染质量",
+    "TransformManager 改为增量重排序，Instance 值不可跨帧持有（API 变更）",
+    "WGSL 外部采样器改为 texture_external 声明，Texture::setImage 拒绝 2 GiB 以上上传"
+   ],
+   "tags": [
+    "渲染管线",
+    "着色器",
+    "阴影",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
  },
  {
   "id": "1e319a99c14d",
@@ -4642,20 +5276,21 @@
   "author": "z3moon",
   "published": "2026-10-26T23:42:28.000Z",
   "fetched": "2026-11-23T12:05:14.414577Z",
-  "snippet": "Release Filament 1.79.0"
- },
- {
-  "id": "f47cd29a6463",
-  "url": "https://www.youtube.com/watch?v=Gb2Sw7RHxJ8",
-  "title": "GPU-Driven Anything",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-10-25T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains the count/prefix-sum/write pattern used in GPU-driven graphics for culling, LOD, and clustered lighting\n• covers expansion, compaction, and binning\n• discusses the difference between push- and pull-based models for moving data\n• additionally presents the effect of determinism compared against atomics",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
+  "snippet": "Release Filament 1.79.0",
+  "ai": {
+   "summary": "这是 Google Filament 渲染引擎的 1.80.0-cut 候选版本发布页面，但页面正文未能加载出实际的发布说明，只显示版本标签和加载错误提示。Filament 是面向移动端与桌面端的实时 PBR 渲染引擎，其版本更新通常涉及渲染管线、着色器、材质系统与性能优化。由于缺少具体变更内容，无法判断本次发布是否涉及 CAD 渲染或几何处理相关改动。",
+   "points": [
+    "页面为 Filament 1.80.0-cut 候选版本发布，但实际发布说明内容加载失败",
+    "Filament 是 Google 的实时 PBR 渲染引擎，与通用渲染技术相关",
+    "无具体变更信息，无法评估对 CAD 渲染或几何内核的影响"
+   ],
+   "tags": [
+    "渲染管线",
+    "PBR",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
   }
  },
  {
@@ -4751,6 +5386,20 @@
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
   "snippet": "• continues a tutorial series by moving a 2D Pong implementation into 3D using Vulkan\n• stages the scene in Blender with paddles, ball, and walls, exports it as GLB\n• shows how to map the exported data into data for runtime usage\n• presents what changes are required to move the logic into 3D space",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
+  }
+ },
+ {
+  "id": "f47cd29a6463",
+  "url": "https://www.youtube.com/watch?v=Gb2Sw7RHxJ8",
+  "title": "GPU-Driven Anything",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-10-25T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains the count/prefix-sum/write pattern used in GPU-driven graphics for culling, LOD, and clustered lighting\n• covers expansion, compaction, and binning\n• discusses the difference between push- and pull-based models for moving data\n• additionally presents the effect of determinism compared against atomics",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
