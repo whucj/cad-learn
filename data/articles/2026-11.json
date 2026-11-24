@@ -1,5 +1,58 @@
 [
  {
+  "id": "f6a1d470b84e",
+  "url": "https://developer.nvidia.com/blog/accelerating-direct-sparse-solvers-for-computational-engineering-with-nvidia-cudss-1-0/",
+  "title": "Accelerating Direct Sparse Solvers for Computational Engineering with NVIDIA cuDSS 1.0",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Azi Riahi",
+  "published": "2026-11-23T19:59:40.000Z",
+  "fetched": "2026-11-24T00:15:54.025434Z",
+  "snippet": "Sparse linear systems are at the core of nearly every engineering and scientific simulation, from structural mechanics and computational fluid dynamics to...",
+  "ai": {
+   "summary": "NVIDIA cuDSS 1.0 是面向工程与科学仿真的 GPU 加速直接稀疏线性求解器库，正式达到生产可用状态。相比 Intel MKL，在真实半导体与机械建模矩阵上，分析阶段几何平均加速 2.5 倍、数值分解 5.9 倍、三角求解 151 倍。新版本默认对对称不定系统启用保对称匹配（HSL MC64）与 Bunch-Kaufman 主元选择，显著减少扰动主元并将范数相对后向误差改善最多 10 个数量级。混合内存模式在 GPU HBM 与 CPU DRAM 间调度数据，将大 VLSI 案例的最小设备内存需求降低约 30%，使原本需多 GPU 的问题可在单 GPU 上求解。",
+   "points": [
+    "cuDSS 1.0 正式发布，提供生产级 GPU 直接稀疏求解，分析/分解/三角求解分别比 Intel MKL 快 2.5x/5.9x/151x。",
+    "对称不定系统默认启用 HSL MC64 匹配与 Bunch-Kaufman 主元，提升数值鲁棒性，后向误差最多改善 10 个数量级。",
+    "混合内存模式协调 GPU HBM 与 CPU DRAM，降低约 30% 最小设备内存需求，支持单 GPU 求解更大问题。",
+    "GPU 符号分解比 0.8.0 快 2.21 倍，新增 pinned memory handler 与 hybrid execute 模式优化数据传输和小矩阵开销。"
+   ],
+   "tags": [
+    "性能优化",
+    "GPU架构",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "3393f6aafb07",
+  "url": "https://developer.nvidia.com/blog/get-started-with-gpu-accelerated-duckdb-analytics-using-the-sirius-core-extension/",
+  "title": "Get Started with GPU-Accelerated DuckDB Analytics Using the Sirius Core Extension",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Allison Ding",
+  "published": "2026-11-23T17:09:28.000Z",
+  "fetched": "2026-11-24T00:15:54.025434Z",
+  "snippet": "As datasets grow, analytical queries can take longer to run, slowing down data exploration, pipelines, and applications. For developers using DuckDB, reducing...",
+  "ai": {
+   "summary": "NVIDIA 与 DuckLabs 合作发布 Sirius，这是一个以 DuckDB core extension 形式提供的 GPU 原生 SQL 引擎；它只需 INSTALL sirius 和 LOAD sirius 两条命令，就能让受支持的查询在 NVIDIA GPU 上执行，而 SQL 与 schema 无需改动。DuckDB 仍负责 SQL 解析与优化，Sirius 负责在 GPU 上执行查询计划，不支持的特性会自动回退到 CPU 引擎。基于 TPC-H（最高 10 TB）的测试显示，查询加速 3.25x–5.50x，查询计算成本最多降低 79%。",
+   "points": [
+    "Sirius 以 DuckDB core extension 形式提供，两条 SQL 命令即可启用 GPU 加速，无需重写查询。",
+    "DuckDB 负责解析与优化，Sirius 在 GPU 上执行受支持的查询计划，不支持的特性回退到 CPU。",
+    "TPC-H 100 GB–10 TB 测试中取得 3.25x–5.50x 加速，查询计算成本最多降低 79%。",
+    "该文属于数据库分析加速，与 CAD 几何内核及 GPU 图形渲染管线无直接关系。"
+   ],
+   "tags": [
+    "GPU架构",
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
   "id": "814963426758",
   "url": "https://github.com/Open-Cascade-SAS/OCCT/releases/tag/V8_0_2",
   "title": "OCCT V8_0_2",
@@ -53,6 +106,89 @@
   }
  },
  {
+  "id": "66c10a9550e2",
+  "url": "https://arxiv.org/abs/2611.27719",
+  "title": "VeilGS: Solving Darkness as a Veil of 2D Basis Maps over Retinex 3DGS",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Mohab Kishawy",
+  "published": "2026-11-20T15:23:12.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "In a dark capture, the darkness is not uniform. How much light reaches a surface depends on where it lies relative to the few light sources, and the camera compresses what remains with a tone curve. Most low-light 3D reconstruction methods either apply one curve to every pixel of a view, so a dark o…",
+  "ai": {
+   "summary": "VeilGS 针对低光照条件下 3D Gaussian Splatting 重建与新颖视角合成的问题，提出将暗光退化建模为覆盖在清晰场景上的“面纱”（veil）。每个 Gaussian 不再使用球谐函数，而是携带 albedo 与 shading latent，从而分离表面颜色与光照；每个视角的变暗由空间变化的 gain 与全局 tone curve 共同作用，去掉该 veil 即可得到恢复后的场景。gain 的粗基由一个小网络从观测中预测，其系数按视角求解而非学习，训练通过该求解过程抑制 Gaussian 吸收本可由 veil 解释的细节。方法无需成对的正常光照监督，也不存储逐视角参数；在 Gaussian-DK 上，恢复渲染在 NIQE、CLIP-IQA 及 55 人盲测中表现最佳，在 LOM 上与 SOTA 相当。",
+   "points": [
+    "用 albedo 与 shading latent 替代球谐函数，将表面颜色与光照分离",
+    "把暗光退化建模为空间变化 gain 加全局 tone curve 的“面纱”，渲染时去除即可恢复场景",
+    "gain 的基由小网络预测，系数按视角求解，训练过程抑制 Gaussian 吸收光照细节",
+    "无需成对正常光照监督，不存储逐视角参数，在 Gaussian-DK 盲测中评价最高"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "神经渲染",
+    "光照"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "fc70304f9dd8",
+  "url": "https://arxiv.org/abs/2611.27525",
+  "title": "PennyGS: Full Resolution 3DGS Training in Minutes on Consumer GPUs",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Nicholas Jing Shou Nge",
+  "published": "2026-11-20T12:18:49.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "3D Gaussian Splatting is increasingly fed by high-resolution captures from commodity devices, yet training still happens at reduced resolution with research-grade GPUs. We present PennyGS, a method to achieve full-resolution (4K) training of 3DGS on consumer GPUs by improving the efficiency of every…",
+  "ai": {
+   "summary": "PennyGS 针对 3D Gaussian Splatting (3DGS) 在高分辨率（4K）训练时对研究级 GPU 的依赖问题，提出在消费级 GPU 上实现全分辨率训练的方法。其核心改进包括：简化 splat 表示（平面 RGB 颜色和方向锥不透明度）、融合投影与关键点发射、前向光栅化优化（跨步像素采样）、近似 tile SSIM 损失、warp-per-splat 反向光栅化以及融合反向投影与稀疏 Adam 步。在标准 30k 步训练预算下，PennyGS 在 Mip-NeRF 360 和 Tanks&Temples 4K 数据集上于四种 GPU 上均达到最快速度（至少比次快方法快 3.9 倍），峰值 GPU 内存低于 2 GB，在 RTX 3060 上全分辨率场景训练仅需 6 分 25 秒，快于其他方法在 RTX 4090 上的训练时间。",
+   "points": [
+    "提出简化 splat 表示（平面 RGB 颜色和方向锥不透明度），降低计算与存储开销。",
+    "融合投影与关键点发射、前向光栅化优化（跨步像素采样）和近似 tile SSIM 损失，提升前向效率。",
+    "采用 warp-per-splat 反向光栅化及融合反向投影与稀疏 Adam 步，加速反向传播。",
+    "在消费级 GPU 上实现 4K 全分辨率 3DGS 训练，速度比现有方法快至少 3.9 倍，内存低于 2 GB。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "性能优化",
+    "光栅化",
+    "GPU驱动渲染"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "bdf4e3fce692",
+  "url": "https://arxiv.org/abs/2611.27396",
+  "title": "ParaBMG: A Parallel Block Multigrid Framework for Large-Scale Evolving Sparse Systems on Unstructured Meshes",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Kangbo Lyu",
+  "published": "2026-11-20T10:02:31.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Solving large-scale, evolving sparse linear systems on unstructured meshes remains the primary performance bottleneck in many GPU-accelerated geometry processing pipelines. Although modern linear solvers like multigrid and multilevel additive Schwarz (MAS) methods offer fast convergence and strong p…",
+  "ai": {
+   "summary": "ParaBMG 针对 GPU 加速几何处理中大规模、演化稀疏线性系统求解的性能瓶颈，提出了一个并行块多重网格预条件框架。该框架结合了完全并行的几何层次构建、快速块 Jacobi 平滑以及 GPU 优化的算子，并构建了包含 4 万多个线性系统（最多 660 万未知数）的基准测试集。实验表明，ParaBMG 相比通用代数多重网格基线加速 3.7-7.7 倍，相比 CPU 多重网格求解器加速 6-105 倍，相比 MAS 加速 6-96 倍。通过层次重用和块 Jacobi 平滑，它降低了层次构建开销并改善了收敛性，使三个交互式几何处理应用获得数量级的加速。",
+   "points": [
+    "提出并行块多重网格预条件框架 ParaBMG，支持 GPU 上完全并行的几何层次构建与块 Jacobi 平滑。",
+    "构建了包含 4 万多个线性系统、最多 660 万未知数的几何处理基准测试集。",
+    "相比 AMG、CPU 多重网格和 MAS 分别实现 3.7-7.7 倍、6-105 倍和 6-96 倍的加速。",
+    "通过层次重用和 MAS 启发的块 Jacobi 平滑，在保持低迭代成本的同时将迭代次数降低一个数量级。"
+   ],
+   "tags": [
+    "性能优化",
+    "GPU驱动渲染",
+    "网格处理",
+    "计算几何"
+   ],
+   "relevance": 3,
+   "level": "专业"
+  }
+ },
+ {
   "id": "e72b86b6f243",
   "url": "https://developer.nvidia.com/blog/reducing-rollout-bottlenecks-in-reinforcement-learning-with-nvidia-dynamo/",
   "title": "Reducing Rollout Bottlenecks in Reinforcement Learning with NVIDIA Dynamo",
@@ -74,6 +210,111 @@
     "性能优化"
    ],
    "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "88e240741ca7",
+  "url": "https://arxiv.org/abs/2611.26783",
+  "title": "CADENCE:Temporally Coherent Whole-Body Human Mesh Recovery that Preserves Expressive Hand Motion",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Keniel Peart",
+  "published": "2026-11-19T20:20:38.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Whole-body SMPL-X estimators recover body, hand, and face meshes from single images, but applied frame by frame to video they produce jittery motion. Smoothing the output removes the jitter at a cost that body-only benchmarks do not measure: a temporal filter strong enough to steady the torso also f…",
+  "ai": {
+   "summary": "CADENCE 针对单目视频中 SMPL-X 全身人体网格恢复的时序抖动问题，提出一种在平滑躯干与保留快速手指动作之间取得平衡的方案。其逐帧估计器基于共享的 C-RADIOv4 编码器，并增加高分辨率手部通路；离线时序精修器沿运动学树使用注意力机制，为每个关节、每一帧选择学习到的零相位滤波器混合，从而在平滑躯干的同时让快速手指动作通过。在 3DPW 上，加速度误差从 17.4 降至 5.4 mm/s2，PA-MPJPE 从 41.9 降至 40.2 mm；在 SignAvatars/How2Sign 手语序列上，手部抖动最低，且手速峰值幅度保持 0.98（对比 SmoothNet 的 0.35）。",
+   "points": [
+    "逐帧估计器共享 C-RADIOv4 编码器，并用高分辨率手部裁剪通路提升手部精度。",
+    "离线时序精修器沿运动学树用注意力为每个关节逐帧混合零相位滤波器，实现关节级自适应平滑。",
+    "在 3DPW 上显著降低加速度误差，同时略微改善 PA-MPJPE。",
+    "在手语序列上优于通用平滑器，保留手速峰值幅度，避免手指快速动作被抹平。"
+   ],
+   "tags": [
+    "网格处理",
+    "性能优化"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "f3947dfd0647",
+  "url": "https://arxiv.org/abs/2611.26773",
+  "title": "FACET: A Data-Efficient Regional Parametric Head Model",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Mathieu Lamarre",
+  "published": "2026-11-19T20:08:19.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Production face pipelines need parametric head models that are expressive, FACS-controllable, and buildable on a small, fixed pool of identities. More training identities would always help, but high-quality registered head scans are expensive to capture; when scaling the data is not an option, the r…",
+  "ai": {
+   "summary": "FACET 针对生产级人脸管线中高质量配准头扫描数据昂贵、身份池固定的问题，提出以架构局部性替代扩充数据的参数化头部模型。其核心改动包括：将身份分解为 16 个解剖区域，绕过全局 PCA 的 N-1 秩上限，使留出中性拟合误差从 1.95 mm 降至 0.23 mm；采用带逐身份神经个性化的学习式 FACS 动作单元表情模型，在各分量数下均优于正则化全局表情 PCA；并引入独立的颈肩区域以减少解姿时姿态泄漏到姿态不变的上半脸。结论是固定身份预算下架构局部性是提升生产头部模型的有效手段。",
+   "points": [
+    "16 区域解剖分解突破全局 PCA 的秩上限，中性拟合误差由 1.95 mm 降至 0.23 mm。",
+    "学习式 FACS 动作单元表情模型配合逐身份神经个性化，在各分量数下均优于全局表情 PCA。",
+    "独立颈肩区域减少解姿时姿态泄漏到上半脸，提升姿态不变性。",
+    "整体表明在固定身份数据预算下，架构局部性比增加扫描数据更有效。"
+   ],
+   "tags": [
+    "网格处理",
+    "几何鲁棒性"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "55159dafe11f",
+  "url": "https://arxiv.org/abs/2611.26600",
+  "title": "A Tutorial on Complementarity-Based Contact Models for Robotics",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Onur Beker",
+  "published": "2026-11-19T18:54:07.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Simulating rigid-body dynamics with contact is fundamental to robotics, from motion synthesis and control to mechanism design. Many widely used simulators rely on cone complementarity formulations, whose physical assumptions and numerical solution require substantial background. While excellent surv…",
+  "ai": {
+   "summary": "这是一篇面向机器人学的教学综述，系统讲解基于互补性（complementarity）的刚体接触模型。文章把刚体动力学、锥优化与摩擦接触统一起来，说明互补条件如何编码非穿透与摩擦耗散，从而自动判定分离、粘着与滑动状态，无需预设接触模式。文中区分了等价改写与凸松弛，指出松弛可能引入 lift-off 与 creep 等伪影，并讨论了解的存在唯一性、求解器在多解中的选择作用，以及一阶方法与 Newton 类方法、正则化与 proximal 策略在开销、鲁棒性与物理保真度之间的权衡。",
+   "points": [
+    "用互补条件统一表达非穿透约束与摩擦耗散，自动区分分离/粘着/滑动状态",
+    "区分等价改写与凸松弛，指出松弛会引入 lift-off、creep 等物理伪影",
+    "分析接触问题解的存在唯一性，以及求解器如何在多解中做出选择",
+    "比较一阶与 Newton 类求解器及正则化策略，并联系主流仿真器与可微仿真"
+   ],
+   "tags": [
+    "约束求解",
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "3f66c1080c32",
+  "url": "https://arxiv.org/abs/2611.26431",
+  "title": "FFGaussType: Feed-Forward Conversion of Glyph and SVG Geometry into Compact Gaussian Assets",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Haoan Feng",
+  "published": "2026-11-19T17:08:21.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Immersive 3D content allows text and graphical elements, such as subtitles, annotations, and icons, to be placed inside a scene rather than displayed as flat overlays. Placed this way, they respect occlusion and perspective and take on user-assigned materials and lighting while preserving their orig…",
+  "ai": {
+   "summary": "FFGaussType 解决的是把字形（glyph）和 SVG 图标几何转换为 3D Gaussian 资产时，每个资产都需单独迭代优化、难以规模化的问题。方法是将挤出的轮廓表面锚点经点编码器映射到单一特征平面，再由所有资产共享的解码器前向预测带法向的神经 Gaussian，从而把几何转换与材质光照解耦，特征平面还可做图像/视频编码以压缩传输。作者构建了 27,221 个字形与 SVG 图标配对数据集，转换单个资产仅需 9.1 ms，在未见字体族上达到 1.62° 法向误差与 0.985 轮廓 IoU，逼近逐资产拟合数千步的保真度。",
+   "points": [
+    "用共享特征平面加解码器的单次前向推断替代逐资产迭代优化，9.1 ms 完成一个字形或 SVG 图标的 Gaussian 化。",
+    "将几何转换与材质、光照选择解耦，预测的神经 Gaussian 携带表面法向，便于后续着色。",
+    "构建 27,221 个字形与 SVG 图标配对数据集，并留出字体族做泛化评测。",
+    "在未见字体上取得 1.62° 法向误差与 0.985 轮廓 IoU，优于对比的前馈转换器。"
+   ],
+   "tags": [
+    "神经渲染",
+    "高斯泼溅",
+    "计算几何"
+   ],
+   "relevance": 2,
    "level": "进阶"
   }
  },
@@ -179,6 +420,115 @@
   }
  },
  {
+  "id": "05ba79d87dff",
+  "url": "https://arxiv.org/abs/2611.25934",
+  "title": "AGSR: Aperture-Guided Super-Resolution for Gaussian Splatting",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Ayman Alkhateeb",
+  "published": "2026-11-19T11:20:23.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "3D Gaussian Splatting (3DGS) enables real-time novel view synthesis, but Gaussian rasterization attenuates fine-scale scene structure through the projected covariance of each primitive. We show that contracting these projected covariances at inference time can mitigate the effective bandwidth limita…",
+  "ai": {
+   "summary": "该论文针对 3D Gaussian Splatting（3DGS）在渲染时因每个 Gaussian 投影协方差有限而导致细节结构被衰减、有效带宽受限的问题，提出在推理阶段收缩投影协方差，并据此设计多孔径渲染框架 AGSR。AGSR 通过不确定性引导的特征聚合，以及来自透射率与深度线索的几何条件，逐步融合多孔径渲染结果，作为预训练 3DGS 模型的即插即用增强模块。在 Mip-NeRF 360 基准上，它优于轻量级图像空间超分基线，且底层 Gaussian 表示越差增益越明显，同时保持实时性能（最多 139k 参数）。",
+   "points": [
+    "指出 Gaussian 光栅化的有限足迹造成有效带宽限制，收缩投影协方差可暴露被衰减的细尺度结构线索。",
+    "提出推理期多孔径渲染融合框架 AGSR，用不确定性引导聚合与透射率/深度几何条件。",
+    "作为预训练 3DGS 的插件式增强，无需重训练即可提升超分效果。",
+    "在 Mip-NeRF 360 上优于图像空间超分基线，参数量小且保持实时。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "神经渲染",
+    "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "58d83402bab8",
+  "url": "https://arxiv.org/abs/2611.25838",
+  "title": "ContextRenderer: Dynamic-Context Video Generation for Interactive Game Worlds",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Runze Wang",
+  "published": "2026-11-19T09:53:53.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Interactive game world models separate executable world evolution from visual generation, using video models to render engine-provided scene representations into detailed observations. During sustained gameplay, however, existing generative renderers struggle to follow changing conditions while pres…",
+  "ai": {
+   "summary": "ContextRenderer 是一个面向交互式游戏世界的自回归视频扩散渲染框架，用于把引擎提供的场景代理表示渲染成细节丰富的画面。它通过 Dynamic-Context Learning 做块级交互监督，并用 Recurrent History Compression 在有限 token 预算内跟踪条件更新、保持视觉连续性；Cross-Representation Flow Alignment 则统一不同代理表示的重建与外观变化。作者构建了 WorldPrism 数据集，在 GWM-Bench 与 Solar-Bench 上提升了重建与视觉质量，并展示了分钟级的交互渲染。",
+   "points": [
+    "用自回归视频扩散替代传统生成式渲染器，支持动态条件更新与跨代理泛化。",
+    "Dynamic-Context Learning 与 Recurrent History Compression 共同在有限 token 预算下维持长时视觉连续性。",
+    "Cross-Representation Flow Alignment 通过共享高保真重建连接不同代理表示的外观与交互变化。",
+    "构建 WorldPrism 数据集，并在 GWM-Bench、Solar-Bench 上验证重建与视觉质量提升。"
+   ],
+   "tags": [
+    "神经渲染",
+    "渲染管线",
+    "LOD"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "7776f4d5a87b",
+  "url": "https://arxiv.org/abs/2611.25340",
+  "title": "SceneAnything: Agentic Reconstruction of Large-Scale Mesh Scenes from a Single Video",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Bowen Xue",
+  "published": "2026-11-19T01:26:02.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Reconstructing an editable 3D scene from video requires matching visible structure while plausibly completing unseen surfaces. Agents can write scene-construction programs, but direct reconstruction attempts often produce errors in layout, scale, and lighting. We introduce SceneAnything, an automate…",
+  "ai": {
+   "summary": "SceneAnything 提出一种从单视频重建可编辑网格场景的自动化系统，通过软件框架协调智能体、预训练视觉模型与图形工具，遵循显式重建协议。系统利用共享的相机、深度与分割估计，由场景所有者智能体规划环境并指导作者编写参数化 Blender 程序，基于可见性与拟合的 LOD 规则选择构建层级，并补全未见区域标记为推断。组装场景使用拟合光照与支持运动，修订经程序化检查与独立视觉比较。在 100 个场景上评估，原始视图保真度优于直接智能体重建，新视图内容相似度高于对比的视频到 3D 方法。",
+   "points": [
+    "提出智能体驱动的场景重建框架，协调视觉模型与 Blender 程序生成可编辑网格场景。",
+    "基于可见性与拟合的 LOD 规则选择构建层级，并补全未见区域。",
+    "在 100 个场景上验证，原始视图保真度与新视图内容相似度均优于基线方法。",
+    "将发布框架、智能体指令、可重用库与场景数据。"
+   ],
+   "tags": [
+    "网格处理",
+    "LOD",
+    "CAD渲染"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "5a3a56d800c3",
+  "url": "https://arxiv.org/abs/2611.25338",
+  "title": "VideoRNG: Relightable Neural Gaussians from Generative Video Models",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Bowen Xue",
+  "published": "2026-11-19T01:25:30.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Generating realistic 3D assets remains constrained by classical representations: surface meshes and compact physically based materials struggle to express objects whose appearance arises from fine geometry or complex light transport, while existing Gaussian-splatting generators typically bake fixed …",
+  "ai": {
+   "summary": "VideoRNG 提出一种两阶段方法，从文本或单张图像生成完整、可重光照的 3D 资产，无需预设 mesh 或解析材质模型。第一阶段用微调的视频扩散模型生成已知位姿、相机与光照下的 RGBA 转台序列；第二阶段用前馈大重建模型把视频 VAE 隐变量直接映射为百万级各向异性 Gaussian，并附带神经外观特征（rtRNG）。共享方向解码器与随机 Gaussian 光线追踪器支持新视角与新光照下的辐射度计算，配合深度锚定外观训练、前景 token 选择与代价感知分布式采样，可生成毛发、羽毛、蛛网等复杂资产并交互渲染与重光照。",
+   "points": [
+    "用视频扩散模型生成转台序列，再前馈重建为带神经外观特征的百万级各向异性 Gaussian（rtRNG）。",
+    "共享方向解码器加随机 Gaussian 光线追踪，实现新视角与新光照下的可重光照渲染。",
+    "深度锚定外观训练在学几何的同时保留高频外观细节。",
+    "前景 token 选择与代价感知分布式采样使百万 Gaussian 重建可行，支持毛发、羽毛、蛛网等复杂资产。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "神经渲染",
+    "光线追踪",
+    "全局光照"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
   "id": "670c4bb04ef0",
   "url": "https://arxiv.org/abs/2611.25305",
   "title": "Subexponential Algorithms for Continuous Euclidean $k$-Means in Subpolylogarithmic Dimension",
@@ -201,6 +551,32 @@
    ],
    "relevance": 1,
    "level": "专业"
+  }
+ },
+ {
+  "id": "7020bba74144",
+  "url": "https://developer.nvidia.com/blog/connecting-energy-use-to-scientific-output-with-science-per-joule/",
+  "title": "Connecting Energy Use to Scientific Output with Science per Joule",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Kibibi Moseley",
+  "published": "2026-11-18T21:26:33.000Z",
+  "fetched": "2026-11-24T00:15:54.025434Z",
+  "snippet": "For high-performance computing (HPC) centers operating under a fixed power budget, every joule spent computing needs to translate into useful scientific work....",
+  "ai": {
+   "summary": "NVIDIA 技术博客提出以“Science per Joule”衡量 HPC 科学产出与能耗的关系，而非仅看 FLOPS/W 或 PUE。文章在 LAMMPS 分子动力学和 ICON 气候模拟上对比 GB200 NVL72 与 HGX H100，并给出 OpenFold3、RFD4-Proteina 单 GPU 推理结果。结论是系统级测量比仅测 GPU 功耗更能反映真实能效提升，例如 ICON 用少 40% 的 GPU 达到相近求解时间、每焦耳科学产出约高 20%。",
+   "points": [
+    "提出以 atom-timesteps/joule、simulated days/joule、predictions/kilojoule 等应用级指标衡量科学产出能效。",
+    "LAMMPS 四种模拟中 GB200 NVL72 每焦耳原子时间步比 HGX H100 高 9–17%。",
+    "ICON 气候模拟中 GB200 NVL72 用 72 块 GPU 对比 120 块 H100，每焦耳模拟天数约高 20%，求解时间接近。",
+    "强调非 GPU 部件功耗在两种平台上相近，仅测 GPU 功耗会低估系统级能效收益。"
+   ],
+   "tags": [
+    "性能优化",
+    "GPU架构"
+   ],
+   "relevance": 1,
+   "level": "入门"
   }
  },
  {
@@ -358,6 +734,32 @@
   }
  },
  {
+  "id": "29702ed4d9c4",
+  "url": "https://arxiv.org/abs/2611.24423",
+  "title": "Probing Physics in Motion Diffusion Models Against Their Own Estimate",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Saeed Ghorbani",
+  "published": "2026-11-18T13:44:03.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Recent studies report that video diffusion models \"know more than they show\": physical properties decode better from their activations than from their inputs or outputs. But a diffusion model computes its clean-sample estimate from those same activations, so such a comparison measures how easily a r…",
+  "ai": {
+   "summary": "该论文研究运动扩散模型（text-to-motion diffusion）是否在其内部激活中隐藏了物理知识。作者沿 MDM 与 MotionDiffuse 的采样轨迹逐层记录中间估计，并精确计算每个估计的运动学物理量，再与模型自身的 clean-sample estimate 对比。在统一调参的 readout 下，平衡与飞行等属性上各层相对估计的增益至多 0.01，说明此前“模型知道得比展示的多”多源于读出方式差异；唯一明显例外是跳跃落地率，MDM 早期层可额外提供约 0.08 的 R²。结论是隐藏物理知识有限，提前中止漂浮样本仅节省不到十分之一算力。",
+   "points": [
+    "逐层记录 MDM 与 MotionDiffuse 采样轨迹，精确计算中间估计的运动学物理量作为对照。",
+    "统一 readout 调参后，平衡与飞行属性上各层相对模型自身估计的增益不超过 0.01。",
+    "跳跃落地率是唯一例外：MDM 早期去噪层可额外贡献约 0.08 R²，并随采样推进衰减。",
+    "模型无需训练即可标记漂浮样本，但中止它们节省的算力不足十分之一。"
+   ],
+   "tags": [
+    "神经渲染",
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
+ },
+ {
   "id": "92b0e75b3dcd",
   "url": "https://arxiv.org/abs/2611.24295",
   "title": "A Well-Separated Pair Decomposition of Linear Size for Unit-Disk Graphs",
@@ -383,6 +785,32 @@
   }
  },
  {
+  "id": "7bcb9a433ffc",
+  "url": "https://arxiv.org/abs/2611.23755",
+  "title": "GramStatTexNet: Efficient, Interpretable, and Neuro-Inspired Texture Analysis-by-Synthesis",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Vasha DuTell",
+  "published": "2026-11-18T03:09:06.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Deep networks achieve high realism in texture synthesis but often rely on opaque, over-parameterized representations that have limited direct connection to biological vision. Neuroscience-informed pyramid models are interpretable, compact, and biologically inspired, but rely on small, hand-curated s…",
+  "ai": {
+   "summary": "本文提出 GramStatTexNet，一个混合式 analysis-by-synthesis 纹理分析框架，将经典多尺度 Gabor 滤波器结构与 Gramian 相关性统计结合，组织成结构化的滤波器族。相比深度网络，该表示紧凑且可解释：每个统计量带有具名滤波器族身份，可将合成保真度分解到各滤波器族的贡献，并学习保留感知纹理内容的低维嵌入。在多种纹理类别和多个感知指标上，其合成质量与深度基线相当，同时具备紧凑性和可解释性优势，并可自然扩展到外周纹理（空间池化）和动态纹理（时空滤波器组）。",
+   "points": [
+    "结合 Gabor 多尺度结构与 Gramian 相关性统计，构建可解释的纹理表示",
+    "每个统计量对应具名滤波器族，可分解合成保真度的逐族贡献",
+    "合成质量与深度纹理合成基线相当，但表示更紧凑、可解释",
+    "可扩展到空间外周纹理与时空动态纹理"
+   ],
+   "tags": [
+    "神经渲染",
+    "性能优化"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "2651eec70798",
   "url": "https://arxiv.org/abs/2611.23659",
   "title": "From Persistent Cohomology to Maps into Arbitrary Eilenberg-MacLane Spaces",
@@ -403,6 +831,33 @@
    "tags": [
     "计算几何",
     "几何鲁棒性"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "f2b27f87d4b4",
+  "url": "https://arxiv.org/abs/2611.23450",
+  "title": "NIRJALA: Draining the Sea out of Gaussian Splatting with Three-Path Optics and Reversible Physics",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Latchan Chhetri",
+  "published": "2026-11-17T19:53:32.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Water does not just tint an underwater photograph; it rewrites it. Each pixel mixes attenuated scene radiance, backscattered light, and scene light scattered forward on its way to the camera, and many combinations of scene and water explain the same pixels. Most Gaussian-splatting methods for underw…",
+  "ai": {
+   "summary": "论文针对水下场景的 3D Gaussian Splatting 重建，指出仅建模直接透射和后向散射并用指数衰减除法去水会导致反演增益无界。提出 NIRJALA 框架，其 TRIVENI 三路径成像模型增加距离饱和的前向散射项，证明反演增益有界并给出误差传播界；PRATIBIMBA 可逆物理锚将神经水模型与十参数物理模型双向绑定；SAMARASA 收集物理约束目标。在自建 SAJALA 合成数据集和真实 SeaThru-NeRF 场景上，PSNR 和深度精度提升，LPIPS 降低，渲染达 44 FPS。",
+   "points": [
+    "提出三路径水下成像模型 TRIVENI，增加前向散射项使反演增益有界，并分析误差传播。",
+    "设计可逆物理锚 PRATIBIMBA，将神经水模型与十参数物理模型双向耦合，防止场景内容藏于水中。",
+    "构建 SAJALA 合成数据集（30 场景，Blender Cycles 路径追踪）用于定量评估去水效果。",
+    "在合成与真实数据上提升 PSNR、深度精度和 LPIPS，渲染速度 44 FPS。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "神经渲染",
+    "光线追踪"
    ],
    "relevance": 2,
    "level": "专业"
@@ -539,6 +994,142 @@
   }
  },
  {
+  "id": "ac17f62c6683",
+  "url": "https://arxiv.org/abs/2611.23054",
+  "title": "ReTouchGS: Ultralight Render-free Aesthetic Color Enhancement and Transfer for 3D Gaussian Splatting",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Chuanzhi Xu",
+  "published": "2026-11-17T16:47:43.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "3D Gaussian Splatting (3DGS) enables photorealistic scene reconstruction. Existing 3DGS color transfer and interactive editing methods are guided by reference images and user-specified color adjustments. However, in many applications, users simply want aesthetically guided color enhancement that aut…",
+  "ai": {
+   "summary": "ReTouchGS 提出首个无需参考图像的美学颜色增强框架，用于预训练的 3D Gaussian Splatting (3DGS) 模型。它从模型和相机参数预测场景级颜色查找表 (LUT)，并支持通过单张编辑视图拟合 LUT 的参考引导颜色迁移。核心是一个仅 44.7K 参数的混合感知颜色细化网络，无需渲染即可实现解析颜色更新，保持几何不变并在数秒内输出标准 3DGS 资产。同时构建 ReTouch3D 基准用于跨视角评估。",
+   "points": [
+    "首个无需参考图像的美学颜色增强框架，自动提升 3DGS 场景视觉吸引力并保持跨视角颜色一致。",
+    "通过预测场景级 LUT 实现无渲染颜色映射，支持参考引导的颜色迁移。",
+    "轻量级混合感知颜色细化网络仅 44.7K 参数，保持几何不变，处理速度快。",
+    "提出 ReTouch3D 基准，用于评估跨视角的美学颜色增强和颜色迁移。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "神经渲染",
+    "着色器"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "cb52f8d935f7",
+  "url": "https://arxiv.org/abs/2611.22903",
+  "title": "BRepA: Graph-Based B-Rep Pretraining for Unified CAD Understanding and Generation",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Dekai Zhu",
+  "published": "2026-11-17T15:08:35.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Boundary representation (B-Rep) of CAD models encodes geometric primitives and their relations as a graph structure, enabling efficient shape modeling within CAD software. Learning on B-Reps for downstream tasks, such as segmentation and novel shape generation, requires specialized neural network de…",
+  "ai": {
+   "summary": "该论文提出 BRepA，一个基于图结构的 B-Rep 自监督预训练框架，通过显式重建 B-Rep 对象的几何与拓扑来学习通用表示。仅需一次大规模无标签 CAD 数据预训练，即可在分割和生成任务上显著提升性能与数据效率：仅用 1% 标签样本，分割 mIoU 提升 32.52%；生成任务中与扩散模型对齐后训练加速近 2 倍且质量提升。结果表明几何与拓扑感知的 B-Rep 预训练可作为统一 CAD 理解与生成的基础骨干。",
+   "points": [
+    "提出 BRepA 自监督预训练框架，联合重建 B-Rep 的几何与拓扑结构。",
+    "在分割任务上数据效率极高，1% 标签即可提升 mIoU 32.52%。",
+    "生成任务中与扩散模型对齐，训练加速近 2 倍且生成质量提升。",
+    "预训练表示可泛化至多种下游任务，作为统一 CAD 表示骨干。"
+   ],
+   "tags": [
+    "B-Rep",
+    "几何鲁棒性",
+    "网格处理",
+    "CAD渲染"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "92ed132bd93d",
+  "url": "https://arxiv.org/abs/2611.22805",
+  "title": "DOOM-GS: Dynamic Out-of-core Optimization for Massive Gaussian Splatting",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Doğa Yılmaz",
+  "published": "2026-11-17T14:00:20.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Traditional Gaussian Splatting (GS) methods use in-core training, i.e. assuming that GPU memory is large enough to accommodate all the primitives. This assumption breaks down when the primitives exceed the capacity of GPU memory, e.g. GS on large environments. Recent out-of-core training research st…",
+  "ai": {
+   "summary": "该论文针对大规模动态 Gaussian Splatting（GS）训练中图元数量超出 GPU 显存容量的问题，提出首个面向动态场景的 out-of-core 优化方法 DOOM-GS。核心改动包括面向时空图元的缓存管理策略，以及针对海量图元的快速学习方法；同时贡献了一个大规模动态 GS 数据集用于评测。实验表明，该方法能在中等硬件上高质量重建城市级动态场景，为后续研究提供基础工具。",
+   "points": [
+    "指出现有 out-of-core GS 训练仅支持静态场景，动态图元在时空上的移动打破了原有内存管理假设。",
+    "提出面向时空图元的缓存优化策略与海量图元的快速学习方法。",
+    "贡献大规模动态 GS 数据集，并改造相近方法作为对比基线。",
+    "实现中等硬件上的城市级动态场景高质量重建。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "性能优化",
+    "LOD"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "ea84dcd2d2dc",
+  "url": "https://arxiv.org/abs/2611.22565",
+  "title": "MillBill: A Machining Agent with Geometric Feedback",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Gennadii Savrasov",
+  "published": "2026-11-17T10:52:45.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Turning a CAD model into a machining program requires both process knowledge and geometric precision. Language models can generate such workflows by writing geometry and toolpath code for each part, but this makes numerical execution part of the model's task. We introduce MillBill, an agent that sep…",
+  "ai": {
+   "summary": "MillBill 是一个将加工决策与几何执行分离的智能体，用于将 B-Rep 零件、毛坯和材料转化为三轴加工方案。它使用本地部署的中等规模开源模型（如 Qwen3.8-27B）提出加工操作与切削参数，再由几何执行模块生成刀路、模拟材料去除并反馈优化方案。其装夹规划基于刀具实际可达性而非仅可见性。在模拟加工后目标表面公差内面积占比的评估中，MillBill 优于自行构建几何与刀路工作流的前沿模型方法。",
+   "points": [
+    "分离加工决策与几何执行：LLM 只负责提出操作和参数，几何模块负责刀路生成与材料去除模拟。",
+    "装夹规划考虑刀具物理可达性，而非仅基于可见性分析。",
+    "使用模拟加工后目标表面公差内面积占比作为量化评估指标。",
+    "在评估任务上，Qwen3.8-27B 驱动的 MillBill 优于前沿模型自建几何与刀路的方法。"
+   ],
+   "tags": [
+    "B-Rep",
+    "CAD渲染",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "cd5bf8307c2a",
+  "url": "https://arxiv.org/abs/2611.22512",
+  "title": "ATS: Anti-Aliased Triangle Splatting with Exact Per-Primitive Integrals",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Brent Zoomers",
+  "published": "2026-11-17T10:06:31.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Triangle Splatting represents scenes using semi-transparent triangles, but it evaluates each triangle at the pixel center and culls any triangle with an inradius smaller than one pixel. The former causes severe aliasing, while the latter culls most of the scene at lower resolutions. We show that the…",
+  "ai": {
+   "summary": "Triangle Splatting 用半透明三角形表示场景，但仅在像素中心采样且剔除内切圆半径小于一像素的三角形，导致严重走样和低分辨率下大量剔除。本文推导出三角形窗口在像素上的积分具有精确闭式解：利用角平分线将三角形分成三个子三角形，每个子三角形内窗口是到一条边距离的幂函数，通过格林公式将积分及梯度化简为子三角形与像素裁剪后每条边的一项。该精确积分还支持保守剔除，只移除在任何像素都无法达到 alpha 阈值的三角形。实验表明该方法无需重训练即可抗锯齿现有模型，时间走样少于 2x2 超采样，并支持多尺度训练，在降低分辨率时匹配或超越超采样训练。",
+   "points": [
+    "提出三角形 splatting 窗口在像素上的精确闭式积分，利用角平分线分割和格林公式实现高效计算。",
+    "精确积分实现保守剔除，避免低分辨率下错误剔除小三角形。",
+    "无需重训练即可对现有模型抗锯齿，时间稳定性优于 2x2 超采样。",
+    "支持多尺度训练，在低分辨率下性能匹配或超越超采样训练。"
+   ],
+   "tags": [
+    "抗锯齿",
+    "光栅化",
+    "渲染管线"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "530c90d36b18",
   "url": "https://arxiv.org/abs/2611.22415",
   "title": "SpatialMind: Adaptive Multi-Level Geometric Fusion for Spatial Reasoning in Multimodal Large Language Models",
@@ -561,6 +1152,87 @@
    ],
    "relevance": 1,
    "level": "专业"
+  }
+ },
+ {
+  "id": "24f5d2e83a53",
+  "url": "https://arxiv.org/abs/2611.22240",
+  "title": "Cross3DGS: Unified Vulkan-Based 3D Gaussian Splatting Training from Workstations to Mobile Devices",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Hiroyuki Sato",
+  "published": "2026-11-17T05:39:40.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Scenes captured with handheld and wearable cameras are still shipped to a CUDA workstation for 3D Gaussian Splatting (3DGS) training. Training on the device that captured them, or on its companion phone or laptop, requires more than translating kernels: GPUs and drivers differ in parallel features, …",
+  "ai": {
+   "summary": "Cross3DGS 是一个基于 Vulkan 的跨厂商、跨平台 3D Gaussian Splatting 训练器，旨在解决在手持设备或移动端直接训练 3DGS 时因 GPU 和驱动差异导致的执行调度问题。其核心方法是通过两步调度选择：先根据设备限制、负载大小和观察到的驱动故障排除不可行的调度，再按固定偏好顺序选择可行调度。实验表明，该训练器在 NVIDIA、Intel、Arm、Qualcomm、AMD、Apple 等多种 GPU 上（包括 Android 和 iPhone）均能完成标准质量训练，而现有便携训练器 VkSplat 和 Brush 在部分移动 GPU 上无法运行。在 11 个场景上，Cross3DGS 质量高于 VkSplat 且训练时间无显著差异，Brush 训练时间约为其三倍但质量相当。最终质量在不同设备间几乎一致，并实现了移动端应用在设备上完成从捕获到可查看模型的完整流程。",
+   "points": [
+    "提出跨厂商、跨平台的 Vulkan 3DGS 训练器，支持从工作站到移动设备的统一训练。",
+    "采用基于设备限制、负载大小和驱动故障的两步调度选择策略，确保训练正确执行。",
+    "在多种 GPU（包括移动端）上完成标准质量训练，而现有便携训练器在部分移动 GPU 上无法运行。",
+    "训练质量与 VkSplat 相当或更高，训练时间无显著差异，且跨设备最终质量几乎一致。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "Vulkan",
+    "GPU驱动渲染",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "1cac60a9f51c",
+  "url": "https://arxiv.org/abs/2611.22207",
+  "title": "ARG-Avatar: Animation-Rendering Guidance for Efficient Feedforward Avatar Reconstruction",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Jianjin Xu",
+  "published": "2026-11-17T04:45:07.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Reconstructing animatable 3D human avatars from images is important for applications such as gaming and augmented reality. Feedforward methods make avatar reconstruction accessible by reducing inference time to a few seconds, but recent approaches rely heavily on scaling model capacity, training dat…",
+  "ai": {
+   "summary": "本文提出 ARG-Avatar，一个仅含 68M 可训练参数的高效前馈式可动画 3D 人体 avatar 重建框架，质疑现有方法依赖扩大模型容量、数据和算力的路线。核心思路是利用 3D 动画与渲染本身提供的强几何对应关系，设计 Foreground Avatar Coordinate RoPE attention（FACRoPE）与 Intermediate Token Rendering（ITR）流程，引导 avatar token 关注对应图像 patch。实验表明，在使用两张及以上输入图像时，该方法一致优于先前方法；相比 LHM++，可训练参数约少 9 倍、训练序列少 4.8 倍、训练算力少 14 倍，推理快 6 倍，并在分布外 NeuMan 基准上 PSNR 提升 2.7 dB。",
+   "points": [
+    "用渲染与动画提供的几何对应先验替代大规模数据与模型扩展，实现轻量前馈 avatar 重建。",
+    "FACRoPE 注意力与 ITR 流程将 avatar token 与图像 patch 对齐，提升重建质量。",
+    "仅 68M 参数即在多数据集上取得 SOTA，训练与推理成本大幅低于 LHM++。",
+    "属于人体 avatar 重建方向，与 CAD 几何内核及 CAD/GPU 渲染核心主题关联较弱。"
+   ],
+   "tags": [
+    "神经渲染",
+    "性能优化"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "77b5d61486c5",
+  "url": "https://arxiv.org/abs/2611.22124",
+  "title": "FrameSeg3D: Learned Local Frames for Segmenting Small Parts on High-Resolution 3D Scans",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Xinwen Zhang",
+  "published": "2026-11-17T03:05:28.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Segmenting small parts on high-resolution 3D scans, such as nails on hand scans and teeth on intraoral scans, poses three challenges: 1) each part covers a tiny fraction of the scan, 2) its boundary is only a subtle change of height and curvature, and 3) it faces its own direction. Existing methods …",
+  "ai": {
+   "summary": "针对高分辨率 3D 扫描（如手部扫描中的指甲、口内扫描中的牙齿）上小部件的分割难题，FrameSeg3D 提出先在全扫描的低分辨率视图上预测每个部件的局部坐标系（中心与朝向法向），再沿该法向以扫描仪原始分辨率对部件进行近景分割。这样每个部件都以居中、正对相机、固定尺度的方式送入同一个分割网络，从而避免全扫描处理时的分辨率损失，也不再依赖特定部件的先验知识。在指甲与牙齿两类部件上，该方法分别取得 mean Dice 0.970 与 per-tooth IoU 96.5，边界 IoU 达 70.5，优于现有方法。",
+   "points": [
+    "核心观察：小部件分割精度取决于观察方向与尺度，而非落在其上的点数。",
+    "先由低分辨率全扫描预测每个部件的局部坐标系，再沿法向做高分辨率近景分割。",
+    "统一的居中、正对、固定尺度输入使单一分割网络可跨部件类型复用并减少标注需求。",
+    "在手部扫描与 Teeth3DS+ 上均超越 SOTA，牙齿边界 IoU 达 70.5。"
+   ],
+   "tags": [
+    "网格处理",
+    "计算几何",
+    "性能优化"
+   ],
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -644,6 +1316,34 @@
   }
  },
  {
+  "id": "117cb54ed052",
+  "url": "https://arxiv.org/abs/2611.22005",
+  "title": "Where Should the Lamp Go? Ambient-Aware Lamp Placement for Portraits",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Yuyan Chen",
+  "published": "2026-11-16T23:37:51.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Portraits shape first impressions, and lighting is an important factor. Prior work, such as lighting estimation and portrait relighting, edits lighting after capture but does not guide where to place a light before the shot. This leaves an open question: where should a light go to best light a face?…",
+  "ai": {
+   "summary": "该论文提出 LightMatch，一个基于偏好的人像补光位置优化框架：先用 Bradley-Terry 模型从成对人工判断中学习光照质量偏好，再用感知头从冻结的自监督特征经 cross-attention 回归球谐光照，最后利用球谐线性性分离可控光源与环境光，优化灯具可达位置。在留出环境中达到 oracle 改进的 87.8%，显著优于忽略环境光的传统求解器和基于 DPR 估计器的流程，并在真实 OLAT 人脸与实拍中降低灯方向误差 37.7%。",
+   "points": [
+    "用 Bradley-Terry 成对偏好学习人像光照质量模型，替代手工光照准则",
+    "通过球谐线性性将可控灯与环境光解耦，再求解灯具最优摆放位置",
+    "在留出环境达 oracle 改进 87.8%，比忽略环境光的求解器相对提升 28.4%",
+    "真实 OLAT 人脸达 73.2%，实拍灯方向误差降低 37.7%"
+   ],
+   "tags": [
+    "光照估计",
+    "逆渲染",
+    "球谐光照",
+    "人像重打光"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "34fef14ddbfa",
   "url": "https://developer.nvidia.com/blog/accelerate-molecular-dynamics-simulations-with-accurate-flexible-primitives-using-nvidia-cupotential/",
   "title": "Accelerate Molecular Dynamics Simulations with Accurate, Flexible Primitives Using NVIDIA cuPotential",
@@ -670,6 +1370,33 @@
   }
  },
  {
+  "id": "50c58c001d58",
+  "url": "https://arxiv.org/abs/2611.21890",
+  "title": "Domain-Tuned Diffusion Super-Resolution for 4K Facial Asset Maps",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Elly Akhoundi",
+  "published": "2026-11-16T21:03:28.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Physically based facial assets require 4K albedo and displacement maps for cinematic close-ups, yet generative pipelines commonly produce them at only 1K. Naively applying photographic super-resolution is a poor fit: facial UV maps have domain-specific statistics, and displacement is a scalar height…",
+  "ai": {
+   "summary": "针对面部 PBR 资产（albedo 与 displacement 贴图）常以 1K 生成、难以满足 4K 影视级特写需求的问题，提出一种领域微调的扩散超分方法。基于冻结的 SDXL 主干，为每种贴图模态加入轻量 LoRA 模块，并用 Tile ControlNet 保持输入结构，将 1024 超分至 4096。在留出集上，albedo 的 LPIPS 从 0.21 降至 0.08，位移贴图避免错误或过度浮雕，证明轻量领域适配即可生成渲染就绪的 4K 面部资产贴图。",
+   "points": [
+    "使用冻结 SDXL + 每模态 LoRA 实现 4x 面部资产贴图超分，无需定制超分架构。",
+    "Tile ControlNet 保留输入结构，扩散先验恢复毛孔与皱纹级细节。",
+    "albedo LPIPS 从 0.21 降至 0.08，优于双线性、GAN 和通用扩散超分器。",
+    "位移贴图作为标量高度场，超分后避免错误或过度浮雕，保证几何正确性。"
+   ],
+   "tags": [
+    "神经渲染",
+    "PBR",
+    "CAD渲染"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "addb2cc27fd2",
   "url": "https://gpuopen.com/learn/amd-fsr-ue-plugin-412/",
   "title": "AMD FSR UE plugin updated with FSR Upscaling 4.1.2",
@@ -691,6 +1418,33 @@
    ],
    "relevance": 1,
    "level": "入门"
+  }
+ },
+ {
+  "id": "c9aadd5a156e",
+  "url": "https://arxiv.org/abs/2611.21867",
+  "title": "FaceRiff: Data-Efficient Unified Text-to-3D Face Asset Synthesis via Geometric Conditioning",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Elly Akhoundi",
+  "published": "2026-11-16T20:31:52.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "High-resolution facial datasets with consistent UV-mapped geometry, albedo, and physically based displacement are scarce, yet such assets are essential for photorealistic digital-human rendering. Existing 3D face generation methods are often slow, single-modality, or require large specialized datase…",
+  "ai": {
+   "summary": "FaceRiff 针对高质量人脸资产（UV 对齐网格、albedo、位移）稀缺、现有文本到 3D 人脸方法慢且需大数据的问题，提出基于预训练 SDXL 的统一生成框架。它用任务专属 LoRA 适配器，并以 UV 法线贴图作为几何条件：逐实例法线引导 albedo 与位移合成，数据集平均法线作为网格生成的规范空间锚点。仅用约 350 个身份的 2049 次扫描、单 GPU 训练，每任务更新不到 3% 参数，即可无需逐实例优化输出可渲染资产。相比 FaceG2E 与 DreamFace，多样性更好且保持固定拓扑 UV 一致性，并生成光照无关 albedo 与毛孔级位移。",
+   "points": [
+    "以 UV 法线贴图作为几何条件，统一生成 UV 对齐网格、albedo 与位移。",
+    "基于 SDXL 加 LoRA，每任务仅更新不到 3% 参数，单 GPU 小数据训练。",
+    "输出光照无关 albedo 支持 PBR 重光照，并含毛孔级位移。",
+    "盲测显示感知真实感显著优于 DreamFace，接近真实扫描。"
+   ],
+   "tags": [
+    "神经渲染",
+    "PBR",
+    "网格处理"
+   ],
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -771,28 +1525,29 @@
   }
  },
  {
-  "id": "c4c2b3a7c433",
-  "url": "https://developer.nvidia.com/blog/nvidia-vera-rubin-nvl72-leads-agentic-inference-performance-on-mlperf-endpoints-v1-0/",
-  "title": "NVIDIA Vera Rubin NVL72 Leads Agentic Inference Performance on MLPerf Endpoints v1.0",
-  "source": "NVIDIA Technical Blog",
+  "id": "4e43b00cdf0e",
+  "url": "https://arxiv.org/abs/2611.21334",
+  "title": "Real-world Polarimetric Environment Map Dataset",
+  "source": "arXiv cs.GR 图形学",
   "topic": "rendering",
-  "author": "Zhihan Jiang",
-  "published": "2026-11-16T16:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Agentic workloads are demanding more from inference systems. AI agents carry growing conversation histories across turns and generate a mix of reasoning, tool...",
+  "author": "Yonghee Oh",
+  "published": "2026-11-16T16:19:35.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Environment maps are a standard representation of illumination, enabling realistic image-based lighting in modern rendering systems. However, existing environment maps typically encode only RGB radiance, omitting polarization, an intrinsic property of light that is imperceptible to the human eye but…",
   "ai": {
-   "summary": "该文是 NVIDIA 关于 MLPerf Endpoints v1.0 的 AI 推理性能发布说明，与计算机图形学、CAD 几何内核及 GPU 渲染无关。核心内容为 Vera Rubin NVL72 在 agentic 推理负载下相比 GB300 NVL72 的每千瓦吞吐与交互性提升，以及 HBM4、Tensor Core、NVLink 和前缀缓存、Dynamo 路由等软硬件优化。",
+   "summary": "该论文针对现有环境贴图仅编码RGB辐射亮度、忽略偏振信息的问题，构建了真实世界偏振环境贴图数据集。作者设计并校准了专用成像系统，开发了偏振感知的全景拼接流程，引入透视相机的帧场表示和奇点感知混合，实现了无奇点伪影的平滑偏振全景拼接。数据集包含100个覆盖多样场景的全天球全景，每个像素提供高动态范围RGB斯托克斯向量。作者还开发了自定义渲染插件，验证了真实与渲染观测的高度一致性，并分析了天空偏振状态及其对偏振形状恢复任务的影响。",
    "points": [
-    "评测对象为多轮 agentic 推理的吞吐与响应性，不涉及图形渲染管线。",
-    "优化手段包括 prefix caching、state reuse、Dynamo 路由及模型专用 kernel。",
-    "硬件亮点为 HBM4、Tensor Cores 与第六代 NVLink，与 GPU 图形架构无直接关系。",
-    "对 CAD 几何内核、B-Rep、曲面求交、渲染剔除等主题无参考价值。"
+    "构建了首个真实世界偏振环境贴图数据集，每个全景图提供逐像素HDR RGB斯托克斯向量。",
+    "设计了专用成像系统与偏振感知全景拼接流程，采用帧场表示和奇点感知混合避免拼接伪影。",
+    "开发了自定义渲染插件，实现了偏振光传输的物理准确模拟，并验证了渲染与真实观测的一致性。",
+    "分析了不同时间和天气下天空的偏振状态，并展示了其对偏振形状恢复下游任务的实用价值。"
    ],
    "tags": [
-    "GPU架构",
-    "性能优化"
+    "光线追踪",
+    "渲染管线",
+    "PBR"
    ],
-   "relevance": 1,
+   "relevance": 3,
    "level": "进阶"
   }
  },
@@ -817,6 +1572,32 @@
    "tags": [
     "性能优化",
     "GPU架构"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "c4c2b3a7c433",
+  "url": "https://developer.nvidia.com/blog/nvidia-vera-rubin-nvl72-leads-agentic-inference-performance-on-mlperf-endpoints-v1-0/",
+  "title": "NVIDIA Vera Rubin NVL72 Leads Agentic Inference Performance on MLPerf Endpoints v1.0",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Zhihan Jiang",
+  "published": "2026-11-16T16:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "Agentic workloads are demanding more from inference systems. AI agents carry growing conversation histories across turns and generate a mix of reasoning, tool...",
+  "ai": {
+   "summary": "该文是 NVIDIA 关于 MLPerf Endpoints v1.0 的 AI 推理性能发布说明，与计算机图形学、CAD 几何内核及 GPU 渲染无关。核心内容为 Vera Rubin NVL72 在 agentic 推理负载下相比 GB300 NVL72 的每千瓦吞吐与交互性提升，以及 HBM4、Tensor Core、NVLink 和前缀缓存、Dynamo 路由等软硬件优化。",
+   "points": [
+    "评测对象为多轮 agentic 推理的吞吐与响应性，不涉及图形渲染管线。",
+    "优化手段包括 prefix caching、state reuse、Dynamo 路由及模型专用 kernel。",
+    "硬件亮点为 HBM4、Tensor Cores 与第六代 NVLink，与 GPU 图形架构无直接关系。",
+    "对 CAD 几何内核、B-Rep、曲面求交、渲染剔除等主题无参考价值。"
+   ],
+   "tags": [
+    "GPU架构",
+    "性能优化"
    ],
    "relevance": 1,
    "level": "进阶"
@@ -848,6 +1629,58 @@
   }
  },
  {
+  "id": "ebfe37265866",
+  "url": "https://arxiv.org/abs/2611.21154",
+  "title": "KuroshioVis: Hypothesis-Driven Discovery of Mesoscale Air-Sea Interaction through Coarse-to-Fine Exploration",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Yuanzhi Chen",
+  "published": "2026-11-16T14:21:12.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Mesoscale air-sea interaction occurs throughout strong sea surface temperature fronts such as the the Kuroshio Extension, but its strength is highly non-uniform and can be resolved only in kilometre-scale coupled simulations. The response of any single eddy is weak relative to synoptic variability, …",
+  "ai": {
+   "summary": "KuroshioVis 是一个面向中尺度海气相互作用分析的可视分析工作流，用于解决单个涡旋响应信号太弱、必须跨大量涡旋累积证据的问题。方法采用由粗到细的两阶段设计：粗阶段提取并对齐中尺度涡旋，构建其海气响应的复合表示，并提供全局探索视图；细阶段通过复合界面视图、跨界面流视图和证据矩阵视图三个协同视图，从表层模式、跨界面动力过程到定量统计证据逐层分析。系统在 C1440-LLC2160 耦合模拟数据上演示，属于科学可视化与可视分析方向。",
+   "points": [
+    "提出由粗到细的假设驱动可视分析流程，先聚合涡旋再深入分析单个响应",
+    "粗阶段将中尺度涡旋对齐并合成为复合表示，支持全局探索",
+    "细阶段用复合界面、跨界面流、证据矩阵三个协同视图支撑从模式到统计证据的分析",
+    "在 2026 SciVis Contest 的公里级耦合模拟数据上完成案例验证"
+   ],
+   "tags": [
+    "可视化分析"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "479233bb6cb5",
+  "url": "https://arxiv.org/abs/2611.20948",
+  "title": "One Code per Material: Neural Representation and Generation of Measured BTFs",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Fazilet Gokbudak",
+  "published": "2026-11-16T11:59:23.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Measured bidirectional texture functions (BTFs) capture the full appearance of real materials--including parallax, self-shadowing and inter-reflections that analytic SVBRDFs cannot express--but each measurement is billions of values, and every new material requires a new capture. Existing neural BTF…",
+  "ai": {
+   "summary": "论文针对实测双向纹理函数（BTF）数据量巨大且缺乏共享表示空间的问题，提出两种神经表示：一种逐材质坐标网络在同等规模下比现有方法 PSNR 提升 3.2 dB；另一种紧凑模型用单个 256 维码和共享解码器表示每种材质，仅需 256 个数而非数百万，PSNR 和颜色精度均优于逐纹素隐变量方法。由于每种材质成为码空间中的一个点，作者用类条件归一化流在 84 种材质上训练，可生成新的完整 BTF 材质并支持渲染与重光照。",
+   "points": [
+    "逐材质坐标网络在匹配尺寸下比 Xia 等人的神经 BTF 方法 PSNR 高 3.2 dB，并在所有指标上超越先前基线。",
+    "紧凑模型用 256 维码和共享解码器表示每种材质，PSNR 提升 1.2 dB 且颜色更准，参数量从数百万降至 256 个数。",
+    "在码空间上训练类条件流模型，可从 84 种材质（含颜色变体和色相旋转）生成新的完整 BTF 材质。",
+    "生成的材质可直接用于渲染和重光照，保留了视差、自阴影和互反射等实测 BTF 特性。"
+   ],
+   "tags": [
+    "神经渲染",
+    "PBR",
+    "材质表示"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "58acc564d1d2",
   "url": "https://arxiv.org/abs/2611.20835",
   "title": "Hierarchical Regime-Conditioned Dynamics for Spatiotemporal Graphs",
@@ -869,6 +1702,33 @@
     "计算几何"
    ],
    "relevance": 1,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "c42f5f76c04b",
+  "url": "https://arxiv.org/abs/2611.20664",
+  "title": "Explicit topology control in isogeometric topology optimization using persistent homology",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Wenliang Yin",
+  "published": "2026-11-16T07:26:59.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Explicitly controlling structural topology remains a major challenge in topology optimization. While many implicit methods regulate topology only indirectly, available explicit strategies often focus on two-dimensional hole control or extend to 3D without a unified treatment of tunnels and cavities.…",
+  "ai": {
+   "summary": "本文针对等几何拓扑优化中结构拓扑难以显式控制的问题，提出一种基于持久同调（persistent homology）的可微框架。该方法用 NURBS 表示的密度场构造单一 sublevel filtration，其持久图直接量化 2D 的连通分量与孔洞、3D 的连通分量、隧道与空腔。通过分阶段施加加权拓扑目标来约束各同调维度的特征数量，并根据持久对所在区域选择切割或填充来消除冗余特征，避免仅填充导致的过大结构变化。拓扑逆映射给出对密度控制系数的解析灵敏度，可嵌入梯度优化并用 MMA 求解，2D/3D 实验验证了显式可靠的拓扑控制与稳定收敛。",
+   "points": [
+    "用 NURBS 密度场的单一 sublevel filtration 与持久图统一量化 2D 孔洞和 3D 隧道、空腔。",
+    "分阶段加权拓扑目标协调不同同调维度，按持久对区域选择切割或填充以消除冗余特征。",
+    "拓扑逆映射提供解析灵敏度，接入梯度优化与 MMA 求解。",
+    "2D/3D 基准实验显示显式拓扑控制下力学性能有竞争力且收敛稳定。"
+   ],
+   "tags": [
+    "NURBS",
+    "拓扑优化",
+    "计算几何"
+   ],
+   "relevance": 2,
    "level": "专业"
   }
  },
@@ -898,6 +1758,263 @@
   }
  },
  {
+  "id": "c1e8ebb204c3",
+  "url": "https://arxiv.org/abs/2611.20584",
+  "title": "A Self-Evolving Agent Runs Like a Gas: Describing and Predicting Its Evolution with Fluid Dynamics",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Haipeng Wang",
+  "published": "2026-11-16T06:06:20.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "A self-evolving LLM agent improves in service by rewriting its own plugin library under a validation gate. Agent engineering is converging on exactly such agents: single systems in continuous operation, carrying populations of runtime instances (plugins, skills, tools) past the point where anyone ca…",
+  "ai": {
+   "summary": "该论文研究自演化 LLM agent 在持续运行中反复改写自身插件库的长期演化行为，试图回答其运行过程是趋于松弛、振荡还是冻结。作者借用动理学理论，将插件实例类比为服从主方程的硬球气体，并指出原理论的边界源于架构设计。为此，作者叠加守恒公理：闭环信用账本使信用成为碰撞不变量，从而产生可测量的声波速度；零和投影门则无条件守恒质心动量。两层设计均经证明与实测，在 66 次干预下轴总量逐位守恒，预注册实验验证了有账本时出现线性波前、无账本时出现耗散的方向性结论。",
+   "points": [
+    "将自演化 agent 的插件群体类比为硬球气体，用动理学主方程描述其数百轮编辑的聚合运动。",
+    "提出闭环信用账本使信用成为碰撞不变量，解锁可工程化的声波速度。",
+    "零和投影门对任意提案流无条件守恒质心动量，并给出证明与执行结果。",
+    "实验在两种群体规模上复现了有账本呈线性波前、无账本呈耗散的方向性判定。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "3933b7cbbd3f",
+  "url": "https://arxiv.org/abs/2611.20546",
+  "title": "A Gaussian Primitive Data Management Framework for Efficient 3DGS Trajectory Rendering",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Haolun Ma",
+  "published": "2026-11-16T05:25:24.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Trajectory rendering, which renders novel views of a reconstructed 3D scene along a camera path, is a core operation in digital twins and autonomous inspection. Structured 3D Gaussian Splatting (3DGS) renders a single view in real time by decoding sparse anchors into Gaussians on demand, but it rend…",
+  "ai": {
+   "summary": "针对结构化 3D Gaussian Splatting (3DGS) 在轨迹渲染时逐视图重复投影所有锚点、重复解码已请求锚点且 CPU 闲置的问题，将轨迹渲染视为空间数据管理问题（锚点为空间对象、视图为范围查询、解码高斯为共享派生数据），提出 GDM-GS 框架。该方法在视图内使用锚点索引与遮挡物索引执行带孔视锥范围查询，避免解码视野外和可证明隐藏的锚点；跨视图采用共享物化，对连续视图组内每个锚点仅解码一次；跨处理器设计混合流水线，在有限内存下平衡 CPU/GPU 选择与分组解码。实验表明，GDM-GS 在大规模公开场景上显著降低轨迹渲染延迟，同时保持图像质量。",
+   "points": [
+    "将轨迹渲染建模为空间数据管理问题，用范围查询视角消除冗余。",
+    "视图内通过锚点索引和遮挡物索引实现带孔视锥查询，跳过不可见锚点解码。",
+    "跨视图共享物化，连续视图组内每个锚点只解码一次。",
+    "跨处理器混合流水线，在有限内存下平衡 CPU/GPU 负载，降低延迟。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "性能优化",
+    "渲染管线"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "31fd4deb4b3b",
+  "url": "https://arxiv.org/abs/2611.20533",
+  "title": "RemeshingAgent: An Iterative Agent for Repair-Based Decimation of Generated Building Meshes",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Haipeng Wang",
+  "published": "2026-11-16T05:08:27.000Z",
+  "fetched": "2026-11-24T00:16:00.487244Z",
+  "snippet": "Aggressively simplifying a generated high-poly building mesh to 0.5-1% of its faces confronts a hard limit. The surface looks complete, yet the mesh is topologically shattered: 10^3-10^4 connected components and non-manifold thin walls. Below a certain budget, every practical decimator \"melts\": it d…",
+  "ai": {
+   "summary": "针对生成的高面数建筑网格在 0.5–1% 面数预算下简化时出现的“融化”问题（拓扑碎裂、上千连通分量、非流形薄壁），作者指出这是实例相关的病态：哪些分量重要、误差悬崖在哪里因网格而异，因此固定算法不够，简化必须变成“清理—简化—验证”的迭代闭环。RemeshingAgent 用三角形预算分解（曲率、折痕、连通分量、亏格项）解释融化机理：低于分量下限时任何输出都无法满足修复契约，故须先清理。在 0.5% 预算下，该方法保持拓扑干净，而 QEM 与顶点聚类会融化；在 20 栋未见城市建筑上与商业 remesher 持平，24 栋训练建筑上的 9 人盲测偏好 168:48（p=0.0195）。训练所得技能以检索回放方式部署，CPU 上每网格 11.7 秒，无需 LLM 调用。",
+   "points": [
+    "将激进简化建模为“清理—简化—验证”的迭代闭环，用三角形预算分解定位分量下限导致的融化阈值。",
+    "在 0.5% 面数预算下保持拓扑干净，QEM 与顶点聚类则出现删件、焊薄壁等失败。",
+    "在 20 栋未见建筑上与商业 remesher 持平，盲测偏好显著（168:48，p=0.0195）。",
+    "部署为检索回放，CPU 每网格 11.7 秒，无 LLM 调用，具备实用性。"
+   ],
+   "tags": [
+    "网格处理",
+    "LOD",
+    "几何鲁棒性",
+    "CAD渲染"
+   ],
+   "relevance": 4,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "8cb2d0d26950",
+  "url": "https://vulkan.org/events/vulkanised-2027",
+  "title": "Vulkanised and Real-Time Shading Symposium 2027",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
+   "points": [
+    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
+    "设有光线追踪、神经渲染与生产案例分享",
+    "包含 Slang、着色器语言、工具链与性能优化专题",
+    "早鸟注册截止 2027 年 1 月 15 日"
+   ],
+   "tags": [
+    "Vulkan",
+    "GPU驱动渲染",
+    "着色器",
+    "光线追踪"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "725346355a13",
+  "url": "https://dl.acm.org/doi/10.1145/3842562",
+  "title": "Stealthy Blue Noise",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• presents a way to generate blue-noise samples that spread points evenly without forming a regular grid\n• controls the pattern by adjusting which spatial frequencies are suppressed, including across areas with different target densities\n• applies the method to stippling and spherical surfaces, producing patterns that stay visually consistent as point density changes",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该文提出一种生成 blue-noise 采样点集的方法：它能让点在空间上均匀分布，同时避免形成规则网格；通过调节被抑制的空间频率来控制图案特征，并且这种控制在不同目标密度的区域之间也能保持。方法被应用于 stippling（点画）和球面采样，使图案在点密度变化时仍保持视觉一致性。该工作属于采样与噪声生成方向，可用于渲染中的抖动、抗锯齿与随机采样。",
+   "points": [
+    "通过抑制特定空间频率来控制 blue-noise 图案的频谱特征",
+    "支持在目标密度不同的区域之间保持一致的采样质量",
+    "应用于 stippling 与球面采样，密度变化时视觉表现稳定",
+    "属于采样/噪声生成技术，可服务于渲染中的抖动与随机采样"
+   ],
+   "tags": [
+    "抗锯齿",
+    "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "f24777d5e668",
+  "url": "https://www.youtube.com/watch?v=VZfuShX693Q",
+  "title": "[video] How Neural Nets Survive Fewer Bits | Quantization",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• covers fundamental quantization techniques to compress neural network weights into low-bit formats like FP8, INT8, and INT4\n• explains linear quantization with scale and zero-point parameters, tuning granularity across tensors, channels, and groups\n• compares post-training quantization against quantization-aware training to preserve accuracy under reduced precision",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该视频讲解神经网络权重量化压缩到 FP8/INT8/INT4 等低位宽格式的基础技术，介绍带 scale 与 zero-point 的线性量化，以及 tensor/channel/group 不同粒度的调优方式，并对比 post-training quantization 与 quantization-aware training 在低精度下保持精度方面的差异。内容属于通用机器学习推理优化，与 CAD 几何内核和 GPU 驱动渲染均无直接关系。",
+   "points": [
+    "讲解 FP8/INT8/INT4 线性量化的 scale 与 zero-point 机制",
+    "讨论 tensor、channel、group 级量化粒度的取舍",
+    "对比 PTQ 与 QAT 在低精度下的精度保持策略",
+    "属于神经网络压缩科普，不涉及图形渲染或几何建模"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "6899e55b962c",
+  "url": "https://arxiv.org/abs/2611.12650",
+  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该工作针对神经纹理压缩在斜视角下模糊的问题，把各向异性过滤直接集成进神经解码器：解码器根据像素足迹的形状、角度和距离（即 LOD 条件）自适应调整过滤方式。这样在近距离和陡峭角度下都能保持表面清晰，同时以约四分之一的内存达到接近全尺寸压缩纹理的质量。",
+   "points": [
+    "将各向异性过滤内嵌到神经纹理压缩的解码器中，而非后处理",
+    "解码器依据像素足迹形状、角度与距离（LOD）条件调整过滤",
+    "显著改善斜视角与近距离的清晰度，避免模糊",
+    "内存约为全尺寸压缩纹理的四分之一，质量接近"
+   ],
+   "tags": [
+    "LOD",
+    "神经渲染",
+    "纹理压缩",
+    "各向异性过滤"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "0fe388cf8c03",
+  "url": "https://arxiv.org/abs/2611.13677",
+  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
+   "points": [
+    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
+    "随变形选择性更新纹理缓存，而非每帧全量重建。",
+    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
+    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
+   ],
+   "tags": [
+    "神经渲染",
+    "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "6390edbe9e91",
+  "url": "https://www.linkedin.com/pulse/sss-tricky-play-albedo-remapping-maximilian-tarpini-avhff/",
+  "title": "SSS and The Tricky Play of Albedo Remapping",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains albedo remapping for subsurface scattering, tracing the physics behind the mappings used in practical subsurface scattering (SSS) shaders\n• compares the remapping approaches and derives how artist-facing parameters are converted into the scattering coefficients required by the model",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "文章讲解次表面散射（SSS）中的 albedo remapping 问题：从物理原理出发，解释实际 SSS 着色器为何需要把美术可调的反照率参数映射为散射系数，并比较不同映射方案，推导面向美术的参数如何转换为模型所需的散射系数。内容属于通用着色与材质渲染细节，不涉及 CAD 几何内核或 CAD 渲染管线。",
+   "points": [
+    "解释 SSS 着色器中 albedo remapping 的物理依据",
+    "比较多种 remapping 方案并推导参数转换关系",
+    "面向美术参数到散射系数的映射流程",
+    "属于通用材质着色话题，与 CAD 渲染核心关联弱"
+   ],
+   "tags": [
+    "着色器",
+    "PBR"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "b1e462c3758e",
   "url": "https://www.youtube.com/live/FLyWOSeETkE",
   "title": "[video] The Intermediate's Guide To Animations with Casey Muratori. Part 2",
@@ -909,6 +2026,20 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "这是 Casey Muratori 关于在自制游戏引擎中实现动画混合的视频第二部分。核心内容包括用四元数点积修正旋转混合伪影，以及通过归一化时间线同步不同长度的动画循环；同时探讨了即时模式混合架构，将各动画层累加到共享骨架缓冲区。内容属于游戏动画系统实现，与 CAD 几何内核和 GPU 驱动渲染无直接关系。",
+   "points": [
+    "用四元数点积处理旋转混合伪影，属于动画插值细节",
+    "归一化时间线用于同步不同长度的动画循环",
+    "即时模式混合架构把多个动画层累加到共享骨架缓冲区",
+    "主题为游戏引擎动画系统，不涉及几何内核或 CAD 渲染"
+   ],
+   "tags": [
+    "渲染管线"
+   ],
+   "relevance": 1,
+   "level": "进阶"
   }
  },
  {
@@ -983,134 +2114,22 @@
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  }
- },
- {
-  "id": "8cb2d0d26950",
-  "url": "https://vulkan.org/events/vulkanised-2027",
-  "title": "Vulkanised and Real-Time Shading Symposium 2027",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  }
- },
- {
-  "id": "6390edbe9e91",
-  "url": "https://www.linkedin.com/pulse/sss-tricky-play-albedo-remapping-maximilian-tarpini-avhff/",
-  "title": "SSS and The Tricky Play of Albedo Remapping",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains albedo remapping for subsurface scattering, tracing the physics behind the mappings used in practical subsurface scattering (SSS) shaders\n• compares the remapping approaches and derives how artist-facing parameters are converted into the scattering coefficients required by the model",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  }
- },
- {
-  "id": "0fe388cf8c03",
-  "url": "https://arxiv.org/abs/2611.13677",
-  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
+   "summary": "该工作提出一种场景特定的神经渲染代理（neural render proxy），用于在固定相机与材质的静态场景中实现可交互、可微的重光照。方法从与光源无关的路径样本训练轻量网络来预测光传输，从而将路径采样与发光（emission）求值解耦，避免每次改变光照都重新采样路径。其意义在于让重光照与光照参数优化变得实时且可微。",
    "points": [
-    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
-    "随变形选择性更新纹理缓存，而非每帧全量重建。",
-    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
-    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
+    "用轻量网络从与光源无关的路径样本学习场景光传输，实现可交互重光照。",
+    "将路径采样与 emission 求值解耦，改变光照时无需重新采样路径。",
+    "代理可微，支持基于梯度的光照参数优化。",
+    "面向固定相机与材质的静态场景，属于神经渲染与重光照方向。"
    ],
    "tags": [
     "神经渲染",
-    "渲染管线"
+    "光线追踪",
+    "全局光照"
    ],
    "relevance": 2,
    "level": "专业"
-  }
- },
- {
-  "id": "6899e55b962c",
-  "url": "https://arxiv.org/abs/2611.12650",
-  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  }
- },
- {
-  "id": "f24777d5e668",
-  "url": "https://www.youtube.com/watch?v=VZfuShX693Q",
-  "title": "[video] How Neural Nets Survive Fewer Bits | Quantization",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers fundamental quantization techniques to compress neural network weights into low-bit formats like FP8, INT8, and INT4\n• explains linear quantization with scale and zero-point parameters, tuning granularity across tensors, channels, and groups\n• compares post-training quantization against quantization-aware training to preserve accuracy under reduced precision",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该视频讲解神经网络权重量化压缩到 FP8/INT8/INT4 等低位宽格式的基础技术，介绍带 scale 与 zero-point 的线性量化，以及 tensor/channel/group 不同粒度的调优方式，并对比 post-training quantization 与 quantization-aware training 在低精度下保持精度方面的差异。内容属于通用机器学习推理优化，与 CAD 几何内核和 GPU 驱动渲染均无直接关系。",
-   "points": [
-    "讲解 FP8/INT8/INT4 线性量化的 scale 与 zero-point 机制",
-    "讨论 tensor、channel、group 级量化粒度的取舍",
-    "对比 PTQ 与 QAT 在低精度下的精度保持策略",
-    "属于神经网络压缩科普，不涉及图形渲染或几何建模"
-   ],
-   "tags": [
-    "性能优化"
-   ],
-   "relevance": 1,
-   "level": "入门"
-  }
- },
- {
-  "id": "725346355a13",
-  "url": "https://dl.acm.org/doi/10.1145/3842562",
-  "title": "Stealthy Blue Noise",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a way to generate blue-noise samples that spread points evenly without forming a regular grid\n• controls the pattern by adjusting which spatial frequencies are suppressed, including across areas with different target densities\n• applies the method to stippling and spherical surfaces, producing patterns that stay visually consistent as point density changes",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该文提出一种生成 blue-noise 采样点集的方法：它能让点在空间上均匀分布，同时避免形成规则网格；通过调节被抑制的空间频率来控制图案特征，并且这种控制在不同目标密度的区域之间也能保持。方法被应用于 stippling（点画）和球面采样，使图案在点密度变化时仍保持视觉一致性。该工作属于采样与噪声生成方向，可用于渲染中的抖动、抗锯齿与随机采样。",
-   "points": [
-    "通过抑制特定空间频率来控制 blue-noise 图案的频谱特征",
-    "支持在目标密度不同的区域之间保持一致的采样质量",
-    "应用于 stippling 与球面采样，密度变化时视觉表现稳定",
-    "属于采样/噪声生成技术，可服务于渲染中的抖动与随机采样"
-   ],
-   "tags": [
-    "抗锯齿",
-    "渲染管线"
-   ],
-   "relevance": 2,
-   "level": "进阶"
   }
  },
  {
@@ -1202,9 +2221,9 @@
   "snippet": "What's Changed Fix a Python abort when a vec/mat argument has the wrong type (#1928) by @zmerlynn in #1930 Check Python binding inputs and MeshGL::Merge indices (#1931) by @zmerlynn in #1934 Reject out-of-range arguments that crashed the library (#1933) by @zmerlynn in #1936. A negative set_properti…"
  },
  {
-  "id": "60ccb3943776",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
-  "title": "wgpu-v30.0.2",
+  "id": "60e9ccf77632",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-emscripten-v30.0.2",
+  "title": "wgpu-core-deps-emscripten-v30.0.2",
   "source": "wgpu Releases",
   "topic": "general",
   "author": "cwfitzgerald",
@@ -1213,9 +2232,9 @@
   "snippet": "Release v30.0.2"
  },
  {
-  "id": "73d4b958efa0",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-types-v30.0.2",
-  "title": "wgpu-types-v30.0.2",
+  "id": "4ac32aaf10cf",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-apple-v30.0.2",
+  "title": "wgpu-core-deps-apple-v30.0.2",
   "source": "wgpu Releases",
   "topic": "general",
   "author": "cwfitzgerald",
@@ -1235,9 +2254,20 @@
   "snippet": "Release v30.0.2"
  },
  {
-  "id": "1f70bbc78b52",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-info-v30.0.2",
-  "title": "wgpu-info-v30.0.2",
+  "id": "73d4b958efa0",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-types-v30.0.2",
+  "title": "wgpu-types-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2"
+ },
+ {
+  "id": "60ccb3943776",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
+  "title": "wgpu-v30.0.2",
   "source": "wgpu Releases",
   "topic": "general",
   "author": "cwfitzgerald",
@@ -1249,6 +2279,17 @@
   "id": "c978e1d8ba71",
   "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-hal-v30.0.2",
   "title": "wgpu-hal-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2"
+ },
+ {
+  "id": "1f70bbc78b52",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-info-v30.0.2",
+  "title": "wgpu-info-v30.0.2",
   "source": "wgpu Releases",
   "topic": "general",
   "author": "cwfitzgerald",
@@ -1282,28 +2323,6 @@
   "id": "beb7913eb994",
   "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-wasm-v30.0.2",
   "title": "wgpu-core-deps-wasm-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
- },
- {
-  "id": "60e9ccf77632",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-emscripten-v30.0.2",
-  "title": "wgpu-core-deps-emscripten-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
- },
- {
-  "id": "4ac32aaf10cf",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-apple-v30.0.2",
-  "title": "wgpu-core-deps-apple-v30.0.2",
   "source": "wgpu Releases",
   "topic": "general",
   "author": "cwfitzgerald",
@@ -1477,17 +2496,6 @@
   "snippet": "Autonomous vehicle (AV) developers need reasoning models that can operate within the compute and latency constraints of an onboard system. Larger models provide..."
  },
  {
-  "id": "863e60369b68",
-  "url": "https://developer.nvidia.com/blog/agent-substrate-advancing-kubernetes-for-agents-at-scale/",
-  "title": "Agent Substrate: Advancing Kubernetes for Agents at Scale",
-  "source": "NVIDIA Technical Blog",
-  "topic": "rendering",
-  "author": "Ekin Karabulut",
-  "published": "2026-11-10T15:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "AI agents spend most of their time idle, waiting on a human prompt, a tool result or a model response. Kubernetes wasn’t built for that. Running one Pod per..."
- },
- {
   "id": "ce98a6a1f234",
   "url": "https://developer.nvidia.com/blog/start-and-restore-gpu-workloads-in-seconds-with-nvidia-snapshot/",
   "title": "Start and Restore GPU Workloads in Seconds with NVIDIA Snapshot",
@@ -1510,6 +2518,28 @@
   "snippet": "NVIDIA is announcing two open source projects for building and operating managed Kubernetes services on GPU infrastructure—NVIDIA Kubernetes Engine (NVKE) and..."
  },
  {
+  "id": "863e60369b68",
+  "url": "https://developer.nvidia.com/blog/agent-substrate-advancing-kubernetes-for-agents-at-scale/",
+  "title": "Agent Substrate: Advancing Kubernetes for Agents at Scale",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Ekin Karabulut",
+  "published": "2026-11-10T15:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "AI agents spend most of their time idle, waiting on a human prompt, a tool result or a model response. Kubernetes wasn’t built for that. Running one Pod per..."
+ },
+ {
+  "id": "79d930bc302b",
+  "url": "https://arxiv.org/abs/2611.13463",
+  "title": "A NURBS-enhanced high-order finite-volume method for compressible laminar boundary layers on curved domains with hybrid meshes",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Yisu Li",
+  "published": "2026-11-10T02:17:40.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "High-fidelity simulation of compressible laminar boundary layers on curved domains requires physical wall boundary treatment and geometric representation compatible with high-order reconstruction, since viscous shear stresses and conductive heat fluxes are concentrated in a thin near-wall region. Co…"
+ },
+ {
   "id": "29679bac2d0d",
   "url": "https://developer.nvidia.com/blog/make-a-robot-arm-feel-weightless-with-nvidia-holoscan-5/",
   "title": "Make a Robot Arm Feel Weightless with NVIDIA Holoscan 5",
@@ -1521,84 +2551,25 @@
   "snippet": "Picture guiding a robot arm by hand while its motors supply just enough torque to support its weight and keep the robot upright. This simple interaction, a..."
  },
  {
-  "id": "b4d519102979",
-  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
-  "title": "Real-Time Path Tracing in Games",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  }
+  "id": "a2ef4e9c5295",
+  "url": "https://arxiv.org/abs/2611.11470",
+  "title": "GOPR-CAD: Graph-of-Operations Progressive Reasoning for CAD Generation",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Yitian Pang",
+  "published": "2026-11-08T16:07:56.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Generating accurate CAD models requires substantial engineering expertise and careful control of geometry, topology, and mechanical constraints. Text-to-CAD aims to simplify this process, but current LLM-based methods often generate CAD programs directly. Language models remain unreliable when produ…"
  },
  {
-  "id": "e1b7dc9fdab0",
-  "url": "https://arxiv.org/abs/2611.07289",
-  "title": "Patch-Based Generalized Neural Texture Upscaling",
+  "id": "646e7777e05c",
+  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
+  "title": "Around The World, Part 34: A pretty sky",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  }
- },
- {
-  "id": "8d92922bf638",
-  "url": "https://panoskarabelas.com/blog/posts/finishing_a_game_engine/",
-  "title": "Twelve years of building a game engine, and what it means to finish one",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• reflects on twelve years of developing the open-source Spartan engine from scratch\n• explores the milestone of reaching a shippable game engine state with real-time path tracing, Lua, and visual scripting\n• shares lessons learned from solo engine development, open-source persistence, and industry career impact",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  }
- },
- {
-  "id": "4d337544856d",
-  "url": "https://www.youtube.com/watch?v=bgv1KyqB59A",
-  "title": "[video] Thompson Sampling - Explained",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains Thompson sampling as a heuristic for balancing exploration and exploitation in multi-armed bandit problems\n• visualizes sampling from Beta distributions to model reward probabilities and choose optimal actions",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  }
- },
- {
-  "id": "610a2604fb43",
-  "url": "https://www.youtube.com/watch?v=wDaFOIJ9Llo",
-  "title": "[video] Offscreen Rendering Part 2 // Vulkan For Beginners #34",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains how to handle offscreen render targets\n• presents the concepts through an ImGui system that allows the activation/deactivation of render passes at runtime\n• walks through managing descriptor sets, pipeline layouts, and frame setup across render passes",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  }
- },
- {
-  "id": "d5689684c624",
-  "url": "https://github.com/shanselman/gputaskman",
-  "title": "gputaskman - A GPU task manager for Windows, Linux, and WSL",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces an open-source terminal UI tool for inspecting per-process GPU memory and compute activity\n• supports Windows with NVIDIA/AMD telemetry and Intel WDDM activity, as well as native Linux, WSL, and Apple Silicon",
+  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
@@ -1619,18 +2590,99 @@
   }
  },
  {
-  "id": "646e7777e05c",
-  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
-  "title": "Around The World, Part 34: A pretty sky",
+  "id": "d5689684c624",
+  "url": "https://github.com/shanselman/gputaskman",
+  "title": "gputaskman - A GPU task manager for Windows, Linux, and WSL",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
+  "snippet": "• introduces an open-source terminal UI tool for inspecting per-process GPU memory and compute activity\n• supports Windows with NVIDIA/AMD telemetry and Intel WDDM activity, as well as native Linux, WSL, and Apple Silicon",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   }
+ },
+ {
+  "id": "610a2604fb43",
+  "url": "https://www.youtube.com/watch?v=wDaFOIJ9Llo",
+  "title": "[video] Offscreen Rendering Part 2 // Vulkan For Beginners #34",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains how to handle offscreen render targets\n• presents the concepts through an ImGui system that allows the activation/deactivation of render passes at runtime\n• walks through managing descriptor sets, pipeline layouts, and frame setup across render passes",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  }
+ },
+ {
+  "id": "4d337544856d",
+  "url": "https://www.youtube.com/watch?v=bgv1KyqB59A",
+  "title": "[video] Thompson Sampling - Explained",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains Thompson sampling as a heuristic for balancing exploration and exploitation in multi-armed bandit problems\n• visualizes sampling from Beta distributions to model reward probabilities and choose optimal actions",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  }
+ },
+ {
+  "id": "e1b7dc9fdab0",
+  "url": "https://arxiv.org/abs/2611.07289",
+  "title": "Patch-Based Generalized Neural Texture Upscaling",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  }
+ },
+ {
+  "id": "b4d519102979",
+  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
+  "title": "Real-Time Path Tracing in Games",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  }
+ },
+ {
+  "id": "8d92922bf638",
+  "url": "https://panoskarabelas.com/blog/posts/finishing_a_game_engine/",
+  "title": "Twelve years of building a game engine, and what it means to finish one",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• reflects on twelve years of developing the open-source Spartan engine from scratch\n• explores the milestone of reaching a shippable game engine state with real-time path tracing, Lua, and visual scripting\n• shares lessons learned from solo engine development, open-source persistence, and industry career impact",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  }
+ },
+ {
+  "id": "b54425e42ef5",
+  "url": "https://arxiv.org/abs/2611.10653",
+  "title": "FG-DSA: Frequency-Guided Depthwise Separable Attention for Efficient Dense Prediction",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Yiyao Yang",
+  "published": "2026-11-07T10:56:38.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Dense prediction and generative modeling remain challenging in resource-constrained environments, particularly because repeated downsampling can lead to the loss of spatial details and less accurate object boundaries. Although attention mechanisms have been widely adopted to address semantic ambigui…"
  },
  {
   "id": "a2d076a923d2",
@@ -1653,6 +2705,17 @@
   "published": "2026-11-06T18:03:26.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
   "snippet": "During reinforcement learning (RL) post-training, training trajectories are generated on the fly by running inference with the current policy model. For..."
+ },
+ {
+  "id": "627420d051c9",
+  "url": "https://arxiv.org/abs/2611.10063",
+  "title": "Done Is Not Correct: Measuring Silent Failures and Self-Verification Calibration When LLM Agents Take CAD Actions",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Carson Rodrigues",
+  "published": "2026-11-06T09:05:00.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "When a large language model (LLM) agent writes parametric CAD code from a natural-language specification, syntactic success decouples from semantic correctness. We release a benchmark and harness that measure this gap directly: 13 specification tasks whose every requirement maps to machine-checkable…"
  },
  {
   "id": "527bad4b47cc",
@@ -1752,6 +2815,17 @@
   "snippet": "Microsoft DirectX® 12 Agility SDK 1.620 brings DirectX Dump Files, Extended PIX Markers and more to retail, and 1.722-preview adds new DXR features. See which AMD Radeon™ GPUs support each feature and which AMD driver you need."
  },
  {
+  "id": "a2ba61e3ed25",
+  "url": "https://arxiv.org/abs/2611.05449",
+  "title": "SO(3)-Equivariant Learning on CAD Boundary Representations",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Matteo Ballegeer",
+  "published": "2026-11-03T17:51:02.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Learning on boundary representations (B-reps) requires robustness to the pose of a part, since CAD models are not stored in a canonical orientation. Existing B-rep networks either operate on world-frame coordinates and normals, and thus degrade under rotation, or encode each face in a local referenc…"
+ },
+ {
   "id": "53eb05fac6dd",
   "url": "https://developer.nvidia.com/blog/diagnose-distributed-ai-workload-failures-with-nvidia-attribution/",
   "title": "Diagnose Distributed AI Workload Failures with NVIDIA Attribution",
@@ -1829,70 +2903,14 @@
   "snippet": "NVIDIA DSX AI Factory Platform brings together technologies to help the ecosystem design, build, and operate more efficient AI factories, including open source,..."
  },
  {
-  "id": "4c29b1f2c0af",
-  "url": "https://grgkopanas.github.io/3dgs_cuda_blog/",
-  "title": "What the 3DGS Literature Left on the Table",
+  "id": "d8562ead568f",
+  "url": "https://gamedev.net/tutorials/programming/general-and-gameplay-programming/shadow-caster-volumes-for-the-culling-of-potential-shadow-casters-r2330",
+  "title": "Shadow Caster Volumes For The Culling Of Potential Shadow Casters",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-01T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a deep-dive analysis of CUDA optimization remaining in 3D Gaussian Splatting after comparison with current literature techniques\n• details five hardware-level optimizations targeting warp execution, register pressure, L2 cache, and SIMT divergence",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  }
- },
- {
-  "id": "75df9c3de10c",
-  "url": "https://lisyarus.github.io/blog/posts/revisiting-importance-sampling.html",
-  "title": "Revisiting importance sampling",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explores the theoretical variance bounds of Monte-Carlo importance sampling for sign-changing functions\n• derives the optimal sampling distribution using calculus of variations and Lagrange multipliers",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  }
- },
- {
-  "id": "28012691739d",
-  "url": "https://valdes.cc/articles/scratchytoy.html",
-  "title": "ScratchyToy",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces a prototype shader editor that combines Shadertoy-style GLSL coding with Scratch-like visual blocks\n• implements a bidirectional AST mapping that keeps text and block representations synchronized\n• supports inline expression previews with multiple evaluations for loop and function contexts",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  }
- },
- {
-  "id": "f03fac7c4c64",
-  "url": "https://devblogs.microsoft.com/directx/agilitysdk-1-620-retail-and-1-722-preview/",
-  "title": "Announcing Agility SDK 1.620 Retail and 1.722 Preview: DirectX Dump Files, Partial Graphics Programs, and So Much More!",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces the release of Agility SDK 1.620 and 1.722 preview\n• covers DirectX Dump Files, Partial Graphics Programs, Fence Barriers Tier 1, Batched Asynchronous Command Lists, and DXR Clustered Geometry with Partitioned TLAS (see below for details)\n• includes day-one PIX support and updated drivers from AMD, Intel, and NVIDIA",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  }
- },
- {
-  "id": "bc93d505c8d7",
-  "url": "https://devblogs.microsoft.com/directx/clas-ptlas-preview/",
-  "title": "[PREVIEW] Raytracing: Clustered Geometry, Partitioned TLAS, Indirect Acceleration Structure Builds",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• previews DXR Clustered Geometry and Partitioned TLAS, enabling GPU-driven efficient scene updates\n• introduces Cluster-Level Acceleration Structures (CLAS) for reusable meshlet building blocks and PTLAS for sparse partition-based TLAS updates\n• provides API walkthroughs, shader intrinsics in Shader Model 6.10, and official samples\n• additionally discusses how animated meshes are better supported",
+  "snippet": "• presents a technique for culling shadow casters by constructing a shadow-caster volume that extends the view frustum to include the light source\n• extends the method to directional lights and semi-transparent object bounds",
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
@@ -1913,28 +2931,70 @@
   }
  },
  {
-  "id": "d8562ead568f",
-  "url": "https://gamedev.net/tutorials/programming/general-and-gameplay-programming/shadow-caster-volumes-for-the-culling-of-potential-shadow-casters-r2330",
-  "title": "Shadow Caster Volumes For The Culling Of Potential Shadow Casters",
+  "id": "f03fac7c4c64",
+  "url": "https://devblogs.microsoft.com/directx/agilitysdk-1-620-retail-and-1-722-preview/",
+  "title": "Announcing Agility SDK 1.620 Retail and 1.722 Preview: DirectX Dump Files, Partial Graphics Programs, and So Much More!",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-01T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a technique for culling shadow casters by constructing a shadow-caster volume that extends the view frustum to include the light source\n• extends the method to directional lights and semi-transparent object bounds",
+  "snippet": "• announces the release of Agility SDK 1.620 and 1.722 preview\n• covers DirectX Dump Files, Partial Graphics Programs, Fence Barriers Tier 1, Batched Asynchronous Command Lists, and DXR Clustered Geometry with Partitioned TLAS (see below for details)\n• includes day-one PIX support and updated drivers from AMD, Intel, and NVIDIA",
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
   }
  },
  {
-  "id": "af5af692b191",
-  "url": "https://charlesgrassi.dev/blog/neural-volumetric-clouds/",
-  "title": "Neural Shaders, Explained With Clouds",
+  "id": "28012691739d",
+  "url": "https://valdes.cc/articles/scratchytoy.html",
+  "title": "ScratchyToy",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-01T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a walkthrough of replacing a cloud in-scattering approximation with a small trained neural network\n• details how the inputs are processed using mip-pyramid density samples and a two-hidden-layer MLP evaluated in plain HLSL\n• measures the neural model against a path-traced reference\n• compares error and performance",
+  "snippet": "• introduces a prototype shader editor that combines Shadertoy-style GLSL coding with Scratch-like visual blocks\n• implements a bidirectional AST mapping that keeps text and block representations synchronized\n• supports inline expression previews with multiple evaluations for loop and function contexts",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  }
+ },
+ {
+  "id": "75df9c3de10c",
+  "url": "https://lisyarus.github.io/blog/posts/revisiting-importance-sampling.html",
+  "title": "Revisiting importance sampling",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explores the theoretical variance bounds of Monte-Carlo importance sampling for sign-changing functions\n• derives the optimal sampling distribution using calculus of variations and Lagrange multipliers",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  }
+ },
+ {
+  "id": "4c29b1f2c0af",
+  "url": "https://grgkopanas.github.io/3dgs_cuda_blog/",
+  "title": "What the 3DGS Literature Left on the Table",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• presents a deep-dive analysis of CUDA optimization remaining in 3D Gaussian Splatting after comparison with current literature techniques\n• details five hardware-level optimizations targeting warp execution, register pressure, L2 cache, and SIMT divergence",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  }
+ },
+ {
+  "id": "513af66f2e88",
+  "url": "https://graphitemaster.github.io/Bento/index.html",
+  "title": "Bento - A shading language and shader compiler infrastructure for building shaders and shader tools",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• introduces Bento, a shading language and compiler infrastructure that lowers directly to SPIR-V, AIR, or GLSL\n• features built-in uniformity analysis, automatic workgroup barriers, memory-space-tagged references, generics, and compile-time const evaluation\n• aims to ship a C library with tools including a linker, optimizer, validator, and language server",
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
@@ -1955,14 +3015,28 @@
   }
  },
  {
-  "id": "513af66f2e88",
-  "url": "https://graphitemaster.github.io/Bento/index.html",
-  "title": "Bento - A shading language and shader compiler infrastructure for building shaders and shader tools",
+  "id": "af5af692b191",
+  "url": "https://charlesgrassi.dev/blog/neural-volumetric-clouds/",
+  "title": "Neural Shaders, Explained With Clouds",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-01T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces Bento, a shading language and compiler infrastructure that lowers directly to SPIR-V, AIR, or GLSL\n• features built-in uniformity analysis, automatic workgroup barriers, memory-space-tagged references, generics, and compile-time const evaluation\n• aims to ship a C library with tools including a linker, optimizer, validator, and language server",
+  "snippet": "• presents a walkthrough of replacing a cloud in-scattering approximation with a small trained neural network\n• details how the inputs are processed using mip-pyramid density samples and a two-hidden-layer MLP evaluated in plain HLSL\n• measures the neural model against a path-traced reference\n• compares error and performance",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  }
+ },
+ {
+  "id": "bc93d505c8d7",
+  "url": "https://devblogs.microsoft.com/directx/clas-ptlas-preview/",
+  "title": "[PREVIEW] Raytracing: Clustered Geometry, Partitioned TLAS, Indirect Acceleration Structure Builds",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• previews DXR Clustered Geometry and Partitioned TLAS, enabling GPU-driven efficient scene updates\n• introduces Cluster-Level Acceleration Structures (CLAS) for reusable meshlet building blocks and PTLAS for sparse partition-based TLAS updates\n• provides API walkthroughs, shader intrinsics in Shader Model 6.10, and official samples\n• additionally discusses how animated meshes are better supported",
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
@@ -2089,20 +3163,6 @@
   "snippet": "Release Filament 1.79.0"
  },
  {
-  "id": "4efe370000b2",
-  "url": "https://ptrtoliam.dev/blog/vkwayland/",
-  "title": "Using Vulkan on Wayland Without WSI",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-10-25T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a way to present a Vulkan frame without using libwayland or Vulkan’s Wayland WSI\n• covers device selection, DRM format modifiers, and a manual frame queue for presenting frames to the compositor",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
-  }
- },
- {
   "id": "9c2d643d36dd",
   "url": "https://danfountain.com/blog/paint-that-squishes/",
   "title": "Paint That Squishes",
@@ -2111,6 +3171,20 @@
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
   "snippet": "• details the GPU-based paint simulation behind the iOS app Fold & Squish\n• implements splats, thin-film flow, folding, rubbing, peeling, and glitter using Metal compute shader",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
+  }
+ },
+ {
+  "id": "4efe370000b2",
+  "url": "https://ptrtoliam.dev/blog/vkwayland/",
+  "title": "Using Vulkan on Wayland Without WSI",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-10-25T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• presents a way to present a Vulkan frame without using libwayland or Vulkan’s Wayland WSI\n• covers device selection, DRM format modifiers, and a manual frame queue for presenting frames to the compositor",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
@@ -2201,6 +3275,50 @@
   }
  },
  {
+  "id": "d29eb3a60700",
+  "url": "https://arxiv.org/abs/2610.34014",
+  "title": "Two-dimensional framework for modeling load transfer in nanocomposites with thin, stiff, and prestressed reinforcements",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Rohit Satish Patil",
+  "published": "2026-10-25T02:58:40.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "This paper presents a novel framework for simulating load-transfer mechanisms in nanocomposites reinforced by thin, stiff, and prestressed reinforcements, such as, e.g., nanosheets or nanoplatelets. The reinforcements are modeled as open material surfaces treated as membranes endowed with their own …"
+ },
+ {
+  "id": "22b0159832c3",
+  "url": "https://arxiv.org/abs/2610.33484",
+  "title": "Can One Hear Geometry? Gauge-Invariant Spectral Descriptors for Text-to-B-rep Retrieval",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Hongzhu Yi",
+  "published": "2026-10-24T06:20:11.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Text-to-3D solid retrieval faces a fundamental representation gap: while natural language describes intrinsic shapes, Boundary Representation (B-rep) entangles precise geometry with arbitrary variations in pose, scale, and boundary encoding conventions. Existing methods either discretize B-reps at t…"
+ },
+ {
+  "id": "5ff530d6d721",
+  "url": "https://arxiv.org/abs/2610.30974",
+  "title": "GraphCAD: Geometry-Aware Diffusion on Edge-Adjacency Graphs for CAD Generation",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Wenhao Zheng",
+  "published": "2026-10-22T09:18:07.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Generative modeling for Computer-Aided Design (CAD) remains fundamentally challenged by the need to capture the intricate interplay between discrete topological connectivity and precise spatial geometry inherent in Boundary Representations (B-reps). Existing generative approaches largely formulate C…"
+ },
+ {
+  "id": "6132e61b8627",
+  "url": "https://arxiv.org/abs/2610.30389",
+  "title": "Robust topology optimization of isogeometric Kirchhoff--Love shells by the Speed Method",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Philipp Eisenhardt",
+  "published": "2026-10-21T19:48:38.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "This paper presents a framework for robust topology optimization of Kirchhoff-Love (KL) multi-patch shells using isogeometric analysis and non-matching meshes and provides a CAD-compatible method. The material distribution is optimized via a NURBS-based level set method, enabling accurate boundary r…"
+ },
+ {
   "id": "2effc54e26dd",
   "url": "https://github.com/google/filament/releases/tag/v1.78.1",
   "title": "filament v1.78.1",
@@ -2232,6 +3350,28 @@
   "published": "2026-10-21T04:34:15.000Z",
   "fetched": "2026-11-23T12:05:15.526313Z",
   "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.10.14...weekly-2026.10.21 How-to use Download the appropriate asset for your OS below Unpack the bund…"
+ },
+ {
+  "id": "4a4eb213319f",
+  "url": "https://arxiv.org/abs/2610.26556",
+  "title": "Commutative Counterexamples to Arveson's Hyperrigidity Conjecture",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Boris Bilich",
+  "published": "2026-10-19T15:14:22.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "We construct counterexamples to Arveson's hyperrigidity conjecture for operator systems in commutative $C^*$-algebras. In each example, every irreducible representation of the $C^*$-envelope is a boundary representation, but hyperrigidity fails. The first example is the operator system of continuous…"
+ },
+ {
+  "id": "5645a90550e3",
+  "url": "https://arxiv.org/abs/2610.26506",
+  "title": "Property RD and boundary representations]{Property RD for $\\widetilde A_2$ groups\\\\and boundary representations",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Adrien Boyer",
+  "published": "2026-10-19T14:42:15.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "We develop a boundary representation approach to Rapid Decay property for groups acting on buildings of type $\\widetilde A_2$. The central estimate combines a multiplicity argument on the product of Furstenberg boundary with the Riesz--Thorin theorem. For simply transitive actions on vertices, we al…"
  },
  {
   "id": "133f804636b2",
@@ -2273,6 +3413,17 @@
   }
  },
  {
+  "id": "7af395298536",
+  "url": "https://arxiv.org/abs/2610.22865",
+  "title": "Geometric multigrid preconditioners for unfitted discretisations of the de Rham complex",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Santiago Badia",
+  "published": "2026-10-16T03:10:07.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "We propose two families of multigrid preconditioners for unfitted finite element discretisations of the Riesz maps of the de Rham complex, in H(grad), H(curl) and H(div), stabilised by cell aggregation. The first is a geometric multigrid method applied directly to the unfitted operators, on a hierar…"
+ },
+ {
   "id": "2e95aa593169",
   "url": "https://github.com/FreeCAD/FreeCAD/releases/tag/weekly-2026.10.14",
   "title": "FreeCAD Development Build weekly-2026.10.14",
@@ -2284,6 +3435,39 @@
   "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.10.07...weekly-2026.10.14 How-to use Download the appropriate asset for your OS below Unpack the bund…"
  },
  {
+  "id": "6e2029846c26",
+  "url": "https://arxiv.org/abs/2610.14633",
+  "title": "Automatic assembly modeling through attention-based assembly feature mate prediction and assembly feature pattern recognition",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Ziheng Dai",
+  "published": "2026-10-10T06:30:47.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Assembly modeling plays an important role in constructing product models, yet it is still mainly performed via interactive operations that are experience-dependent and labor-intensive. Data-driven strategies hold promise for automating this process; however, existing approaches either predict poses …"
+ },
+ {
+  "id": "c501b8c21c7b",
+  "url": "https://arxiv.org/abs/2610.14413",
+  "title": "Coarse-Graining Recursive Expert Computation: Continuation-Relative Interfaces and Failure Modes",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Shihua Yu",
+  "published": "2026-10-10T00:21:04.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Computational coarse-graining aims to replace a sequence of updates with a cheaper module while preserving task performance. We present a continuation-relative evaluation framework that assesses replacements through the computation that follows them, using downstream task quality and total execution…"
+ },
+ {
+  "id": "f1ef853984d1",
+  "url": "https://arxiv.org/abs/2610.13466",
+  "title": "A Real-World CAD Segmentation Benchmark: Comparing Rule-Based and Learning-Based Approaches through Hole Detection",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Kai Schütte",
+  "published": "2026-10-09T12:03:15.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "CAD segmentation datasets are predominantly synthetic or automatically labelled, leaving it unclear how well existing methods transfer to real-world engineering tasks. Fastener-relevant hole detection represents one such task, requiring human annotation and exhibiting greater geometric complexity th…"
+ },
+ {
   "id": "9a70487c0a1c",
   "url": "https://github.com/FreeCAD/FreeCAD/releases/tag/26.3rc1",
   "title": "FreeCAD 26.3 Release Candidate 1",
@@ -2293,6 +3477,17 @@
   "published": "2026-10-08T19:01:25.000Z",
   "fetched": "2026-11-23T12:05:15.526313Z",
   "snippet": "This is the first release candidate for FreeCAD 26.3, the first complete build of the work done since 1.1. We are near the finish line: what is needed now is testing, so that any remaining blocking bugs surface before the final release. A note on the version number: 26.3 follows 1.1. Nothing was ski…"
+ },
+ {
+  "id": "e27e0742c339",
+  "url": "https://arxiv.org/abs/2610.09896",
+  "title": "NL2Hull: A Natural Language-Driven Constrained Ship Design Decision Framework",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Wenhua Huo",
+  "published": "2026-10-07T11:55:01.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Ship-form design combines smooth geometric representation, local shape editing, and constraints on the resulting hull. We present the Natural-Language-to-Hull Framework (NL2Hull Framework), which formulates ship-form editing as a typed discrete decision problem and connects language decisions to num…"
  },
  {
   "id": "bd3fce61fb05",
@@ -2316,6 +3511,17 @@
   "snippet": "Learn how AMD Radeon GPU Analyzer 2.15 correlates pre-compiled AMD GPU code objects back to source lines, making ISA analysis and optimization far easier."
  },
  {
+  "id": "b390a18af5c5",
+  "url": "https://arxiv.org/abs/2610.06348",
+  "title": "IGA-KAN: Isogeometric Analysis with Physics-Informed Closed-Form Kolmogorov-Arnold Networks for Forward and Inverse PDEs",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Sima Naraghi",
+  "published": "2026-10-05T13:48:44.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Isogeometric analysis (IGA) solves partial differential equations accurately on exact NURBS geometry, whereas neural solvers are mesh-free but often orders of magnitude less accurate and typically trained by non-convex optimization without error control. We propose IGA-KAN, which uses local Kolmogor…"
+ },
+ {
   "id": "1a18982b394e",
   "url": "https://aras-p.info/blog/2026/10/05/Unroll-a-loop-make-shader-10x-faster/",
   "title": "Unroll a loop, make shader 10x faster",
@@ -2324,6 +3530,39 @@
   "published": "2026-10-05T10:05:10.000Z",
   "fetched": "2026-11-23T12:05:14.608870Z",
   "snippet": "Loop unrolling is complexicated. Usual knowledge is that the compiler has way more knowledge than you might have about source code and the target machine, and so you should just write a loop, and let the compiler decide what to actually do with it. This is a good rule of thumb, most of the time. The…"
+ },
+ {
+  "id": "e4cd2bc1d49e",
+  "url": "https://arxiv.org/abs/2610.04330",
+  "title": "Asymptotic Schur orthogonality for lattices",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "A. BENDIKOV",
+  "published": "2026-10-03T06:51:16.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Let $π:G\\to \\mathcal{U}(L^{2}(G/P,ν))$ be the boundary representation of a non-compact connected semisimple Lie group $G$ with finite center on its Furstenberg-Poisson boundary $(G/P,ν)$. Let $Γ\\subset G$ be a lattice in $G$ (uniform or not). We show that for any \\emph{continuous} functions $\\varphi…"
+ },
+ {
+  "id": "681dea317506",
+  "url": "https://arxiv.org/abs/2610.04092",
+  "title": "UniBRep: Learning Unified Geometry and Topology for Image-conditioned B-Rep Generation",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Haiyang Ying",
+  "published": "2026-10-02T21:59:29.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Generating a boundary representation (B-rep) conditioned on a single image requires faithful reconstruction of geometry, valid topology, and support for complex shapes. We present UniBRep, a geometry-first framework that adapts a pretrained image-to-3D model to generate a feature mesh as a unified i…"
+ },
+ {
+  "id": "680b532bba4f",
+  "url": "https://arxiv.org/abs/2610.03468",
+  "title": "A Vision-Language Model (VLM)-based Pipeline for End-to-End Procedural Modeling of Field-Grown Maize from Point Clouds",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Mozhgan Hadadi",
+  "published": "2026-10-02T15:41:28.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Editable 3D models of field-grown crops support high-throughput phenotyping and in silico breeding trials, but building them from scanned point clouds requires organ-level segmentation and fitting. Procedural generators can turn an organ-level parameter set into an analysis-suitable 3D model, but ob…"
  },
  {
   "id": "36b25d040557",
@@ -2357,6 +3596,17 @@
   "snippet": "Almost a year ago, while testing some Blender compositor related things, I noticed that their “Fast Blur” mode is not very fast in some cases, and I started to wonder maybe Blender should get a Dual Kawase blur mode, but that had limitations, and after a whole bunch of poofing around I assembled a b…"
  },
  {
+  "id": "b3f0799849c7",
+  "url": "https://arxiv.org/abs/2609.39738",
+  "title": "CNCGEN: A Dataset and Framework for Machining Process Planning and Toolpath Generation from B-rep Models",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Xiaolei Zhou",
+  "published": "2026-09-30T13:41:33.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Learning to generate machining process plans and toolpaths from B-rep CAD requires coupling discrete operation decisions with continuous tool motion as the workpiece evolves. Correctly predicting an operation sequence does not by itself ensure correct material removal, because each toolpath acts on …"
+ },
+ {
   "id": "ca02a6cc25d7",
   "url": "https://zeux.io/2026/09/30/billions-of-triangles-redux/",
   "title": "Billions of triangles redux",
@@ -2365,6 +3615,39 @@
   "published": "2026-09-30T00:00:00.000Z",
   "fetched": "2026-11-23T12:05:13.672420Z",
   "snippet": "In early September, NVIDIA released an update to their vk_lod_clusters open-source sample, that - among other things - featured a new impressive Zorah scene as a glTF file. The demo showcased the application of new driver-exposed raytracing features, specifically clustered raytracing, in combination…"
+ },
+ {
+  "id": "3936af2fc03b",
+  "url": "https://arxiv.org/abs/2609.36806",
+  "title": "CANTO: CAD-Native Transformer Operators for AI-Aided Engineering",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Daniel Leibovici",
+  "published": "2026-09-29T06:21:15.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Modern engineering systems, from automobiles to aircraft, are designed by using precise, continuous parametric computer-aided design (CAD) models. Evaluating design changes through numerical simulation requires meshing the continuous geometry, a computationally expensive and often brittle process th…"
+ },
+ {
+  "id": "3485aba7a8d5",
+  "url": "https://arxiv.org/abs/2610.14008",
+  "title": "Generalized PINN-Based Inverse Estimation of Spatially Varying Heat Transfer Coefficients with Transfer Learning",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Pradipan Maitra",
+  "published": "2026-09-28T21:29:21.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "This study investigates generalized boundary representations and transfer learning for physics-informed neural-network (PINN) estimation of spatially varying convective heat transfer coefficients (HTCs) in jet impingement cooling. Piecewise-linear (PWL) and neural-network boundary estimators are inf…"
+ },
+ {
+  "id": "968d3688d8fe",
+  "url": "https://arxiv.org/abs/2609.34494",
+  "title": "ConCAD: Constraint-Aware Image-to-CAD Generation with Dual-Granularity Rewards",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Chenxi Zhai",
+  "published": "2026-09-28T07:44:16.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Image-to-CAD generation seeks executable parametric programs that recover both the geometry and design intent of a reference object. Existing systems are commonly evaluated by validity and shape overlap, although two solids with similar volume can encode different CAD relations. We introduce ConCAD,…"
  },
  {
   "id": "7e5a2db388a6",
@@ -2389,6 +3672,28 @@
   "snippet": "What's Changed Fixes WASM bindings fail under a Content-Security-Policy without 'unsafe-eval' by @Felipe-UXD in #1851"
  },
  {
+  "id": "67f9bf6bac23",
+  "url": "https://arxiv.org/abs/2609.28601",
+  "title": "HClimRep-Ocean: A Global Ocean Emulator on an Unstructured Mesh",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Kacper Nowak",
+  "published": "2026-09-23T15:57:35.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "Machine-learning (ML) emulators for atmospheric processes have advanced rapidly in recent years, transforming weather forecasting. Although early ML ocean forecasting models now exist, they remain less developed than their atmospheric counterparts. Unlike the atmosphere, much of the ocean's kinetic …"
+ },
+ {
+  "id": "21606e91450d",
+  "url": "https://arxiv.org/abs/2609.27544",
+  "title": "Geometry-Based Metrics for Early-Stage Hull-Form Producibility Screening",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "Andrea Serani",
+  "published": "2026-09-23T08:35:08.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "This paper presents a representation-aware framework for geometry-based screening of hull-form producibility at early design stages. The proposed signature combines dimensionless total and signed developability deviation with curvature-class area fractions, distributed fields, metric-specific validi…"
+ },
+ {
   "id": "92f6db4fe1cb",
   "url": "https://gpuopen.com/learn/how-tetrahedral-cages-significantly-reduce-bvh-memory-usage/",
   "title": "How tetrahedral cages significantly reduce BVH memory usage",
@@ -2407,6 +3712,17 @@
   "published": "2026-09-16T10:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.427065Z",
   "snippet": "AMD ADLX 2.0 adds AI extensions and MCP servers to help developers build intelligent apps that can monitor, manage, and optimize AMD graphics hardware."
+ },
+ {
+  "id": "24f1a18ac757",
+  "url": "https://arxiv.org/abs/2609.35788",
+  "title": "Hybrid Reconstruction of Admissible Spline Spaces from Locally Modified Unclamped Patches for Isogeometric Analysis",
+  "source": "arXiv NURBS / B-Rep",
+  "topic": "geometry",
+  "author": "C. G. Provatidis",
+  "published": "2026-09-14T14:15:06.000Z",
+  "fetched": "2026-11-24T00:15:57.047443Z",
+  "snippet": "We propose a decoupled reconstruction framework that temporarily decomposes a NURBS representation into independent local Active Sections, enabling arbitrary local knot insertion, degree elevation, and basis modifications while preserving exact CAD geometry. However, these independent modifications …"
  },
  {
   "id": "fc3bd77478ce",

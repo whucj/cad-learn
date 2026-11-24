@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-23T12:09:32.094884Z",
+ "generatedAt": "2026-11-24T00:17:42.004296Z",
  "schedule": {
   "every": "4x-daily",
   "label": "每天 4 次",
@@ -16,131 +16,133 @@
    "topic": "geometry",
    "ok": true,
    "items": 30,
-   "added": 30
+   "added": 0
   },
   {
    "name": "arXiv NURBS / B-Rep",
    "topic": "geometry",
-   "ok": false,
-   "error": "网络错误：TimeoutException after 0:00:25.000000: Future not completed"
+   "ok": true,
+   "items": 30,
+   "added": 30
   },
   {
    "name": "OCCT Releases",
    "topic": "geometry",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "FreeCAD Releases",
    "topic": "geometry",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "CGAL Releases",
    "topic": "geometry",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "Manifold Releases",
    "topic": "geometry",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "Quaoar（Analysis Situs）博客",
    "topic": "geometry",
    "ok": true,
    "items": 1,
-   "added": 1
+   "added": 0
   },
   {
    "name": "arXiv cs.GR 图形学",
    "topic": "rendering",
-   "ok": false,
-   "error": "网络错误：TimeoutException after 0:00:25.000000: Future not completed"
+   "ok": true,
+   "items": 30,
+   "added": 29
   },
   {
    "name": "Graphics Programming Weekly",
    "topic": "rendering",
    "ok": true,
    "items": 40,
-   "added": 38
+   "added": 0
   },
   {
    "name": "MJP 博客",
    "topic": "rendering",
    "ok": true,
    "items": 40,
-   "added": 40
+   "added": 0
   },
   {
    "name": "Aras Pranckevičius 博客",
    "topic": "rendering",
    "ok": true,
    "items": 40,
-   "added": 40
+   "added": 0
   },
   {
    "name": "Interplay of Light",
    "topic": "rendering",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "NVIDIA Technical Blog",
    "topic": "rendering",
    "ok": true,
    "items": 40,
-   "added": 40
+   "added": 3
   },
   {
    "name": "AMD GPUOpen",
    "topic": "rendering",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "Filament Releases",
    "topic": "rendering",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "meshoptimizer Releases",
    "topic": "rendering",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "zeux.io（Arseny Kapoulkine）",
    "topic": "rendering",
    "ok": true,
    "items": 40,
-   "added": 40
+   "added": 0
   },
   {
    "name": "three.js Releases",
    "topic": "general",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   },
   {
    "name": "wgpu Releases",
    "topic": "general",
    "ok": true,
    "items": 10,
-   "added": 10
+   "added": 0
   }
  ]
 }
