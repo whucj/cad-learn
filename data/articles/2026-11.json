@@ -82,6 +82,81 @@
   }
  },
  {
+  "id": "2fc330fbd5a2",
+  "url": "https://arxiv.org/abs/2611.29185",
+  "title": "Area Stability for Largest Small Polygons",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "José Ayala Hoffmann",
+  "published": "2026-11-22T03:22:52.000Z",
+  "fetched": "2026-11-24T04:00:18.321391Z",
+  "snippet": "We develop a second order calculus for area maximisation among small polygons of diameter at most one, culminating in rigorous computational proofs of stationarity, spectral stability and strict local maximality modulo orientation preserving Euclidean motions for the polygons $Q_n$, whose diameter g…",
+  "ai": {
+   "summary": "本文研究直径不超过 1 的小多边形（small polygons）的面积最大化问题，针对一类特定多边形 Q_n（其直径图由 n-1 个顶点的环和一条悬挂边组成，n 为 6 到 64 的偶数），建立了二阶变分 calculus。通过正乘子、独立活跃约束梯度和负的约化 Hessian 谱，证明了 Q_n 在模去保向欧氏运动下的严格局部极大性，并利用向外圆整区间算术给出了存在性证明和显式的邻域半径与二次面积下降界。该工作为小多边形的面积稳定性提供了严格计算证明，并展示了约化谱在检测二阶退化与不稳定性的作用。",
+   "points": [
+    "针对直径图含环和悬挂边的偶数边小多边形 Q_n，建立了面积最大化的二阶分析框架。",
+    "利用正乘子、独立活跃约束梯度和负约化 Hessian 谱，证明了 Q_n 的严格局部极大性。",
+    "通过向外圆整区间算术，严格验证了 Q_n 的严格凸性和所有约化特征值为负。",
+    "给出了显式的邻域半径和二次面积下降界，并揭示了约化谱检测二阶退化的能力。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "396b5efd2102",
+  "url": "https://arxiv.org/abs/2611.29166",
+  "title": "Improved Lower Bound on the Hadwiger-Debrunner Numbers",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Chaya Keller",
+  "published": "2026-11-22T02:52:46.000Z",
+  "fetched": "2026-11-24T04:00:18.321391Z",
+  "snippet": "The celebrated $(p,q)$-theorem of Alon and Kleitman asserts that for any $d \\in \\mathbb{N}$ and any $p \\geq q \\geq d+1$, every family of convex sets in $\\mathbb{R}^d$ in which among any $p$ sets, some $q$ intersect, can be pierced by $c(p,q,d)$ points. The minimum numbers $c(p,q,d)$ are called the H…",
+  "ai": {
+   "summary": "本文研究计算几何中 Hadwiger-Debrunner 数 HD_d(p,q) 的下界，即用点穿透满足 (p,q) 相交性质的凸集族所需的最少点数。作者构造一族平行多面体（parallelotopes），并借助超图容器方法（hypergraph container method）证明 HD_d(p,d+1) ≥ p^{d-o(1)}，更一般地 HD_d(p,q) ≥ p^{(q-1)/(q-d)-o(1)}。该结果在 VC 维有界的集族范围内与已知上界仅差 polylog 因子，推进了这一长期未解问题。",
+   "points": [
+    "给出任意维 d≥2 时 HD_d(p,d+1) 的 p^{d-o(1)} 下界，推广到一般 q 的指数 (q-1)/(q-d)。",
+    "下界由一族平行多面体构造得到，证明核心工具是超图容器方法。",
+    "在 VC 维有界的集族中，该界与上界仅差 polylog 因子，接近紧致。",
+    "属于纯组合几何的穿透数问题，与 CAD 几何内核及 GPU 渲染无直接关联。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "3a7c91c7aa1b",
+  "url": "https://arxiv.org/abs/2611.29163",
+  "title": "Inclusive Hand Pose Estimation via Topology-Aware Distillation and Progressive Kinematic Reasoning",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Kanglei Zhou",
+  "published": "2026-11-22T02:48:32.000Z",
+  "fetched": "2026-11-24T04:00:32.658509Z",
+  "snippet": "Hand pose estimation aims to recover the spatial configuration of hand joints from visual observations and serves as a fundamental perception module for downstream systems that rely on complete and topologically consistent hand representations. Most existing methods are developed under the assumptio…",
+  "ai": {
+   "summary": "该论文研究手部姿态估计在运动链结构不完整（部分关节持续缺失）时的鲁棒性问题，构建了生理约束基准 IncNYU，并提出 InsHaPE 框架。方法基于分层运动学建模，包含拓扑感知蒸馏（从完整手表示迁移关节级与关系先验）和渐进式运动学推理（沿运动链结构化推断）两个组件。实验表明其在结构缺失下更鲁棒，同时在完整手上保持竞争力。该工作属于计算机视觉中的人体/手部姿态估计，与 CAD 几何内核及 GPU 渲染无直接关联。",
+   "points": [
+    "构建 IncNYU 基准，通过形态学修改模拟手部结构不完整并保留参考位置",
+    "提出拓扑感知蒸馏，从完整手模型迁移关节级与关系先验作为初始化",
+    "渐进式运动学推理沿运动链进行结构化推断，应对严重结构变化",
+    "在 NYU/IncNYU 与 MSRA 上验证鲁棒性提升，完整手性能保持竞争水平"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
+ },
+ {
   "id": "9d15d4a68950",
   "url": "https://quaoar.su/blog/page/gipoteza-kloda",
   "title": "Гипотеза Клода",
@@ -103,6 +178,110 @@
    ],
    "relevance": 1,
    "level": "入门"
+  }
+ },
+ {
+  "id": "c0ba46db18f8",
+  "url": "https://arxiv.org/abs/2611.28842",
+  "title": "Learning How a Body Moves: Few-Shot Body Inference for Visual World Models of Animated Characters",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Amarnath R",
+  "published": "2026-11-21T14:45:28.000Z",
+  "fetched": "2026-11-24T04:00:32.658509Z",
+  "snippet": "Two visually identical animated characters can respond differently to the same action command because their body dynamics differ. For example, a stiff blob and its bouncy twin reach different heights when both receive the jump command. Given only the first frame and the action command, a visual worl…",
+  "ai": {
+   "summary": "该论文研究动画角色的视觉世界模型：外观相同的角色因身体动力学不同，对同一动作指令的反应也不同，仅凭首帧和动作指令无法区分。作者提出 in-context world model，将角色其他动作片段编码为 body representation，并用对比损失区分外观相似的角色；同时发布 ToonTwins 基准（144 个 2D 卡通角色，按动力学分组）并在 DeformingThings4D 的 32 个动画动物上评测。结果显示，在未见形状上识别正确孪生角色的准确率为 85.9%（transformer 基线 76.7%），对比损失贡献过半增益，动物数据上路径预测误差降低 8.5%。",
+   "points": [
+    "提出 in-context world model，用角色其他动作片段编码 body representation 以区分外观相同但动力学不同的角色",
+    "构建 ToonTwins 基准：144 个 2D 卡通角色，每四个一组仅动力学 profile 不同",
+    "对比损失是主要增益来源，贡献超过一半的识别提升",
+    "在 DeformingThings4D 动画动物上平均路径预测误差降低 8.5%"
+   ],
+   "tags": [
+    "神经渲染",
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "62d620c00289",
+  "url": "https://arxiv.org/abs/2611.28793",
+  "title": "STAC++: Plug-and-Play Adaptive Spatio-Temporal Aware Cache Compression for Streaming 3D Reconstruction",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Boyi Zhu",
+  "published": "2026-11-21T13:12:41.000Z",
+  "fetched": "2026-11-24T04:00:32.658509Z",
+  "snippet": "Streaming 3D reconstruction must preserve geometry under limited memory, yet STAC's fixed-resolution spatial key-value (KV) cache grows as scenes expand. We propose STAC++, a plug-and-play, training-free framework that compresses and reuses spatial memory for long-term reconstruction in unbounded sc…",
+  "ai": {
+   "summary": "STAC++ 针对流式三维重建中固定分辨率空间 KV 缓存随场景扩张而膨胀的问题，提出免训练、可插拔的缓存压缩框架。它用自适应空间 KV 缓存（ASKC）把 KV 状态组织成八叉树，在不同区域和层采用自适应分辨率；用响应感知缓存压缩（RACC）根据注意力输出变化指导 KV 合并，在节省存储与保持几何之间取得平衡；用时间上下文精化（TCR）复用缓存中间特征，只重算骨干网络末端，以利用后续观测修正历史预测。集成到四个预训练流式骨干后，该方法显著降低空间内存占用，并在长序列和大场景上保持有竞争力的重建质量。",
+   "points": [
+    "ASKC 用八叉树按区域和层自适应分配 KV 缓存分辨率，替代固定分辨率缓存。",
+    "RACC 以注意力输出变化为准则合并 KV，兼顾存储压缩与几何保真。",
+    "TCR 复用缓存特征并只重算骨干网络末端，用后续观测精化历史重建。",
+    "在四个流式骨干上即插即用，长序列与大场景下内存下降且质量保持。"
+   ],
+   "tags": [
+    "三维重建",
+    "缓存压缩",
+    "八叉树",
+    "性能优化"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "87bf395614dd",
+  "url": "https://arxiv.org/abs/2611.28495",
+  "title": "Approximate Map Matching under Realistic Assumptions",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Lindsey Deryckere",
+  "published": "2026-11-21T02:28:18.000Z",
+  "fetched": "2026-11-24T04:00:18.321391Z",
+  "snippet": "Given a graph $G=(V,E)$ and a polygonal curve $P$ of complexity $n$ in $\\mathbb{R}^d$, we study the map matching problem of computing a path in $G$ that minimises the Fréchet distance to $P$. Chen, Driemel, Guibas, Nguyen and Wenk (ALENEX 2011) gave a near-linear time $(1+\\varepsilon)$-approximation…",
+  "ai": {
+   "summary": "本文研究地图匹配问题：给定图 G 与折线 P，求 G 中与 P 的 Fréchet 距离最小的路径。已有工作（Chen 等，ALENEX 2011）在 G 为 λ-low-dense、P 为 c-packed 时给出近线性时间的 (1+ε) 近似。本文放宽这些假设：当 P 为 c-packed 而 G 任意时，给出 Õ(cn + c²|E|) 时间算法；当 G 与 P 均为 λ-low-dense 时，给出 Õ(λ²((n|V|)^{1-1/d}+n+|V|)) 期望时间算法，平面情形降为 Õ(λ²(n+|V|))。",
+   "points": [
+    "放宽了地图匹配近似算法对图与曲线的密度假设",
+    "任意图 + c-packed 曲线：Õ(cn + c²|E|) 时间 (1+ε) 近似",
+    "双 λ-low-dense 情形：高维 Õ(λ²((n|V|)^{1-1/d}+n+|V|))，平面 Õ(λ²(n+|V|))",
+    "核心工具是 Fréchet 距离近似与低密度结构的组合"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "8ed66a0af2ec",
+  "url": "https://arxiv.org/abs/2611.28401",
+  "title": "A Homotopic Kuratowski Theorem",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Loïc Dubois",
+  "published": "2026-11-20T23:09:43.000Z",
+  "fetched": "2026-11-24T04:00:18.321391Z",
+  "snippet": "We prove that if a map from a graph G to a compact orientable surface, possibly with boundary, cannot be deformed so as to remove all crossings, then neither can its restriction to some subgraph of G with at most 72 vertices of degree other than two. On the sphere, this is Kuratowski's theorem; in c…",
+  "ai": {
+   "summary": "本文研究图在可定向曲面上的嵌入障碍问题，证明若图到曲面的映射无法通过形变消除所有交叉，则存在一个至多含72个非二度顶点的子图同样不可嵌入。方法将问题归约为带顺序约束的圆盘平面性判定，并利用同伦版本的深度优先搜索树（经典平面性测试和 Kuratowski 子图提取的基础）来识别小障碍。该结果推广了球面上的 Kuratowski 定理，并揭示了曲面嵌入最小障碍的规模与亏格相关。",
+   "points": [
+    "证明任意不可嵌入可定向曲面的图映射，都存在一个至多72个非二度顶点的子图作为障碍。",
+    "将曲面嵌入问题归约为带顺序约束的圆盘平面性判定。",
+    "核心工具是同伦版本的深度优先搜索树，用于提取小规模 Kuratowski 型子图。",
+    "该定理在球面上退化为经典 Kuratowski 定理，并说明曲面嵌入障碍的规模随亏格增长。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 2,
+   "level": "专业"
   }
  },
  {
@@ -782,6 +961,33 @@
    ],
    "relevance": 1,
    "level": "专业"
+  }
+ },
+ {
+  "id": "6350fc0c2410",
+  "url": "https://arxiv.org/abs/2611.28114",
+  "title": "Temporal Persistence for Stylized Rendering: Historical Image Storage and Reconstruction",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Daniel Szelogowski",
+  "published": "2026-11-18T04:54:35.000Z",
+  "fetched": "2026-11-24T04:00:32.658509Z",
+  "snippet": "The overlapping silhouettes and gradual fading in The Legend of Zelda: Majora's Mask (released April 27, 2000) produce a distinctive depiction of motion blur, in which earlier scene states remain visible as part of the current image. Reproducing this appearance in a modern renderer involves decision…",
+  "ai": {
+   "summary": "本文研究如何复现《塞尔达传说：梅祖拉的假面》中重叠轮廓与渐隐的拖影风格，通过完整图像历史、共享图像区域和选择性保留像素变化三种策略在 Godot 引擎中实现。实验表明，半浮点存储可将历史分配减半，并在 720p/1080p 下分别将存储阶段中位耗时降低 2.40 倍和 1.73 倍；自适应实验进一步分析了重建元数据与分配对内存节省的影响，其中稀疏表示在低分辨率下减少 83.81% 分配但 GPU 耗时增至 445.25 倍。",
+   "points": [
+    "提出基于历史图像存储与重建的时序持久化方法，复现风格化运动模糊效果。",
+    "半浮点存储有效降低历史分配与存储阶段耗时，且保持源精度。",
+    "稀疏表示大幅减少内存分配，但 GPU 耗时显著增加，揭示内存与性能的权衡。",
+    "在 Godot 引擎中实现并与独立合成参考进行对比评估。"
+   ],
+   "tags": [
+    "渲染管线",
+    "性能优化",
+    "着色器"
+   ],
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -1838,34 +2044,61 @@
   }
  },
  {
-  "id": "8cb2d0d26950",
-  "url": "https://vulkan.org/events/vulkanised-2027",
-  "title": "Vulkanised and Real-Time Shading Symposium 2027",
+  "id": "f24777d5e668",
+  "url": "https://www.youtube.com/watch?v=VZfuShX693Q",
+  "title": "[video] How Neural Nets Survive Fewer Bits | Quantization",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
+  "snippet": "• covers fundamental quantization techniques to compress neural network weights into low-bit formats like FP8, INT8, and INT4\n• explains linear quantization with scale and zero-point parameters, tuning granularity across tensors, channels, and groups\n• compares post-training quantization against quantization-aware training to preserve accuracy under reduced precision",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
+   "summary": "该视频讲解神经网络权重量化压缩到 FP8/INT8/INT4 等低位宽格式的基础技术，介绍带 scale 与 zero-point 的线性量化，以及 tensor/channel/group 不同粒度的调优方式，并对比 post-training quantization 与 quantization-aware training 在低精度下保持精度方面的差异。内容属于通用机器学习推理优化，与 CAD 几何内核和 GPU 驱动渲染均无直接关系。",
    "points": [
-    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
-    "设有光线追踪、神经渲染与生产案例分享",
-    "包含 Slang、着色器语言、工具链与性能优化专题",
-    "早鸟注册截止 2027 年 1 月 15 日"
+    "讲解 FP8/INT8/INT4 线性量化的 scale 与 zero-point 机制",
+    "讨论 tensor、channel、group 级量化粒度的取舍",
+    "对比 PTQ 与 QAT 在低精度下的精度保持策略",
+    "属于神经网络压缩科普，不涉及图形渲染或几何建模"
    ],
    "tags": [
-    "Vulkan",
-    "GPU驱动渲染",
-    "着色器",
-    "光线追踪"
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "c17e0fe2be1a",
+  "url": "https://arxiv.org/abs/2611.17185",
+  "title": "Neural Render Proxies for Interactive and Differentiable Lighting",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• introduces a scene-specific neural render proxy for interactive, differentiable relighting of static scenes with fixed cameras and materials\n• trains a lightweight network from light-agnostic path samples to predict transport\n• decoupling path sampling from emission evaluation",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该工作提出一种场景特定的神经渲染代理（neural render proxy），用于在固定相机与材质的静态场景中实现可交互、可微的重光照。方法从与光源无关的路径样本训练轻量网络来预测光传输，从而将路径采样与发光（emission）求值解耦，避免每次改变光照都重新采样路径。其意义在于让重光照与光照参数优化变得实时且可微。",
+   "points": [
+    "用轻量网络从与光源无关的路径样本学习场景光传输，实现可交互重光照。",
+    "将路径采样与 emission 求值解耦，改变光照时无需重新采样路径。",
+    "代理可微，支持基于梯度的光照参数优化。",
+    "面向固定相机与材质的静态场景，属于神经渲染与重光照方向。"
+   ],
+   "tags": [
+    "神经渲染",
+    "光线追踪",
+    "全局光照"
    ],
    "relevance": 2,
-   "level": "入门"
+   "level": "专业"
   }
  },
  {
@@ -1898,30 +2131,33 @@
   }
  },
  {
-  "id": "f24777d5e668",
-  "url": "https://www.youtube.com/watch?v=VZfuShX693Q",
-  "title": "[video] How Neural Nets Survive Fewer Bits | Quantization",
+  "id": "8cb2d0d26950",
+  "url": "https://vulkan.org/events/vulkanised-2027",
+  "title": "Vulkanised and Real-Time Shading Symposium 2027",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers fundamental quantization techniques to compress neural network weights into low-bit formats like FP8, INT8, and INT4\n• explains linear quantization with scale and zero-point parameters, tuning granularity across tensors, channels, and groups\n• compares post-training quantization against quantization-aware training to preserve accuracy under reduced precision",
+  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "该视频讲解神经网络权重量化压缩到 FP8/INT8/INT4 等低位宽格式的基础技术，介绍带 scale 与 zero-point 的线性量化，以及 tensor/channel/group 不同粒度的调优方式，并对比 post-training quantization 与 quantization-aware training 在低精度下保持精度方面的差异。内容属于通用机器学习推理优化，与 CAD 几何内核和 GPU 驱动渲染均无直接关系。",
+   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
    "points": [
-    "讲解 FP8/INT8/INT4 线性量化的 scale 与 zero-point 机制",
-    "讨论 tensor、channel、group 级量化粒度的取舍",
-    "对比 PTQ 与 QAT 在低精度下的精度保持策略",
-    "属于神经网络压缩科普，不涉及图形渲染或几何建模"
+    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
+    "设有光线追踪、神经渲染与生产案例分享",
+    "包含 Slang、着色器语言、工具链与性能优化专题",
+    "早鸟注册截止 2027 年 1 月 15 日"
    ],
    "tags": [
-    "性能优化"
+    "Vulkan",
+    "GPU驱动渲染",
+    "着色器",
+    "光线追踪"
    ],
-   "relevance": 1,
+   "relevance": 2,
    "level": "入门"
   }
  },
@@ -2103,36 +2339,6 @@
   }
  },
  {
-  "id": "c17e0fe2be1a",
-  "url": "https://arxiv.org/abs/2611.17185",
-  "title": "Neural Render Proxies for Interactive and Differentiable Lighting",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces a scene-specific neural render proxy for interactive, differentiable relighting of static scenes with fixed cameras and materials\n• trains a lightweight network from light-agnostic path samples to predict transport\n• decoupling path sampling from emission evaluation",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该工作提出一种场景特定的神经渲染代理（neural render proxy），用于在固定相机与材质的静态场景中实现可交互、可微的重光照。方法从与光源无关的路径样本训练轻量网络来预测光传输，从而将路径采样与发光（emission）求值解耦，避免每次改变光照都重新采样路径。其意义在于让重光照与光照参数优化变得实时且可微。",
-   "points": [
-    "用轻量网络从与光源无关的路径样本学习场景光传输，实现可交互重光照。",
-    "将路径采样与 emission 求值解耦，改变光照时无需重新采样路径。",
-    "代理可微，支持基于梯度的光照参数优化。",
-    "面向固定相机与材质的静态场景，属于神经渲染与重光照方向。"
-   ],
-   "tags": [
-    "神经渲染",
-    "光线追踪",
-    "全局光照"
-   ],
-   "relevance": 2,
-   "level": "专业"
-  }
- },
- {
   "id": "03e88dffee7f",
   "url": "https://arxiv.org/abs/2611.19600",
   "title": "The Deepest Pairs of Points Are Not as Deep as Conjectured",
@@ -2141,7 +2347,21 @@
   "author": "Herbert Edelsbrunner",
   "published": "2026-11-14T20:15:27.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "Given any finite set of points in $\\mathbb{R}^2$, Neumann-Lara and Urrutia \\cite{NLUr88} proved in 1988 that there is always a pair such that every circle through the two points encloses a positive fraction of all points. While Edelsbrunner et al.\\ \\cite{EHSS89} showed that the fraction is at least …"
+  "snippet": "Given any finite set of points in $\\mathbb{R}^2$, Neumann-Lara and Urrutia \\cite{NLUr88} proved in 1988 that there is always a pair such that every circle through the two points encloses a positive fraction of all points. While Edelsbrunner et al.\\ \\cite{EHSS89} showed that the fraction is at least …",
+  "ai": {
+   "summary": "该文研究平面点集的“最深点对”问题：Neumann-Lara 与 Urrutia 在 1988 年证明，对任意有限点集，总存在一对点，使得经过这两点的每个圆都包含全体点中一个正比例的点；Edelsbrunner 等人随后给出了该比例的下界。本文推翻或修正了此前关于该比例最优值的猜想，给出更精确的界或反例。属于纯计算几何的理论结果，与 CAD 几何内核和 GPU 渲染均无直接关系。",
+   "points": [
+    "研究平面点集中“最深点对”的圆包含比例问题，属经典计算几何理论。",
+    "回顾 Neumann-Lara–Urrutia 的存在性结论与 Edelsbrunner 等人的下界。",
+    "指出此前关于该比例最优值的猜想不成立，给出新的界或构造。",
+    "结论为纯理论，不涉及 B-Rep、NURBS、网格或渲染管线。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "303d03200480",
@@ -2152,7 +2372,21 @@
   "author": "Anastasiia Tkachenko",
   "published": "2026-11-14T19:53:45.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "We study the problem of computing an independent set of size three in disk graphs, where vertices correspond to disks in the plane and two vertices are adjacent if their disks intersect. While computing a maximum independent set in disk graphs is NP-hard, the fixed-size case admits more efficient so…"
+  "snippet": "We study the problem of computing an independent set of size three in disk graphs, where vertices correspond to disks in the plane and two vertices are adjacent if their disks intersect. While computing a maximum independent set in disk graphs is NP-hard, the fixed-size case admits more efficient so…",
+  "ai": {
+   "summary": "本文研究圆盘图（disk graph）中大小为三的独立集计算问题：顶点对应平面上的圆盘，两圆盘相交则相邻。虽然圆盘图的最大独立集问题是 NP-hard，但固定大小的情形可以更高效地求解。文章针对 k=3 的固定规模情形给出算法结果，属于纯计算几何的图算法研究。",
+   "points": [
+    "研究对象是圆盘图：顶点为平面圆盘，相交关系定义邻接。",
+    "最大独立集在圆盘图上 NP-hard，固定大小情形是主要突破口。",
+    "聚焦大小为三的独立集计算，给出相应算法。",
+    "属于计算几何理论算法，不涉及 CAD 几何内核或 GPU 渲染。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "02e137f3e654",
@@ -2163,7 +2397,23 @@
   "author": "Cole Brower",
   "published": "2026-11-13T22:13:51.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Many scientific simulations, from molecular chemistry to materials science, spend the majority of their execution time computing high-precision dense general..."
+  "snippet": "Many scientific simulations, from molecular chemistry to materials science, spend the majority of their execution time computing high-precision dense general...",
+  "ai": {
+   "summary": "NVIDIA cuBLAS 在 CUDA Toolkit 13.4.2 中引入 Ozaki-II 和 2M 算法，将 FP64 矩阵乘法（DGEMM/ZGEMM）映射到整数 Tensor Cores 上执行，同时保持完整双精度精度。Ozaki-II 利用中国剩余定理减少整数乘法次数，2M 方法将复数矩阵乘法从四次实数乘法降为两次。在 NVIDIA GB200 等硬件上，DGEMM 和 ZGEMM 分别获得最高 5.5 倍和 5 倍加速，并在量子化学 CCSD 和材料科学 BerkeleyGW 应用中验证了端到端性能提升。",
+   "points": [
+    "cuBLAS 通过将 FP64 拆分为整数片段在 Tensor Cores 上计算，实现无损精度的 DGEMM/ZGEMM 加速。",
+    "Ozaki-II 基于中国剩余定理，使 Tensor Core GEMM 数量随模数线性增长，相比 Ozaki-I 减少约一半计算量。",
+    "2M 算法将复数矩阵乘法从四次实数乘法缩减为两次，ZGEMM 在 GB200 上获得 5 倍加速。",
+    "在 CCSD 和 BerkeleyGW 实际应用中，新算法带来 1.4 倍至 6.6 倍的端到端加速。"
+   ],
+   "tags": [
+    "GPU架构",
+    "性能优化",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
  },
  {
   "id": "4194ee659db7",
@@ -2174,7 +2424,23 @@
   "author": "Akhilesh Mishra",
   "published": "2026-11-13T21:17:17.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Imaging black holes is challenging because they are distant and appear tiny in the sky—for example, M87*’s observed ring spans just 42 microarcseconds. The..."
+  "snippet": "Imaging black holes is challenging because they are distant and appear tiny in the sky—for example, M87*’s observed ring spans just 42 microarcseconds. The...",
+  "ai": {
+   "summary": "NVIDIA cuPhoton.xBeam 是面向事件视界望远镜（EHT）等射电干涉测量的 GPU 加速 FX 相关器，将望远镜电压记录转换为可见度数据。它读取 VDIF 帧，进行延迟与条纹校正、FFT 信道化、台站对交叉相乘，并输出 DiFX SWIN 或 xbeam-v1 格式。在 64 块 GPU 的 Vera Rubin NVL72 系统上，10 TB 数据集仅用 70 秒完成相关处理，相比 x86 CPU 基线加速约 460 倍。文章还介绍了通过 --devices 和 --shard-count 等参数进行多 GPU 与多节点扩展，以及 AI 代理编排端到端流程的方法。",
+   "points": [
+    "cuPhoton.xBeam 是 GPU 加速的 FX 相关器，用于射电干涉测量，将电压数据转换为可见度。",
+    "核心流程包括 VDIF 帧解析、延迟/条纹校正、FFT 信道化、台站对交叉相乘和格式输出。",
+    "在 64 GPU 系统上处理 10 TB 数据仅需 70 秒，相比 CPU 基线加速 460 倍。",
+    "支持单节点多 GPU 与多节点分片扩展，并可通过 AI 代理自动生成作业规范并监控执行。"
+   ],
+   "tags": [
+    "GPU驱动渲染",
+    "性能优化",
+    "GPU架构"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
  },
  {
   "id": "a05643d8281c",
@@ -2185,7 +2451,23 @@
   "author": "Nikshay Shrivastava",
   "published": "2026-11-13T18:57:10.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "AI applications at the edge often need to run multiple neural networks within limited compute and power budgets. NVIDIA Deep Learning Accelerator (DLA)..."
+  "snippet": "AI applications at the edge often need to run multiple neural networks within limited compute and power budgets. NVIDIA Deep Learning Accelerator (DLA)...",
+  "ai": {
+   "summary": "文章介绍如何通过 cuda-bindings 13.3.0 新增的 cuda.bindings.cudla 模块，在 Python 中直接调用 cuDLA C++ API，在 NVIDIA Jetson AGX Orin 的 DLA 硬件上执行神经网络推理。核心流程包括：初始化 CUDA、以 hybrid 模式创建 DLA 设备、从内存加载 TensorRT 编译生成的 DLA loadable、查询张量描述符、分配并注册 GPU 缓冲区、在 CUDA stream 上提交任务并同步读回结果，从而实现 DLA 推理与 GPU 前后处理的协同。该绑定同样适用于 RTX Spark 平台，扩展了 DLA 的使用范围。",
+   "points": [
+    "cuda.bindings.cudla 将 cuDLA C++ API 以 Cython 薄封装暴露给 Python，支持 hybrid 模式下 CUDA stream 协调 DLA 与 GPU 工作。",
+    "完整推理生命周期分九步：初始化 CUDA、创建 DLA 设备、加载 loadable、查询张量、分配并注册缓冲区、拷贝输入、提交任务、同步读回。",
+    "DLA loadable 由 TensorRT trtexec 以 --buildDLAStandalone 编译生成，推理阶段仅需 JetPack 自带的 libcudla.so。",
+    "所有 cuDLA 调用失败时抛出 Python 异常，可通过 cudla.Status 枚举做细粒度错误处理。"
+   ],
+   "tags": [
+    "GPU架构",
+    "性能优化",
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "dbb6a7059ae0",
@@ -2196,7 +2478,21 @@
   "author": "Fatima Fall",
   "published": "2026-11-13T17:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Running a frontier-scale model locally means keeping all its weights in GPU memory; the largest models no longer fit on one machine. Two NVIDIA DGX Stations..."
+  "snippet": "Running a frontier-scale model locally means keeping all its weights in GPU memory; the largest models no longer fit on one machine. Two NVIDIA DGX Stations...",
+  "ai": {
+   "summary": "该文介绍如何在两台 NVIDIA DGX Station 上通过 ConnectX-8 RDMA 与 vLLM 的 tensor parallelism（TP=2）本地部署 753B 参数的 MoE 模型 GLM-5.3 NVFP4，解决单卡 252 GB HBM3e 无法容纳约 464 GB 权重的问题。两台机器各持一半权重并共同参与计算，由 Station A 暴露单一 OpenAI 兼容端点，并启用多 token 预测、FP8 KV-cache 与前缀缓存。AIPerf 在 SPEED-Bench Coding 上的测试显示并发 16 时输出吞吐峰值 607.8 tokens/s，并发 32 时降至 385.0 tokens/s、平均延迟 453.5 s。内容属于大模型推理部署运维，与图形学无关。",
+   "points": [
+    "用 TP=2 将 753B MoE 模型权重拆分到两台 GB300 DGX Station，避免 CPU offload。",
+    "通过 ConnectX-8 RDMA 双 rail 互联，Station A 提供统一 OpenAI 兼容 API。",
+    "vLLM 启用多 token 预测、FP8 KV-cache 与前缀缓存以提升并发吞吐。",
+    "基准显示并发 16 时吞吐最高，继续加压后吞吐下降、延迟显著上升。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "647ecc584acf",
@@ -2207,7 +2503,21 @@
   "author": "John Malaska",
   "published": "2026-11-13T17:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Human motion offers roboticists a great starting point for teaching humanoid robots how to move. A human demonstration captures the coordination and timing..."
+  "snippet": "Human motion offers roboticists a great starting point for teaching humanoid robots how to move. A human demonstration captures the coordination and timing...",
+  "ai": {
+   "summary": "NVIDIA SOMA Retargeter 是一个开源工具，用于将人类动作数据（BVH 格式，基于 SOMA 骨架）重定向到不同人形机器人的比例与关节结构上。其流程为：先按机器人比例缩放动作目标，再用基于 NVIDIA Warp 的 Newton 求解器做逆运动学求解，最后进行脚部着地等后处理修正。v0.2 版本为 Unitree G1/H2、Booster T1、AgiBot X2 Ultra/A3T3 五款机器人提供了参考配置与重定向示例，输出 CSV 轨迹可供策略训练使用。",
+   "points": [
+    "以 SOMA 骨架作为统一的人类动作表示，兼容动捕数据、视频重建（GEM-X）与生成模型（Kimodo、ARDY）等多种来源。",
+    "重定向管线包含比例缩放、基于 Warp/Newton 的逆运动学求解与脚部着地后处理。",
+    "v0.2 提供五款人形机器人的参考配置与成对的人-机器人动作示例。",
+    "输出 CSV 轨迹可转换为 SONIC、ProtoMotions 等策略训练所需的动作库格式。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "40a985c45da1",
@@ -2218,18 +2528,23 @@
   "author": "zmerlynn",
   "published": "2026-11-13T02:30:58.000Z",
   "fetched": "2026-11-23T12:05:14.723345Z",
-  "snippet": "What's Changed Fix a Python abort when a vec/mat argument has the wrong type (#1928) by @zmerlynn in #1930 Check Python binding inputs and MeshGL::Merge indices (#1931) by @zmerlynn in #1934 Reject out-of-range arguments that crashed the library (#1933) by @zmerlynn in #1936. A negative set_properti…"
- },
- {
-  "id": "60e9ccf77632",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-emscripten-v30.0.2",
-  "title": "wgpu-core-deps-emscripten-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "What's Changed Fix a Python abort when a vec/mat argument has the wrong type (#1928) by @zmerlynn in #1930 Check Python binding inputs and MeshGL::Merge indices (#1931) by @zmerlynn in #1934 Reject out-of-range arguments that crashed the library (#1933) by @zmerlynn in #1936. A negative set_properti…",
+  "ai": {
+   "summary": "Manifold v3.5.5 是一个补丁版本，主要修复了 Python 绑定和 MeshGL 合并中的输入校验问题，避免因参数类型错误或越界导致库崩溃。同时修复了半边结构在奇数计数时未初始化的问题，并改进了 Python 符号导出和 wheel 构建。该版本提升了库的鲁棒性和跨平台支持，对几何内核的稳定性有直接帮助。",
+   "points": [
+    "修复 Python 绑定中 vec/mat 参数类型错误导致的 abort，并增加输入范围检查。",
+    "修复 MeshGL::Merge 索引越界和负 set_properties 计数导致的崩溃，返回 InvalidConstruction。",
+    "修复半边对在奇数计数时未初始化的问题，提升 B-Rep 拓扑数据结构的鲁棒性。",
+    "新增 Python 3.15 和 Windows Arm64 wheel，改进跨平台构建。"
+   ],
+   "tags": [
+    "几何鲁棒性",
+    "版本发布",
+    "B-Rep"
+   ],
+   "relevance": 4,
+   "level": "进阶"
+  }
  },
  {
   "id": "4ac32aaf10cf",
@@ -2240,7 +2555,22 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目针对 Apple 平台的依赖包 wgpu-core-deps-apple 的 v30.0.2 版本发布标签页，正文只包含 GitHub 的签名验证与标签比较界面，没有任何关于功能、修复或性能变化的说明。该发布属于 WebGPU 实现 wgpu 的依赖版本管理，与 CAD 几何内核或 CAD 渲染算法无直接内容关联。对学习图形学的读者而言，仅可作为了解 wgpu 版本节奏的参考，学习价值很低。",
+   "points": [
+    "发布为 wgpu-core-deps-apple 的 v30.0.2 依赖版本标签，无具体变更说明。",
+    "页面内容主要是 GitHub 签名验证与标签比较 UI，无技术细节。",
+    "wgpu 是 WebGPU 的 Rust 实现，属于 GPU 渲染 API 生态。",
+    "与 CAD 几何内核、B-Rep 建模或 CAD 渲染主题无直接关系。"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "a3efc1d41568",
@@ -2251,7 +2581,23 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目下 wgpu-naga-bridge 的 v30.0.2 版本发布说明，但页面正文只有 GitHub 的模板与加载错误信息，没有列出任何具体变更内容。wgpu-naga-bridge 是连接 wgpu 与 naga 着色器编译器的桥接 crate，属于 WebGPU 生态的底层组件。由于缺少实际的更新条目，无法判断本次发布涉及着色器翻译、后端支持或性能方面的具体改动。",
+   "points": [
+    "发布版本为 wgpu-naga-bridge v30.0.2，由 cwfitzgerald 提交并签名",
+    "页面未渲染出任何 release notes 内容，仅有 GitHub 的加载错误提示",
+    "该 crate 属于 wgpu/naga 着色器编译与 WebGPU 生态的桥接层",
+    "无具体功能、修复或性能信息可供评估"
+   ],
+   "tags": [
+    "WebGPU",
+    "着色器",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
  },
  {
   "id": "73d4b958efa0",
@@ -2262,7 +2608,24 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目 wgpu-types 子 crate 的 v30.0.2 版本发布说明，但发布页正文没有提供任何变更内容，只有 GitHub 的签名验证和标签比较界面。wgpu 是 Rust 生态的跨平台 GPU 抽象层，支持 Vulkan、D3D12、Metal 和 WebGPU 后端；wgpu-types 是其共享类型定义 crate。由于缺少实际的变更日志，无法判断本次发布是否涉及渲染管线或几何相关改动。",
+   "points": [
+    "发布对象是 wgpu 的 wgpu-types crate，版本号 v30.0.2",
+    "发布说明正文为空，未列出任何新增功能或修复",
+    "wgpu 是 Rust 的跨平台 GPU 抽象层，支持 Vulkan/D3D12/Metal/WebGPU",
+    "与 CAD 几何内核及 CAD 渲染主题无直接内容关联"
+   ],
+   "tags": [
+    "版本发布",
+    "WebGPU",
+    "Vulkan",
+    "D3D12"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "60ccb3943776",
@@ -2273,18 +2636,21 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
- },
- {
-  "id": "c978e1d8ba71",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-hal-v30.0.2",
-  "title": "wgpu-hal-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu v30.0.2 的补丁版本发布页面，但正文只包含 GitHub 的签名验证和加载错误提示，没有列出任何实际的变更日志或修复内容。因此无法判断该版本在 WebGPU 实现、渲染管线或性能方面具体改了什么。对学习 GPU 驱动渲染的读者而言，这条信息本身几乎没有可提取的技术内容。",
+   "points": [
+    "发布说明正文缺失，仅显示 GitHub 页面加载错误，无 changelog。",
+    "无法确认该补丁版本是否涉及渲染管线、着色器或性能修复。",
+    "wgpu 是 Rust 的 WebGPU 实现，属于 GPU 渲染基础设施，但本条无实质信息。"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "1f70bbc78b52",
@@ -2295,7 +2661,21 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 仓库中 wgpu-info 工具 v30.0.2 的发布标签页面，正文只包含 GitHub 的提交签名验证信息和页面加载错误提示，没有任何关于功能变更、修复或性能改进的实质内容。wgpu-info 是用于查询 GPU 适配器与后端信息的诊断工具，与 WebGPU 生态相关，但本次发布说明未提供可学习的技术细节。",
+   "points": [
+    "发布页正文仅有提交签名验证信息与页面加载错误，无实际变更日志",
+    "wgpu-info 是 wgpu/WebGPU 生态中查询 GPU 适配器与后端能力的诊断工具",
+    "未涉及几何内核、渲染算法或性能优化的具体内容"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "478c2f46545c",
@@ -2306,7 +2686,21 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu-core 的补丁版本发布（v30.0.2），但发布页面未能加载出具体变更内容，正文只有 GitHub 的签名验证与标签选择界面，没有可读的更新说明。wgpu 是 Rust 生态的跨平台 GPU 抽象层，wgpu-core 是其核心校验与资源管理层，支撑 WebGPU 及 Vulkan/D3D12/Metal 后端。由于缺少实际 changelog，无法判断本次修复涉及几何建模还是渲染管线细节。",
+   "points": [
+    "发布为 wgpu-core v30.0.2 补丁版本，由 Connor Fitzgerald 签名提交",
+    "页面正文未加载出变更日志，无法获知具体修复内容",
+    "wgpu-core 是 WebGPU 在 Rust 中的核心实现，可映射到 Vulkan/D3D12/Metal 后端"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
  },
  {
   "id": "79dc44a97034",
@@ -2317,7 +2711,22 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 仓库中 wgpu-core-deps-windows-linux-android 子 crate 的 v30.0.2 发布标签页，正文仅包含 GitHub 的签名验证与标签比较界面，没有提供任何实际的变更说明或发布内容。该 crate 负责为 wgpu-core 在 Windows、Linux、Android 平台拉取依赖，属于 WebGPU 实现的构建与依赖管理层面。由于缺少具体改动信息，无法判断其与几何内核或 CAD 渲染的关联。",
+   "points": [
+    "发布页无实质内容，仅显示 GitHub 签名验证与标签比较 UI",
+    "该 crate 是 wgpu-core 在 Windows/Linux/Android 上的依赖聚合包",
+    "未包含任何渲染管线、着色器或几何处理相关的变更说明",
+    "对 CAD 渲染或几何内核学习无直接参考价值"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
  },
  {
   "id": "beb7913eb994",
@@ -2328,7 +2737,74 @@
   "author": "cwfitzgerald",
   "published": "2026-11-12T18:34:15.000Z",
   "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2"
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目的一个发布标签 wgpu-core-deps-wasm-v30.0.2，属于 wgpu-core 的 WASM 依赖子 crate 的版本发布。页面正文只有 GitHub Releases 的模板内容与加载错误提示，没有列出任何具体变更、修复或新功能说明。因此该发布对几何内核与 CAD 渲染方向没有可提取的技术信息，只能视为 WebGPU 生态的常规版本号更新。",
+   "points": [
+    "wgpu-core-deps-wasm 子 crate 发布 v30.0.2 版本标签",
+    "发布说明正文为空，未列出任何功能或修复条目",
+    "属于 WebGPU 实现 wgpu 的依赖版本维护，与几何建模算法无关"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "60e9ccf77632",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-deps-emscripten-v30.0.2",
+  "title": "wgpu-core-deps-emscripten-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目为 Emscripten（WebAssembly）平台发布的 wgpu-core-deps-emscripten 依赖包 v30.0.2 版本发布说明。页面本身没有提供任何具体变更内容，只包含版本号、提交哈希和签名验证信息，属于纯版本发布记录。对学习图形学核心知识没有实质信息量。",
+   "points": [
+    "wgpu-core-deps-emscripten 是 wgpu 在 Emscripten/WebAssembly 目标下的依赖打包 crate",
+    "版本号 v30.0.2，对应提交 2b38d99，由 Connor Fitzgerald 签名验证",
+    "发布说明未列出任何功能变更、修复或 API 调整",
+    "与 CAD 几何内核及 GPU 渲染技术细节无关"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "c978e1d8ba71",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-hal-v30.0.2",
+  "title": "wgpu-hal-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目 wgpu-hal 组件的 v30.0.2 版本发布说明，但页面正文只包含 GitHub 的签名验证与标签选择界面，没有列出任何具体变更内容。wgpu-hal 是 wgpu 的底层硬件抽象层，负责对接 Vulkan、D3D12、Metal 等图形后端。由于缺少 changelog 细节，无法判断本次发布是否涉及渲染管线或性能相关修复。",
+   "points": [
+    "wgpu-hal 是 wgpu 的底层后端抽象层，对接 Vulkan/D3D12/Metal 等 API",
+    "发布页面未提供具体变更条目，仅有签名验证信息",
+    "无法确认是否包含与 CAD 渲染或 GPU 性能相关的改动"
+   ],
+   "tags": [
+    "版本发布",
+    "WebGPU",
+    "Vulkan",
+    "D3D12"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
  },
  {
   "id": "381e48ad1fcf",
@@ -2339,7 +2815,21 @@
   "author": "Ksenia Belkovskaya",
   "published": "2026-11-12T18:20:22.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "Graph-based collaborative filtering learns user and item representations by propagating embeddings over a user--item interaction graph. We investigate a modular, sheaf-inspired scoring extension placed on top of a three-layer LightGCN backbone. The motivation comes from cellular sheaves, where local…"
+  "snippet": "Graph-based collaborative filtering learns user and item representations by propagating embeddings over a user--item interaction graph. We investigate a modular, sheaf-inspired scoring extension placed on top of a three-layer LightGCN backbone. The motivation comes from cellular sheaves, where local…",
+  "ai": {
+   "summary": "该论文在 LightGCN 三层主干之上加入受层论（sheaf）启发的模块化打分扩展，用于协同过滤推荐。方法利用 cellular sheaf 的局部一致性思想，对用户—物品交互图上的嵌入传播结果做结构化重打分。结论表明该扩展可提升推荐效果，但工作属于推荐系统/图学习领域，与 CAD 几何内核或 GPU 渲染无直接关系。",
+   "points": [
+    "在 LightGCN 三层主干上叠加 sheaf 启发的打分模块",
+    "借助 cellular sheaf 的局部一致性约束建模交互图",
+    "目标是改进协同过滤的推荐精度",
+    "与几何建模、GPU 渲染主题无关"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "fea0ff3df483",
@@ -2350,7 +2840,21 @@
   "author": "Sushovan Majhi",
   "published": "2026-11-12T15:36:16.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "We compute the asymptotic dimension of spaces of multiparameter persistence modules of bounded presentation under the interleaving distance. The $d$-parameter modules with at most $n$ generators and $m$ relations have asymptotic dimension, and Assouad-Nagata dimension, exactly $d(n+m)$, the number o…"
+  "snippet": "We compute the asymptotic dimension of spaces of multiparameter persistence modules of bounded presentation under the interleaving distance. The $d$-parameter modules with at most $n$ generators and $m$ relations have asymptotic dimension, and Assouad-Nagata dimension, exactly $d(n+m)$, the number o…",
+  "ai": {
+   "summary": "该文研究有界表示的多参数持久性模（persistence modules）在 interleaving 距离下的渐近维数，证明最多 n 个生成元、m 个关系的 d 参数模空间，其渐近维数与 Assouad-Nagata 维数恰为 d(n+m)。属于拓扑数据分析与计算几何中的度量几何理论工作，与 CAD 几何内核或 GPU 渲染无直接关系。",
+   "points": [
+    "研究对象是多参数持久性模在 interleaving 距离下构成的度量空间。",
+    "证明其渐近维数与 Assouad-Nagata 维数精确等于 d(n+m)。",
+    "属于拓扑数据分析/计算几何的理论结果，不涉及几何建模算法或渲染。",
+    "对 CAD 内核与 GPU 渲染方向无直接可借鉴的工程方法。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "9dab6c1ebac5",
@@ -2361,7 +2865,21 @@
   "author": "Alexis Langlois-Rémillard",
   "published": "2026-11-12T14:46:59.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "The $n$-omino fence problem asks how many cells can be surrounded by placing every $n$-omino exactly once in the grid. We present a new dynamic programming approach for this problem, allowing us to prove optimality for the pentomino and hexomino fence and to classify all possible pentomino orders by…"
+  "snippet": "The $n$-omino fence problem asks how many cells can be surrounded by placing every $n$-omino exactly once in the grid. We present a new dynamic programming approach for this problem, allowing us to prove optimality for the pentomino and hexomino fence and to classify all possible pentomino orders by…",
+  "ai": {
+   "summary": "本文研究 n-omino fence 问题：在网格中把每个 n-omino 恰好放置一次，最多能围住多少格子。作者提出一种新的动态规划方法，证明 pentomino 与 hexomino fence 的最优性，并对所有可能的 pentomino 排列进行分类。该工作属于离散计算几何与组合优化，与 CAD 几何内核或 GPU 渲染无直接关联。",
+   "points": [
+    "提出基于动态规划的新方法求解 n-omino fence 问题",
+    "证明了 pentomino 与 hexomino fence 的最优性",
+    "对所有 pentomino 排列进行了分类",
+    "属于网格组合几何，不涉及 B-Rep、NURBS 或渲染管线"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "d37134f0fa6a",
@@ -2372,7 +2890,20 @@
   "author": "A. Yu. Chirkov",
   "published": "2026-11-12T14:17:18.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "We establish the first nontrivial upper bound on the number of edges of a Gomory corner polyhedron, resolving a long-standing open question. For an $n$-dimensional corner polyhedron associated with an integer lattice of determinant $δ$, the number of edges is at most $$ O\\left(n6^n \\cdot \\bigl(1+\\lo…"
+  "snippet": "We establish the first nontrivial upper bound on the number of edges of a Gomory corner polyhedron, resolving a long-standing open question. For an $n$-dimensional corner polyhedron associated with an integer lattice of determinant $δ$, the number of edges is at most $$ O\\left(n6^n \\cdot \\bigl(1+\\lo…",
+  "ai": {
+   "summary": "该文研究 Gomory corner polyhedron（整数规划中的多面体）的边数上界，给出了首个非平凡上界 O(n6^n·(1+log δ))，解决了长期未决的问题。方法属于离散/计算几何与整数规划交叉的理论分析，与 CAD 几何内核的 B-Rep、NURBS、布尔运算等主题没有直接关系。结论对多面体组合复杂度有理论意义，但不涉及网格处理、曲面求交或 GPU 渲染。",
+   "points": [
+    "给出 n 维 Gomory corner polyhedron 边数的首个非平凡上界。",
+    "上界与维数 n 和格行列式 δ 相关，形式为 O(n6^n·(1+log δ))。",
+    "属于整数规划与计算几何的理论结果，不涉及 CAD 建模算法或渲染管线。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "f598883b87b9",
@@ -2383,7 +2914,21 @@
   "author": "Francisco J. Muñoz",
   "published": "2026-11-12T05:58:11.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "Visibility graphs map a time series into a network by linking two data whenever the straight line between them is not obstructed by intermediate data. Their extension to two-dimensional fields has so far been restricted to regular lattices, where visibility is checked along a finite number of lattic…"
+  "snippet": "Visibility graphs map a time series into a network by linking two data whenever the straight line between them is not obstructed by intermediate data. Their extension to two-dimensional fields has so far been restricted to regular lattices, where visibility is checked along a finite number of lattic…",
+  "ai": {
+   "summary": "该论文将一维时间序列的可见性图（visibility graph）推广到不规则采样的二维标量场：利用 Voronoi 剖分把散乱采样点组织成邻接结构，并据此判断任意两点连线是否被中间数据遮挡，从而构建二维可见性图。此前这类方法只适用于规则格点，因为可见性只需沿有限条格线检查；在不规则采样下，遮挡判定需要借助 Voronoi 单元与对偶结构来定义。该工作为散乱数据提供了一种把场转化为网络的分析工具。",
+   "points": [
+    "把可见性图从规则格点推广到不规则采样的二维场",
+    "用 Voronoi 剖分及其对偶结构定义并检测两点间的遮挡关系",
+    "解决了散乱点集上无法沿固定格线检查可见性的问题",
+    "属于计算几何与网络/时间序列分析交叉，与 CAD 几何内核和 GPU 渲染无直接关系"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "545bc60fc25c",
@@ -2394,7 +2939,24 @@
   "author": "bejado",
   "published": "2026-11-11T21:54:08.000Z",
   "fetched": "2026-11-23T12:05:14.414577Z",
-  "snippet": "engine: fix PCSS soft shadows of point and spot lights using the directional light's bulb radius engine: fix a shader program leak when rendering PCSS or VSM shadows with the program cache disabled vulkan: with the backend.vulkan.enable_pipeline_cache_persistence feature flag, the backend keeps its …"
+  "snippet": "engine: fix PCSS soft shadows of point and spot lights using the directional light's bulb radius engine: fix a shader program leak when rendering PCSS or VSM shadows with the program cache disabled vulkan: with the backend.vulkan.enable_pipeline_cache_persistence feature flag, the backend keeps its …",
+  "ai": {
+   "summary": "Filament v1.80.1 是一个补丁版本，主要修复了 PCSS 软阴影中点光源和聚光灯错误使用方向光灯泡半径的问题，以及禁用程序缓存时 PCSS/VSM 阴影渲染的着色器程序泄漏。Vulkan 后端新增 pipeline cache 持久化选项，可通过 Platform::setBlobFunc 跨运行保留 VkPipelineCache。材质系统新增 retroreflection 属性并支持 KHR_materials_retroreflection 扩展，用于创建逆反射表面。",
+   "points": [
+    "修复 PCSS 软阴影中点光源和聚光灯错误使用方向光 bulb radius 的问题。",
+    "修复禁用程序缓存时 PCSS/VSM 阴影渲染导致的着色器程序泄漏。",
+    "Vulkan 后端支持通过 feature flag 和 Platform::setBlobFunc 持久化 VkPipelineCache。",
+    "新增 retroreflection 材质属性并支持 glTF KHR_materials_retroreflection 扩展。"
+   ],
+   "tags": [
+    "阴影",
+    "Vulkan",
+    "渲染管线",
+    "版本发布"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
  },
  {
   "id": "edaf67a766e6",
@@ -2405,7 +2967,22 @@
   "author": "bejado",
   "published": "2026-11-11T21:16:01.000Z",
   "fetched": "2026-11-23T12:05:14.414577Z",
-  "snippet": "Release Filament 1.80.1"
+  "snippet": "Release Filament 1.80.1",
+  "ai": {
+   "summary": "这是 Google Filament 渲染引擎的 rc/1.81.0-cut 发布标签页面，但页面正文没有加载出实际的发布说明内容，只显示版本标签和加载错误提示。因此无法得知该版本具体新增或修复了哪些功能。Filament 是面向移动端和桌面端的实时 PBR 渲染引擎，与 CAD 渲染管线有一定关联，但本次内容没有提供可学习的实质信息。",
+   "points": [
+    "发布页面内容未能加载，缺少实际的更新日志",
+    "Filament 是实时 PBR 渲染引擎，可用于 CAD 场景的渲染管线参考",
+    "本次无几何内核或 GPU 渲染技术细节可提取"
+   ],
+   "tags": [
+    "PBR",
+    "渲染管线",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "d4a18dfa0a19",
@@ -2416,7 +2993,21 @@
   "author": "Huanyi Zhou",
   "published": "2026-11-11T18:06:23.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "Bounded Knapsack asks how many copies of each item to take to maximize profit under a capacity constraint. Given $n$ records with binary-encoded multiplicities, we return optimal counts in randomized time with a fixed power saving in the maximum item weight $w_{\\max}$ or maximum item profit $p_{\\max…"
+  "snippet": "Bounded Knapsack asks how many copies of each item to take to maximize profit under a capacity constraint. Given $n$ records with binary-encoded multiplicities, we return optimal counts in randomized time with a fixed power saving in the maximum item weight $w_{\\max}$ or maximum item profit $p_{\\max…",
+  "ai": {
+   "summary": "该论文研究有界背包问题（Bounded Knapsack），在物品数量以二进制编码、最大重量或最大利润受限的设定下，给出随机化的真正次二次时间算法，突破了此前的时间界。核心方法基于计算几何中的（min,+）卷积与结构化优化技术，在最大物品重量 w_max 或最大物品利润 p_max 上取得固定幂次的加速。结论是背包类问题可在亚二次时间内求解，属于算法与计算几何交叉的理论成果。",
+   "points": [
+    "给出有界背包问题的随机化次二次时间算法，打破原有时间界。",
+    "加速依赖于最大物品重量 w_max 或最大利润 p_max 的固定幂次节省。",
+    "方法涉及（min,+）卷积等计算几何与算法设计技术。",
+    "属于理论算法复杂度研究，与几何建模或渲染无直接关联。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "7ae3b41ba201",
@@ -2427,7 +3018,20 @@
   "author": "Rishabh Kabra",
   "published": "2026-11-11T17:56:44.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "Smale's seventh problem asks for a polynomial-time algorithm that places $N$ points on the unit sphere $\\mathbb{S}^2$ with logarithmic energy (the sum of $-\\log$ of all pairwise distances) within $O(\\log N)$ of the minimum. The minimal energy has an asymptotic expansion with explicit terms of order …"
+  "snippet": "Smale's seventh problem asks for a polynomial-time algorithm that places $N$ points on the unit sphere $\\mathbb{S}^2$ with logarithmic energy (the sum of $-\\log$ of all pairwise distances) within $O(\\log N)$ of the minimum. The minimal energy has an asymptotic expansion with explicit terms of order …",
+  "ai": {
+   "summary": "文章针对 Smale 第七问题：在单位球面 S² 上放置 N 个点，使对数能量（所有点对距离取负对数后求和）接近最小值。作者给出一种线性时间构造，其能量与最优值的差距达到次线性（优于 O(log N) 的要求），从而在理论上回答了该问题。这是计算几何中的球面点分布与能量最小化结果，与 CAD 几何内核和 GPU 渲染均无直接关系。",
+   "points": [
+    "研究单位球面 S² 上 N 点对数能量最小化问题（Smale 第七问题）",
+    "提出线性时间构造算法，能量差距达到次线性",
+    "结果属于球面点集分布与势能理论，不涉及 B-Rep、NURBS 或渲染管线"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "02396da78845",
@@ -2438,7 +3042,21 @@
   "author": "github-actions[bot]",
   "published": "2026-11-11T17:54:07.000Z",
   "fetched": "2026-11-23T12:05:15.526313Z",
-  "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.11.04...weekly-2026.11.11 How-to use Download the appropriate asset for your OS below Unpack the bund…"
+  "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.11.04...weekly-2026.11.11 How-to use Download the appropriate asset for your OS below Unpack the bund…",
+  "ai": {
+   "summary": "这是 FreeCAD 的每周开发构建发布说明（weekly-2026.11.11），面向测试 bug 修复、回归问题和近期新功能的用户，属于 bleeding edge 版本，不建议用于生产环境。正文只提供了各平台（Windows 的 freecad.exe、macOS 的 FreeCAD.app、Linux 的 AppImage）的下载与启动方法，并给出与上一周构建的变更对比链接，但页面加载出错，实际变更列表未能显示。因此，本次发布没有可提取的具体几何建模或渲染改动信息。",
+   "points": [
+    "FreeCAD 每周开发构建，用于测试 bugfix、回归与新功能，非生产可用",
+    "提供 Windows、macOS、Linux 三平台打包下载与解压启动说明",
+    "变更对比链接指向 weekly-2026.11.04...weekly-2026.11.11，但内容加载失败",
+    "未列出任何与 B-Rep、几何内核或渲染相关的具体改动"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
  },
  {
   "id": "29a3eb718110",
@@ -2449,7 +3067,22 @@
   "author": "Mark Chmarny",
   "published": "2026-11-11T17:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "As teams deploy and scale AI workloads using NVIDIA Dynamo, Kubeflow, or Slurm, tracking what actually runs requires visibility beyond the platform..."
+  "snippet": "As teams deploy and scale AI workloads using NVIDIA Dynamo, Kubeflow, or Slurm, tracking what actually runs requires visibility beyond the platform...",
+  "ai": {
+   "summary": "NVIDIA 技术博客介绍 AICR（AI Cluster Runtime）新增 AIBOM 组件，用于在 Kubernetes 上追踪实际运行的 AI 工作负载。AICR 负责生成版本锁定的 GPU 平台部署配方与可复现部署包，k8s-aibom 则观察工作负载并输出 CycloneDX 1.6 AIBOM 记录，包含置信度分级与证据定位。两个默认配方已集成该组件，验证显示稳态观察下约每分钟 4 次 API-server 请求、平均 2.2 millicores CPU 与 28–34 MiB 内存占用。",
+   "points": [
+    "AICR 将已知良好的 GPU 平台配置固化为版本锁定配方与带校验和的可复现部署包。",
+    "k8s-aibom 监控 Kubernetes 工作负载 API，为识别到的 AI 工作负载生成 CycloneDX 1.6 AIBOM。",
+    "两个默认 GKE 配方已启用 k8s-aibom，其他配方可通过 --runtime-inventory 选择启用。",
+    "该方案用于发现影子 AI 工作负载、追踪模型与推理运行时、支持安全审计与合规。"
+   ],
+   "tags": [
+    "版本发布",
+    "GPU架构"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
  },
  {
   "id": "639edced3116",
@@ -2460,7 +3093,23 @@
   "author": "Pengfei Wang",
   "published": "2026-11-11T10:57:56.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "Nearest-neighbor search is a fundamental primitive in computer graphics, with applications in distance field computation, surface reconstruction, and point cloud registration. In many graphics applications, data points lie on a surface manifold embedded in 3D space, whereas queries are distributed t…"
+  "snippet": "Nearest-neighbor search is a fundamental primitive in computer graphics, with applications in distance field computation, surface reconstruction, and point cloud registration. In many graphics applications, data points lie on a surface manifold embedded in 3D space, whereas queries are distributed t…",
+  "ai": {
+   "summary": "该文针对嵌入三维空间的曲面流形上的数据点，提出基于 Delaunay 的最近邻搜索方法：用网格加速查询，并支持并行构建。方法面向距离场计算、曲面重建、点云配准等图形学基础场景，核心在于提升最近邻查询效率与构建速度。属于计算几何加速结构研究，与 CAD 几何内核的网格处理、几何查询有间接关联，但不直接涉及 B-Rep、NURBS 或渲染管线。",
+   "points": [
+    "提出基于 Delaunay 的最近邻搜索框架，适用于曲面流形上的点集",
+    "采用网格加速查询，并支持并行构建以提升效率",
+    "应用场景包括距离场计算、曲面重建与点云配准",
+    "属于计算几何加速结构，与 CAD 内核的几何查询有间接联系"
+   ],
+   "tags": [
+    "计算几何",
+    "网格处理",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
  },
  {
   "id": "df79a7cbb2dc",
@@ -2471,7 +3120,21 @@
   "author": "Karthik C. S.",
   "published": "2026-11-11T01:28:58.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "In the Euclidean $k$-means problem, we are given a set of $n$ points in $\\mathbb{R}^d$, and the goal is to find $k$ representative points in space so as to minimize the sum of the squared distances from each point to its closest representative. Algorithmically, de la Vega, Karpinski, Kenyon, and Rab…"
+  "snippet": "In the Euclidean $k$-means problem, we are given a set of $n$ points in $\\mathbb{R}^d$, and the goal is to find $k$ representative points in space so as to minimize the sum of the squared distances from each point to its closest representative. Algorithmically, de la Vega, Karpinski, Kenyon, and Rab…",
+  "ai": {
+   "summary": "该论文研究欧氏 k-means 问题的近似算法下界，在几乎 ETH（指数时间假设）的条件下给出几乎最优的不可近似性/时间下界。核心方法是将 k-means 的近似与细粒度复杂度假设联系起来，证明在接近 ETH 的假设下，不存在显著优于已知算法的近似方案。结论为欧氏 k-means 的近似精度与运行时间之间存在本质权衡，属于计算几何与细粒度复杂性交叉的理论结果。",
+   "points": [
+    "在几乎 ETH 假设下证明欧氏 k-means 近似的下界",
+    "给出近似精度与运行时间之间的权衡关系",
+    "方法基于细粒度复杂度归约而非新的几何算法",
+    "结论对 k-means 近似算法的设计空间给出理论限制"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "83d7e2892267",
@@ -2482,7 +3145,21 @@
   "author": "Jesús F. Espinoza",
   "published": "2026-11-10T18:05:17.000Z",
   "fetched": "2026-11-23T12:05:13.672874Z",
-  "snippet": "Dismantling reduces a graph to one vertex by successive deletions. At level zero, a vertex is eligible if one of its neighbours is adjacent to all its other neighbours. At level $k\\geq1$, its neighbours must induce a graph dismantlable at level $k-1$. A graph has strict level $k$ if it admits a redu…"
+  "snippet": "Dismantling reduces a graph to one vertex by successive deletions. At level zero, a vertex is eligible if one of its neighbours is adjacent to all its other neighbours. At level $k\\geq1$, its neighbours must induce a graph dismantlable at level $k-1$. A graph has strict level $k$ if it admits a redu…",
+  "ai": {
+   "summary": "这篇计算几何论文研究图的 dismantling（拆解）层级：第 0 层要求某顶点的邻居能支配它的其余邻居，第 k 层则要求其邻居诱导出的子图可在第 k-1 层被拆解。作者构造了在每个严格拆解层级上都只有线性数量顶点的图，说明拆解层级可以任意高，而图的规模不必随之指数增长。该结果属于纯图论与计算几何中的组合结构研究，与 CAD 几何内核或 GPU 渲染没有直接关系。",
+   "points": [
+    "定义了严格拆解层级 k 的递归条件：第 k 层要求邻居诱导子图可在第 k-1 层拆解。",
+    "构造出在每个严格层级上都只有线性规模顶点的图族。",
+    "说明拆解层级可以任意高，而图的规模不必指数增长。",
+    "属于纯组合几何与图论结果，不涉及几何建模或渲染算法。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
  },
  {
   "id": "5a1c4dfbb3e2",
@@ -2562,20 +3239,6 @@
   "snippet": "Generating accurate CAD models requires substantial engineering expertise and careful control of geometry, topology, and mechanical constraints. Text-to-CAD aims to simplify this process, but current LLM-based methods often generate CAD programs directly. Language models remain unreliable when produ…"
  },
  {
-  "id": "646e7777e05c",
-  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
-  "title": "Around The World, Part 34: A pretty sky",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  }
- },
- {
   "id": "04c5d8781fa6",
   "url": "https://github.com/aurimasg/splines",
   "title": "Splines",
@@ -2618,20 +3281,6 @@
   }
  },
  {
-  "id": "4d337544856d",
-  "url": "https://www.youtube.com/watch?v=bgv1KyqB59A",
-  "title": "[video] Thompson Sampling - Explained",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains Thompson sampling as a heuristic for balancing exploration and exploitation in multi-armed bandit problems\n• visualizes sampling from Beta distributions to model reward probabilities and choose optimal actions",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  }
- },
- {
   "id": "e1b7dc9fdab0",
   "url": "https://arxiv.org/abs/2611.07289",
   "title": "Patch-Based Generalized Neural Texture Upscaling",
@@ -2668,6 +3317,34 @@
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
   "snippet": "• reflects on twelve years of developing the open-source Spartan engine from scratch\n• explores the milestone of reaching a shippable game engine state with real-time path tracing, Lua, and visual scripting\n• shares lessons learned from solo engine development, open-source persistence, and industry career impact",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  }
+ },
+ {
+  "id": "646e7777e05c",
+  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
+  "title": "Around The World, Part 34: A pretty sky",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  }
+ },
+ {
+  "id": "4d337544856d",
+  "url": "https://www.youtube.com/watch?v=bgv1KyqB59A",
+  "title": "[video] Thompson Sampling - Explained",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains Thompson sampling as a heuristic for balancing exploration and exploitation in multi-armed bandit problems\n• visualizes sampling from Beta distributions to model reward probabilities and choose optimal actions",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
@@ -3247,20 +3924,6 @@
   }
  },
  {
-  "id": "93d916478236",
-  "url": "https://www.youtube.com/watch?v=_1BQ-6qc0Bk",
-  "title": "Pong - From 2D to 3D With Vulkan",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-10-25T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• continues a tutorial series by moving a 2D Pong implementation into 3D using Vulkan\n• stages the scene in Blender with paddles, ball, and walls, exports it as GLB\n• shows how to map the exported data into data for runtime usage\n• presents what changes are required to move the logic into 3D space",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
-  }
- },
- {
   "id": "fb387cf6b44e",
   "url": "https://graphics-programming.org/blog/virtual-shadow-maps",
   "title": "Virtual Shadow Maps",
@@ -3269,6 +3932,20 @@
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
   "snippet": "• explains a virtual shadow map implementation using cascaded virtual page tables and physical page allocation\n• covers bookkeeping, visible-page marking, 2D wraparound addressing, and hierarchical page buffer culling\n• provides performance timings on an RTX 3070\n• discusses caching, filtering, and future work such as translucency and local lights",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
+  }
+ },
+ {
+  "id": "93d916478236",
+  "url": "https://www.youtube.com/watch?v=_1BQ-6qc0Bk",
+  "title": "Pong - From 2D to 3D With Vulkan",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-10-25T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• continues a tutorial series by moving a 2D Pong implementation into 3D using Vulkan\n• stages the scene in Blender with paddles, ball, and walls, exports it as GLB\n• shows how to map the exported data into data for runtime usage\n• presents what changes are required to move the logic into 3D space",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-24T00:17:42.004296Z",
+ "generatedAt": "2026-11-24T04:02:19.628706Z",
  "schedule": {
   "every": "4x-daily",
   "label": "每天 4 次",
@@ -16,14 +16,14 @@
    "topic": "geometry",
    "ok": true,
    "items": 30,
-   "added": 0
+   "added": 4
   },
   {
    "name": "arXiv NURBS / B-Rep",
    "topic": "geometry",
    "ok": true,
    "items": 30,
-   "added": 30
+   "added": 0
   },
   {
    "name": "OCCT Releases",
@@ -65,7 +65,7 @@
    "topic": "rendering",
    "ok": true,
    "items": 30,
-   "added": 29
+   "added": 4
   },
   {
    "name": "Graphics Programming Weekly",
@@ -100,7 +100,7 @@
    "topic": "rendering",
    "ok": true,
    "items": 40,
-   "added": 3
+   "added": 0
   },
   {
    "name": "AMD GPUOpen",
