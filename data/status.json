@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T02:43:23.048002Z",
+ "generatedAt": "2026-11-25T14:47:24.894710Z",
  "schedule": {
   "every": "4x-daily",
   "label": "每天 4 次",
@@ -16,14 +16,14 @@
    "topic": "geometry",
    "ok": true,
    "items": 30,
-   "added": 1
+   "added": 6
   },
   {
    "name": "arXiv NURBS / B-Rep",
    "topic": "geometry",
    "ok": true,
    "items": 30,
-   "added": 1
+   "added": 0
   },
   {
    "name": "OCCT Releases",
@@ -37,7 +37,7 @@
    "topic": "geometry",
    "ok": true,
    "items": 10,
-   "added": 1
+   "added": 0
   },
   {
    "name": "CGAL Releases",
@@ -65,14 +65,14 @@
    "topic": "rendering",
    "ok": true,
    "items": 30,
-   "added": 2
+   "added": 9
   },
   {
    "name": "Graphics Programming Weekly",
    "topic": "rendering",
    "ok": true,
    "items": 40,
-   "added": 0
+   "added": 10
   },
   {
    "name": "MJP 博客",
@@ -84,8 +84,9 @@
   {
    "name": "Aras Pranckevičius 博客",
    "topic": "rendering",
-   "ok": false,
-   "error": "网络错误：TimeoutException after 0:00:25.000000: Future not completed"
+   "ok": true,
+   "items": 40,
+   "added": 0
   },
   {
    "name": "Interplay of Light",
