@@ -1,5 +1,32 @@
 [
  {
+  "id": "0174ddbc696b",
+  "url": "https://developer.nvidia.com/blog/how-to-optimize-nvfp4-attention-on-nvidia-rtx-blackwell-through-register-recycling/",
+  "title": "How to Optimize NVFP4 Attention on NVIDIA RTX Blackwell Through Register Recycling",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Atharva Joshi",
+  "published": "2026-11-25T19:30:00.000Z",
+  "fetched": "2026-11-25T21:56:48.756906Z",
+  "snippet": "Attention can be a major bottleneck when serving world foundation models, where long sequences make inference computationally demanding. On NVIDIA Hopper and...",
+  "ai": {
+   "summary": "文章介绍在 NVIDIA RTX Blackwell (SM120) 上优化 NVFP4 注意力计算的方法。由于 SM120 的 Tensor Core 架构与数据中心 GPU 不同，FlashAttention3/4 无法直接适用，且 BF16 注意力受 MMA 吞吐限制。作者通过寄存器回收（register recycling）调度，在 softmax 量化后将 score 寄存器复用，使下一个 tile 的 QK 计算与当前 tile 剩余操作重叠，减少 Tensor Core 空闲时间，无需额外 score 缓冲区。该优化使 NVFP4 注意力内核延迟降低最多 1.64 倍，并集成到 Reactor 生产栈和 FlashInfer 主分支，端到端推理延迟降低最多 15.34%。",
+   "points": [
+    "NVFP4 在 RTX Blackwell 上提供高于 BF16 的 Tensor Core 吞吐，但需协调 softmax、数据移动和中间存储以避免 Tensor Core 空闲。",
+    "核心优化是将每个 N128 score tile 拆分为两个 N64 寄存器槽，在 softmax 量化后回收寄存器，实现下一个 tile 的 QK 与当前 tile 剩余操作重叠。",
+    "该调度无需分配第二个完整 score 缓冲区，将 NVFP4 注意力内核延迟降低最多 1.64 倍。",
+    "优化已合并至 FlashInfer 主分支，并在 Reactor 生产栈中实现端到端推理延迟降低最多 15.34%。"
+   ],
+   "tags": [
+    "GPU驱动渲染",
+    "性能优化",
+    "GPU架构"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
   "id": "e132fb56eb47",
   "url": "https://github.com/FreeCAD/FreeCAD/releases/tag/weekly-2026.11.25",
   "title": "FreeCAD Development Build weekly-2026.11.25",
@@ -1062,32 +1089,32 @@
   }
  },
  {
-  "id": "77f5ab836432",
-  "url": "https://lisyarus.github.io/blog/posts/ratio-tracking-intuitively.html",
-  "title": "Ratio tracking, intuitively",
+  "id": "c3b55d004048",
+  "url": "https://www.youtube.com/watch?v=MFgptB5tpxk",
+  "title": "Siggraph 2026: smolder real-time volumetric effect rendering in glacier & 007 first light (Advances)",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-23T04:00:00.000Z",
   "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• derives ratio tracking from scratch as an unbiased Monte Carlo estimator for volumetric transmittance\n• resolves the high variance of alternating Taylor series by introducing a majorant upper bound to shift into a non-negative exponential series weighted by a Poisson distribution",
+  "snippet": "• presents Smolder, a real-time volumetric effect rendering framework\n• uses Moment-based Order Independent Transparency (MBI) for shadows and transmittance\n• custom OpenVDB-based runtime density format integrated with lighting and volumetric fog\n• presents how cross-target hardware scaling is approached",
   "via": {
    "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
   },
   "ai": {
-   "summary": "文章从蒙特卡洛积分基础出发，推导了如何无偏估计积分的幂次（通过独立样本乘积），进而引出体积渲染中透射率（transmittance）的估计问题。针对透射率是积分指数这一难题，介绍了 ratio tracking 方法：通过引入 majorant 上界将交替泰勒级数转化为非负指数级数，并用泊松分布加权，从而构造出期望等于透射率的随机变量。该方法解决了传统方法方差高的问题，为体积路径追踪提供了无偏且低方差的透射率估计。",
+   "summary": "该演讲介绍 Smolder，一个实时体积特效渲染框架，用于《冰川》与《007 First Light》等游戏。核心方法包括基于矩的 Order Independent Transparency（MBI）处理阴影与透射率，以及自定义的 OpenVDB 运行时密度格式，并与光照和体积雾集成；同时讨论了跨目标硬件的缩放策略。内容属于通用实时体积渲染技术，与 CAD 几何内核及 CAD 渲染的核心主题关联较弱。",
    "points": [
-    "蒙特卡洛估计积分幂次时，需用独立样本的乘积而非样本平方，以保持无偏性。",
-    "体积渲染中的透射率是积分指数，无法直接精确计算，需构造期望等于该指数的随机变量。",
-    "Ratio tracking 通过 majorant 上界将交替级数转为非负指数级数，并用泊松分布加权，降低方差。",
-    "该方法为体积路径追踪中的透射率估计提供了无偏且高效的解决方案。"
+    "提出 Smolder 实时体积特效框架，用于游戏中的烟雾、雾等体积效果。",
+    "使用 Moment-based Order Independent Transparency（MBI）计算体积阴影与透射率。",
+    "采用自定义 OpenVDB 运行时密度格式，并与光照、体积雾管线集成。",
+    "讨论跨目标硬件的性能缩放方案，偏向游戏引擎工程实践。"
    ],
    "tags": [
-    "光线追踪",
-    "全局光照",
-    "性能优化"
+    "渲染管线",
+    "性能优化",
+    "全局光照"
    ],
-   "relevance": 3,
+   "relevance": 2,
    "level": "进阶"
   }
  },
@@ -1119,37 +1146,6 @@
    ],
    "relevance": 2,
    "level": "入门"
-  }
- },
- {
-  "id": "b2d0fb6f7c3f",
-  "url": "https://www.lunarg.com/lunarg-at-vulkanised-2027-real-time-shading-symposium/",
-  "title": "LunarG at Vulkanised 2027/Real-Time Shading Symposium",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• announces LunarG sponsorship and technical sessions at Vulkanised 2027 and the Real-Time Shading Symposium\n• covers talks on VK_KHR_descriptor_heap, VK_KHR_shader_object, VK_KHR_shader_abort, SyncVal 2027 synchronization validation, and more\n• includes a symposium session on SPIR-V Integrated Tester for validating ShaderDebugInfo in SPIR-V",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "LunarG 宣布赞助 Vulkanised 2027 与 Real-Time Shading Symposium，并公布其技术演讲内容，涵盖 VK_KHR_descriptor_heap、VK_KHR_shader_object、VK_KHR_shader_abort 以及 SyncVal 2027 同步验证等 Vulkan 扩展与工具。文章还介绍了三星 SARC 基于 LunarG 的 GFXReconstruct 构建的开源 Android GPU 性能分析器 Sokatoa，可提供实时、多帧的可见性洞察。整体属于 Vulkan 生态与 GPU 工具链的会议与产品动态，与 CAD 几何内核无直接关系，对 GPU 渲染方向仅有外围参考价值。",
-   "points": [
-    "LunarG 将在 Vulkanised 2027 与 Real-Time Shading Symposium 上介绍 descriptor heap、shader object、shader abort 等 Vulkan 扩展。",
-    "SyncVal 2027 提供同步验证能力，属于 Vulkan 开发调试工具链的更新。",
-    "三星基于 GFXReconstruct 构建开源 Android GPU 性能分析器 Sokatoa，支持实时多帧可见性分析。",
-    "内容以会议公告和工具发布为主，未涉及 CAD 渲染或几何建模算法细节。"
-   ],
-   "tags": [
-    "Vulkan",
-    "GPU驱动渲染",
-    "性能优化",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "进阶"
   }
  },
  {
@@ -1336,30 +1332,61 @@
   }
  },
  {
-  "id": "c3b55d004048",
-  "url": "https://www.youtube.com/watch?v=MFgptB5tpxk",
-  "title": "Siggraph 2026: smolder real-time volumetric effect rendering in glacier & 007 first light (Advances)",
+  "id": "77f5ab836432",
+  "url": "https://lisyarus.github.io/blog/posts/ratio-tracking-intuitively.html",
+  "title": "Ratio tracking, intuitively",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-23T04:00:00.000Z",
   "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• presents Smolder, a real-time volumetric effect rendering framework\n• uses Moment-based Order Independent Transparency (MBI) for shadows and transmittance\n• custom OpenVDB-based runtime density format integrated with lighting and volumetric fog\n• presents how cross-target hardware scaling is approached",
+  "snippet": "• derives ratio tracking from scratch as an unbiased Monte Carlo estimator for volumetric transmittance\n• resolves the high variance of alternating Taylor series by introducing a majorant upper bound to shift into a non-negative exponential series weighted by a Poisson distribution",
   "via": {
    "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
   },
   "ai": {
-   "summary": "该演讲介绍 Smolder，一个实时体积特效渲染框架，用于《冰川》与《007 First Light》等游戏。核心方法包括基于矩的 Order Independent Transparency（MBI）处理阴影与透射率，以及自定义的 OpenVDB 运行时密度格式，并与光照和体积雾集成；同时讨论了跨目标硬件的缩放策略。内容属于通用实时体积渲染技术，与 CAD 几何内核及 CAD 渲染的核心主题关联较弱。",
+   "summary": "文章从蒙特卡洛积分基础出发，推导了如何无偏估计积分的幂次（通过独立样本乘积），进而引出体积渲染中透射率（transmittance）的估计问题。针对透射率是积分指数这一难题，介绍了 ratio tracking 方法：通过引入 majorant 上界将交替泰勒级数转化为非负指数级数，并用泊松分布加权，从而构造出期望等于透射率的随机变量。该方法解决了传统方法方差高的问题，为体积路径追踪提供了无偏且低方差的透射率估计。",
    "points": [
-    "提出 Smolder 实时体积特效框架，用于游戏中的烟雾、雾等体积效果。",
-    "使用 Moment-based Order Independent Transparency（MBI）计算体积阴影与透射率。",
-    "采用自定义 OpenVDB 运行时密度格式，并与光照、体积雾管线集成。",
-    "讨论跨目标硬件的性能缩放方案，偏向游戏引擎工程实践。"
+    "蒙特卡洛估计积分幂次时，需用独立样本的乘积而非样本平方，以保持无偏性。",
+    "体积渲染中的透射率是积分指数，无法直接精确计算，需构造期望等于该指数的随机变量。",
+    "Ratio tracking 通过 majorant 上界将交替级数转为非负指数级数，并用泊松分布加权，降低方差。",
+    "该方法为体积路径追踪中的透射率估计提供了无偏且高效的解决方案。"
    ],
    "tags": [
-    "渲染管线",
+    "光线追踪",
+    "全局光照",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "b2d0fb6f7c3f",
+  "url": "https://www.lunarg.com/lunarg-at-vulkanised-2027-real-time-shading-symposium/",
+  "title": "LunarG at Vulkanised 2027/Real-Time Shading Symposium",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• announces LunarG sponsorship and technical sessions at Vulkanised 2027 and the Real-Time Shading Symposium\n• covers talks on VK_KHR_descriptor_heap, VK_KHR_shader_object, VK_KHR_shader_abort, SyncVal 2027 synchronization validation, and more\n• includes a symposium session on SPIR-V Integrated Tester for validating ShaderDebugInfo in SPIR-V",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "LunarG 宣布赞助 Vulkanised 2027 与 Real-Time Shading Symposium，并公布其技术演讲内容，涵盖 VK_KHR_descriptor_heap、VK_KHR_shader_object、VK_KHR_shader_abort 以及 SyncVal 2027 同步验证等 Vulkan 扩展与工具。文章还介绍了三星 SARC 基于 LunarG 的 GFXReconstruct 构建的开源 Android GPU 性能分析器 Sokatoa，可提供实时、多帧的可见性洞察。整体属于 Vulkan 生态与 GPU 工具链的会议与产品动态，与 CAD 几何内核无直接关系，对 GPU 渲染方向仅有外围参考价值。",
+   "points": [
+    "LunarG 将在 Vulkanised 2027 与 Real-Time Shading Symposium 上介绍 descriptor heap、shader object、shader abort 等 Vulkan 扩展。",
+    "SyncVal 2027 提供同步验证能力，属于 Vulkan 开发调试工具链的更新。",
+    "三星基于 GFXReconstruct 构建开源 Android GPU 性能分析器 Sokatoa，支持实时多帧可见性分析。",
+    "内容以会议公告和工具发布为主，未涉及 CAD 渲染或几何建模算法细节。"
+   ],
+   "tags": [
+    "Vulkan",
+    "GPU驱动渲染",
     "性能优化",
-    "全局光照"
+    "版本发布"
    ],
    "relevance": 2,
    "level": "进阶"
@@ -3493,35 +3520,6 @@
   }
  },
  {
-  "id": "6390edbe9e91",
-  "url": "https://www.linkedin.com/pulse/sss-tricky-play-albedo-remapping-maximilian-tarpini-avhff/",
-  "title": "SSS and The Tricky Play of Albedo Remapping",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains albedo remapping for subsurface scattering, tracing the physics behind the mappings used in practical subsurface scattering (SSS) shaders\n• compares the remapping approaches and derives how artist-facing parameters are converted into the scattering coefficients required by the model",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "文章讲解次表面散射（SSS）中的 albedo remapping 问题：从物理原理出发，解释实际 SSS 着色器为何需要把美术可调的反照率参数映射为散射系数，并比较不同映射方案，推导面向美术的参数如何转换为模型所需的散射系数。内容属于通用着色与材质渲染细节，不涉及 CAD 几何内核或 CAD 渲染管线。",
-   "points": [
-    "解释 SSS 着色器中 albedo remapping 的物理依据",
-    "比较多种 remapping 方案并推导参数转换关系",
-    "面向美术参数到散射系数的映射流程",
-    "属于通用材质着色话题，与 CAD 渲染核心关联弱"
-   ],
-   "tags": [
-    "着色器",
-    "PBR"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
   "id": "725346355a13",
   "url": "https://dl.acm.org/doi/10.1145/3842562",
   "title": "Stealthy Blue Noise",
@@ -3724,6 +3722,35 @@
     "渲染管线"
    ],
    "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "6390edbe9e91",
+  "url": "https://www.linkedin.com/pulse/sss-tricky-play-albedo-remapping-maximilian-tarpini-avhff/",
+  "title": "SSS and The Tricky Play of Albedo Remapping",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains albedo remapping for subsurface scattering, tracing the physics behind the mappings used in practical subsurface scattering (SSS) shaders\n• compares the remapping approaches and derives how artist-facing parameters are converted into the scattering coefficients required by the model",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "文章讲解次表面散射（SSS）中的 albedo remapping 问题：从物理原理出发，解释实际 SSS 着色器为何需要把美术可调的反照率参数映射为散射系数，并比较不同映射方案，推导面向美术的参数如何转换为模型所需的散射系数。内容属于通用着色与材质渲染细节，不涉及 CAD 几何内核或 CAD 渲染管线。",
+   "points": [
+    "解释 SSS 着色器中 albedo remapping 的物理依据",
+    "比较多种 remapping 方案并推导参数转换关系",
+    "面向美术参数到散射系数的映射流程",
+    "属于通用材质着色话题，与 CAD 渲染核心关联弱"
+   ],
+   "tags": [
+    "着色器",
+    "PBR"
+   ],
+   "relevance": 2,
    "level": "进阶"
   }
  },
@@ -3936,6 +3963,31 @@
   }
  },
  {
+  "id": "60ccb3943776",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
+  "title": "wgpu-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu v30.0.2 的补丁版本发布页面，但正文只包含 GitHub 的签名验证和加载错误提示，没有列出任何实际的变更日志或修复内容。因此无法判断该版本在 WebGPU 实现、渲染管线或性能方面具体改了什么。对学习 GPU 驱动渲染的读者而言，这条信息本身几乎没有可提取的技术内容。",
+   "points": [
+    "发布说明正文缺失，仅显示 GitHub 页面加载错误，无 changelog。",
+    "无法确认该补丁版本是否涉及渲染管线、着色器或性能修复。",
+    "wgpu 是 Rust 的 WebGPU 实现，属于 GPU 渲染基础设施，但本条无实质信息。"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
   "id": "a3efc1d41568",
   "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-naga-bridge-v30.0.2",
   "title": "wgpu-naga-bridge-v30.0.2",
@@ -3960,59 +4012,6 @@
    ],
    "relevance": 2,
    "level": "进阶"
-  }
- },
- {
-  "id": "73d4b958efa0",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-types-v30.0.2",
-  "title": "wgpu-types-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu 项目 wgpu-types 子 crate 的 v30.0.2 版本发布说明，但发布页正文没有提供任何变更内容，只有 GitHub 的签名验证和标签比较界面。wgpu 是 Rust 生态的跨平台 GPU 抽象层，支持 Vulkan、D3D12、Metal 和 WebGPU 后端；wgpu-types 是其共享类型定义 crate。由于缺少实际的变更日志，无法判断本次发布是否涉及渲染管线或几何相关改动。",
-   "points": [
-    "发布对象是 wgpu 的 wgpu-types crate，版本号 v30.0.2",
-    "发布说明正文为空，未列出任何新增功能或修复",
-    "wgpu 是 Rust 的跨平台 GPU 抽象层，支持 Vulkan/D3D12/Metal/WebGPU",
-    "与 CAD 几何内核及 CAD 渲染主题无直接内容关联"
-   ],
-   "tags": [
-    "版本发布",
-    "WebGPU",
-    "Vulkan",
-    "D3D12"
-   ],
-   "relevance": 2,
-   "level": "入门"
-  }
- },
- {
-  "id": "60ccb3943776",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
-  "title": "wgpu-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu v30.0.2 的补丁版本发布页面，但正文只包含 GitHub 的签名验证和加载错误提示，没有列出任何实际的变更日志或修复内容。因此无法判断该版本在 WebGPU 实现、渲染管线或性能方面具体改了什么。对学习 GPU 驱动渲染的读者而言，这条信息本身几乎没有可提取的技术内容。",
-   "points": [
-    "发布说明正文缺失，仅显示 GitHub 页面加载错误，无 changelog。",
-    "无法确认该补丁版本是否涉及渲染管线、着色器或性能修复。",
-    "wgpu 是 Rust 的 WebGPU 实现，属于 GPU 渲染基础设施，但本条无实质信息。"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "入门"
   }
  },
  {
@@ -4192,6 +4191,34 @@
     "版本发布"
    ],
    "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "73d4b958efa0",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-types-v30.0.2",
+  "title": "wgpu-types-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目 wgpu-types 子 crate 的 v30.0.2 版本发布说明，但发布页正文没有提供任何变更内容，只有 GitHub 的签名验证和标签比较界面。wgpu 是 Rust 生态的跨平台 GPU 抽象层，支持 Vulkan、D3D12、Metal 和 WebGPU 后端；wgpu-types 是其共享类型定义 crate。由于缺少实际的变更日志，无法判断本次发布是否涉及渲染管线或几何相关改动。",
+   "points": [
+    "发布对象是 wgpu 的 wgpu-types crate，版本号 v30.0.2",
+    "发布说明正文为空，未列出任何新增功能或修复",
+    "wgpu 是 Rust 的跨平台 GPU 抽象层，支持 Vulkan/D3D12/Metal/WebGPU",
+    "与 CAD 几何内核及 CAD 渲染主题无直接内容关联"
+   ],
+   "tags": [
+    "版本发布",
+    "WebGPU",
+    "Vulkan",
+    "D3D12"
+   ],
+   "relevance": 2,
    "level": "入门"
   }
  },
@@ -4852,33 +4879,6 @@
   }
  },
  {
-  "id": "4d337544856d",
-  "url": "https://www.youtube.com/watch?v=bgv1KyqB59A",
-  "title": "[video] Thompson Sampling - Explained",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains Thompson sampling as a heuristic for balancing exploration and exploitation in multi-armed bandit problems\n• visualizes sampling from Beta distributions to model reward probabilities and choose optimal actions",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  },
-  "ai": {
-   "summary": "该视频用可视化方式讲解 Thompson sampling（汤普森采样），一种用于多臂老虎机问题中平衡探索与利用的启发式方法。核心做法是对每个动作的奖励概率建模为 Beta 分布，从各分布中采样并选择采样值最大的动作，从而在不确定性与收益之间自适应权衡。内容属于概率统计与强化学习决策方法，与 CAD 几何内核或 GPU 渲染无直接关联。",
-   "points": [
-    "讲解 Thompson sampling 在多臂老虎机中平衡探索与利用的基本思想",
-    "用 Beta 分布对奖励概率建模，并通过采样选择动作",
-    "属于机器学习/决策算法科普，不涉及图形学或几何处理"
-   ],
-   "tags": [
-    "计算几何"
-   ],
-   "relevance": 1,
-   "level": "入门"
-  }
- },
- {
   "id": "e1b7dc9fdab0",
   "url": "https://arxiv.org/abs/2611.07289",
   "title": "Patch-Based Generalized Neural Texture Upscaling",
@@ -4967,6 +4967,33 @@
     "版本发布"
    ],
    "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "4d337544856d",
+  "url": "https://www.youtube.com/watch?v=bgv1KyqB59A",
+  "title": "[video] Thompson Sampling - Explained",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains Thompson sampling as a heuristic for balancing exploration and exploitation in multi-armed bandit problems\n• visualizes sampling from Beta distributions to model reward probabilities and choose optimal actions",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  },
+  "ai": {
+   "summary": "该视频用可视化方式讲解 Thompson sampling（汤普森采样），一种用于多臂老虎机问题中平衡探索与利用的启发式方法。核心做法是对每个动作的奖励概率建模为 Beta 分布，从各分布中采样并选择采样值最大的动作，从而在不确定性与收益之间自适应权衡。内容属于概率统计与强化学习决策方法，与 CAD 几何内核或 GPU 渲染无直接关联。",
+   "points": [
+    "讲解 Thompson sampling 在多臂老虎机中平衡探索与利用的基本思想",
+    "用 Beta 分布对奖励概率建模，并通过采样选择动作",
+    "属于机器学习/决策算法科普，不涉及图形学或几何处理"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
    "level": "入门"
   }
  },
@@ -6180,20 +6207,6 @@
   }
  },
  {
-  "id": "fb387cf6b44e",
-  "url": "https://graphics-programming.org/blog/virtual-shadow-maps",
-  "title": "Virtual Shadow Maps",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-10-25T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains a virtual shadow map implementation using cascaded virtual page tables and physical page allocation\n• covers bookkeeping, visible-page marking, 2D wraparound addressing, and hierarchical page buffer culling\n• provides performance timings on an RTX 3070\n• discusses caching, filtering, and future work such as translucency and local lights",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
-  }
- },
- {
   "id": "93d916478236",
   "url": "https://www.youtube.com/watch?v=_1BQ-6qc0Bk",
   "title": "Pong - From 2D to 3D With Vulkan",
@@ -6216,6 +6229,20 @@
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
   "snippet": "• details the GPU-based paint simulation behind the iOS app Fold & Squish\n• implements splats, thin-film flow, folding, rubbing, peeling, and glitter using Metal compute shader",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
+  }
+ },
+ {
+  "id": "fb387cf6b44e",
+  "url": "https://graphics-programming.org/blog/virtual-shadow-maps",
+  "title": "Virtual Shadow Maps",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-10-25T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• explains a virtual shadow map implementation using cascaded virtual page tables and physical page allocation\n• covers bookkeeping, visible-page marking, 2D wraparound addressing, and hierarchical page buffer culling\n• provides performance timings on an RTX 3070\n• discusses caching, filtering, and future work such as translucency and local lights",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
