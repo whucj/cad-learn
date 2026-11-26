@@ -1089,6 +1089,37 @@
   }
  },
  {
+  "id": "9d87aedfb559",
+  "url": "https://ipotrick.github.io/site/blogs/practical-efficient-rendergraphs/",
+  "title": "Practical, efficient render graphs",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• walks through building a render graph from scratch based on resource access timelines\n• explains two-level command recording, consecutive read and concurrent-write access grouping, pass batching, pass reordering, and transient memory aliasing\n• includes discussions on memory usage and GPU time savings",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "文章从零构建一个实用的 render graph，核心是基于资源访问时间线自动生成 barrier 并优化 pass 顺序。它采用两级命令录制，并通过连续读分组、并发写分组、pass 批处理、pass 重排序和瞬态内存别名等逐步优化，减少 GPU 同步开销和显存占用。在作者的研究渲染器中，该方案节省约 350 MB 显存（占总 VRAM 的 20%）和每帧 0.2–0.4 ms GPU 时间。文章还讨论了 split barrier 和 async compute 等进阶优化，并指出 render graph 相比手工放置 barrier 更可维护。",
+   "points": [
+    "基于资源访问时间线自动生成 barrier，解决手工同步在复杂渲染设置组合下难以维护的问题。",
+    "两级命令录制与访问分组（连续读、并发写）减少不必要的 barrier 和 GPU 流水线排空。",
+    "pass 批处理与重排序优化执行顺序，瞬态内存别名降低显存占用。",
+    "在 Timberdoodle 渲染器中实测节省约 350 MB 显存和每帧 0.2–0.4 ms GPU 时间。"
+   ],
+   "tags": [
+    "渲染管线",
+    "GPU驱动渲染",
+    "性能优化",
+    "Vulkan"
+   ],
+   "relevance": 4,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "c3b55d004048",
   "url": "https://www.youtube.com/watch?v=MFgptB5tpxk",
   "title": "Siggraph 2026: smolder real-time volumetric effect rendering in glacier & 007 first light (Advances)",
@@ -1116,36 +1147,6 @@
    ],
    "relevance": 2,
    "level": "进阶"
-  }
- },
- {
-  "id": "76c8336974d8",
-  "url": "https://www.youtube.com/watch?v=njNioqaf6o0",
-  "title": "[video] Row Major VS Column Major, explained.",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• explains row-major versus column-major matrix memory layouts\n• shows the difference between column-vector and row-vector multiplication conventions\n• explains how Vulkan itself is layout-agnostic and that apparent matrix flips originate from differences in viewport and projection\n• lists symptoms for common bugs: transposed matrices warping or freezing translation, inverted Y projection flipping the scene, and depth-range mismatches causing clipping",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "该视频讲解行主序与列主序矩阵内存布局的区别，以及列向量与行向量乘法约定的差异，并说明 Vulkan 本身不规定矩阵布局，所谓矩阵翻转其实来自 viewport 与投影约定的不同。视频还给出常见 bug 的症状：矩阵转置导致平移扭曲或失效、Y 投影反转导致画面翻转、深度范围不匹配导致裁剪。内容偏基础概念澄清，与 CAD 几何内核无关，对 GPU 渲染方向属于入门级前置知识。",
-   "points": [
-    "区分 row-major/column-major 内存布局与 row-vector/column-vector 乘法约定两组独立概念",
-    "指出 Vulkan 对矩阵布局不敏感，视觉上的翻转源于 viewport 与投影约定差异",
-    "列举转置矩阵、Y 投影反转、深度范围不匹配三类典型 bug 的症状",
-    "属于图形编程基础科普，不涉及剔除、mesh shader 或 CAD 渲染等进阶主题"
-   ],
-   "tags": [
-    "渲染管线",
-    "Vulkan",
-    "着色器"
-   ],
-   "relevance": 2,
-   "level": "入门"
   }
  },
  {
@@ -1301,37 +1302,6 @@
   }
  },
  {
-  "id": "9d87aedfb559",
-  "url": "https://ipotrick.github.io/site/blogs/practical-efficient-rendergraphs/",
-  "title": "Practical, efficient render graphs",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• walks through building a render graph from scratch based on resource access timelines\n• explains two-level command recording, consecutive read and concurrent-write access grouping, pass batching, pass reordering, and transient memory aliasing\n• includes discussions on memory usage and GPU time savings",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "文章从零构建一个实用的 render graph，核心是基于资源访问时间线自动生成 barrier 并优化 pass 顺序。它采用两级命令录制，并通过连续读分组、并发写分组、pass 批处理、pass 重排序和瞬态内存别名等逐步优化，减少 GPU 同步开销和显存占用。在作者的研究渲染器中，该方案节省约 350 MB 显存（占总 VRAM 的 20%）和每帧 0.2–0.4 ms GPU 时间。文章还讨论了 split barrier 和 async compute 等进阶优化，并指出 render graph 相比手工放置 barrier 更可维护。",
-   "points": [
-    "基于资源访问时间线自动生成 barrier，解决手工同步在复杂渲染设置组合下难以维护的问题。",
-    "两级命令录制与访问分组（连续读、并发写）减少不必要的 barrier 和 GPU 流水线排空。",
-    "pass 批处理与重排序优化执行顺序，瞬态内存别名降低显存占用。",
-    "在 Timberdoodle 渲染器中实测节省约 350 MB 显存和每帧 0.2–0.4 ms GPU 时间。"
-   ],
-   "tags": [
-    "渲染管线",
-    "GPU驱动渲染",
-    "性能优化",
-    "Vulkan"
-   ],
-   "relevance": 4,
-   "level": "进阶"
-  }
- },
- {
   "id": "77f5ab836432",
   "url": "https://lisyarus.github.io/blog/posts/ratio-tracking-intuitively.html",
   "title": "Ratio tracking, intuitively",
@@ -1390,6 +1360,36 @@
    ],
    "relevance": 2,
    "level": "进阶"
+  }
+ },
+ {
+  "id": "76c8336974d8",
+  "url": "https://www.youtube.com/watch?v=njNioqaf6o0",
+  "title": "[video] Row Major VS Column Major, explained.",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• explains row-major versus column-major matrix memory layouts\n• shows the difference between column-vector and row-vector multiplication conventions\n• explains how Vulkan itself is layout-agnostic and that apparent matrix flips originate from differences in viewport and projection\n• lists symptoms for common bugs: transposed matrices warping or freezing translation, inverted Y projection flipping the scene, and depth-range mismatches causing clipping",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "该视频讲解行主序与列主序矩阵内存布局的区别，以及列向量与行向量乘法约定的差异，并说明 Vulkan 本身不规定矩阵布局，所谓矩阵翻转其实来自 viewport 与投影约定的不同。视频还给出常见 bug 的症状：矩阵转置导致平移扭曲或失效、Y 投影反转导致画面翻转、深度范围不匹配导致裁剪。内容偏基础概念澄清，与 CAD 几何内核无关，对 GPU 渲染方向属于入门级前置知识。",
+   "points": [
+    "区分 row-major/column-major 内存布局与 row-vector/column-vector 乘法约定两组独立概念",
+    "指出 Vulkan 对矩阵布局不敏感，视觉上的翻转源于 viewport 与投影约定差异",
+    "列举转置矩阵、Y 投影反转、深度范围不匹配三类典型 bug 的症状",
+    "属于图形编程基础科普，不涉及剔除、mesh shader 或 CAD 渲染等进阶主题"
+   ],
+   "tags": [
+    "渲染管线",
+    "Vulkan",
+    "着色器"
+   ],
+   "relevance": 2,
+   "level": "入门"
   }
  },
  {
@@ -1781,6 +1781,31 @@
    ],
    "relevance": 3,
    "level": "专业"
+  }
+ },
+ {
+  "id": "577302f3414c",
+  "url": "https://developer.nvidia.com/blog/manage-liquid-cooled-ai-factories-with-nvidia-mission-control/",
+  "title": "Manage Liquid-Cooled AI Factories with NVIDIA Mission Control",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Ryan Prout",
+  "published": "2026-11-19T22:02:30.000Z",
+  "fetched": "2026-11-26T01:53:23.874697Z",
+  "snippet": "Managing AI infrastructure such as NVIDIA Vera Rubin NVL72 requires coordinated operation of compute, power, and cooling systems. In liquid-cooled AI factories,...",
+  "ai": {
+   "summary": "本文介绍 NVIDIA Mission Control 如何连接 IT 与 OT 系统，以协调液冷 AI 工厂中泄漏响应并监控计算与设施状态。核心方法包括可配置的 MQTT 与楼宇管理系统（BMS）集成、按数据中心物理层级映射的泄漏响应策略、机架管理命令，以及 Prometheus/Grafana 可观测性集成。泄漏策略可依据泄漏位置与受影响设备数量自动触发跨 BMC、集群管理器与 BMS 的联动操作。该方案面向 GB200/GB300 NVL72 等液冷集群，旨在降低定制集成维护成本并提升响应速度。",
+   "points": [
+    "通过 MQTT 将 NVIDIA Mission Control 与 BMS 连接，打通 IT 与 OT 两个域。",
+    "泄漏响应策略按设备、机架、行、房间、建筑等层级配置自动化动作。",
+    "提供 electricaloverview、liquidcoolingoverview、leakdetectionoverview 等机架监控命令。",
+    "集成 Prometheus 与 Grafana 仪表盘，统一观测计算与设施指标。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
   }
  },
  {
@@ -3520,35 +3545,6 @@
   }
  },
  {
-  "id": "725346355a13",
-  "url": "https://dl.acm.org/doi/10.1145/3842562",
-  "title": "Stealthy Blue Noise",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a way to generate blue-noise samples that spread points evenly without forming a regular grid\n• controls the pattern by adjusting which spatial frequencies are suppressed, including across areas with different target densities\n• applies the method to stippling and spherical surfaces, producing patterns that stay visually consistent as point density changes",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该文提出一种生成 blue-noise 采样点集的方法：它能让点在空间上均匀分布，同时避免形成规则网格；通过调节被抑制的空间频率来控制图案特征，并且这种控制在不同目标密度的区域之间也能保持。方法被应用于 stippling（点画）和球面采样，使图案在点密度变化时仍保持视觉一致性。该工作属于采样与噪声生成方向，可用于渲染中的抖动、抗锯齿与随机采样。",
-   "points": [
-    "通过抑制特定空间频率来控制 blue-noise 图案的频谱特征",
-    "支持在目标密度不同的区域之间保持一致的采样质量",
-    "应用于 stippling 与球面采样，密度变化时视觉表现稳定",
-    "属于采样/噪声生成技术，可服务于渲染中的抖动与随机采样"
-   ],
-   "tags": [
-    "抗锯齿",
-    "渲染管线"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
   "id": "f24777d5e668",
   "url": "https://www.youtube.com/watch?v=VZfuShX693Q",
   "title": "[video] How Neural Nets Survive Fewer Bits | Quantization",
@@ -3749,6 +3745,35 @@
    "tags": [
     "着色器",
     "PBR"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "725346355a13",
+  "url": "https://dl.acm.org/doi/10.1145/3842562",
+  "title": "Stealthy Blue Noise",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• presents a way to generate blue-noise samples that spread points evenly without forming a regular grid\n• controls the pattern by adjusting which spatial frequencies are suppressed, including across areas with different target densities\n• applies the method to stippling and spherical surfaces, producing patterns that stay visually consistent as point density changes",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该文提出一种生成 blue-noise 采样点集的方法：它能让点在空间上均匀分布，同时避免形成规则网格；通过调节被抑制的空间频率来控制图案特征，并且这种控制在不同目标密度的区域之间也能保持。方法被应用于 stippling（点画）和球面采样，使图案在点密度变化时仍保持视觉一致性。该工作属于采样与噪声生成方向，可用于渲染中的抖动、抗锯齿与随机采样。",
+   "points": [
+    "通过抑制特定空间频率来控制 blue-noise 图案的频谱特征",
+    "支持在目标密度不同的区域之间保持一致的采样质量",
+    "应用于 stippling 与球面采样，密度变化时视觉表现稳定",
+    "属于采样/噪声生成技术，可服务于渲染中的抖动与随机采样"
+   ],
+   "tags": [
+    "抗锯齿",
+    "渲染管线"
    ],
    "relevance": 2,
    "level": "进阶"
@@ -3963,58 +3988,6 @@
   }
  },
  {
-  "id": "60ccb3943776",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
-  "title": "wgpu-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu v30.0.2 的补丁版本发布页面，但正文只包含 GitHub 的签名验证和加载错误提示，没有列出任何实际的变更日志或修复内容。因此无法判断该版本在 WebGPU 实现、渲染管线或性能方面具体改了什么。对学习 GPU 驱动渲染的读者而言，这条信息本身几乎没有可提取的技术内容。",
-   "points": [
-    "发布说明正文缺失，仅显示 GitHub 页面加载错误，无 changelog。",
-    "无法确认该补丁版本是否涉及渲染管线、着色器或性能修复。",
-    "wgpu 是 Rust 的 WebGPU 实现，属于 GPU 渲染基础设施，但本条无实质信息。"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "入门"
-  }
- },
- {
-  "id": "a3efc1d41568",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-naga-bridge-v30.0.2",
-  "title": "wgpu-naga-bridge-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu 项目下 wgpu-naga-bridge 的 v30.0.2 版本发布说明，但页面正文只有 GitHub 的模板与加载错误信息，没有列出任何具体变更内容。wgpu-naga-bridge 是连接 wgpu 与 naga 着色器编译器的桥接 crate，属于 WebGPU 生态的底层组件。由于缺少实际的更新条目，无法判断本次发布涉及着色器翻译、后端支持或性能方面的具体改动。",
-   "points": [
-    "发布版本为 wgpu-naga-bridge v30.0.2，由 cwfitzgerald 提交并签名",
-    "页面未渲染出任何 release notes 内容，仅有 GitHub 的加载错误提示",
-    "该 crate 属于 wgpu/naga 着色器编译与 WebGPU 生态的桥接层",
-    "无具体功能、修复或性能信息可供评估"
-   ],
-   "tags": [
-    "WebGPU",
-    "着色器",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
   "id": "1f70bbc78b52",
   "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-info-v30.0.2",
   "title": "wgpu-info-v30.0.2",
@@ -4030,6 +4003,31 @@
     "发布页正文仅有提交签名验证信息与页面加载错误，无实际变更日志",
     "wgpu-info 是 wgpu/WebGPU 生态中查询 GPU 适配器与后端能力的诊断工具",
     "未涉及几何内核、渲染算法或性能优化的具体内容"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
+  "id": "60ccb3943776",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
+  "title": "wgpu-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu v30.0.2 的补丁版本发布页面，但正文只包含 GitHub 的签名验证和加载错误提示，没有列出任何实际的变更日志或修复内容。因此无法判断该版本在 WebGPU 实现、渲染管线或性能方面具体改了什么。对学习 GPU 驱动渲染的读者而言，这条信息本身几乎没有可提取的技术内容。",
+   "points": [
+    "发布说明正文缺失，仅显示 GitHub 页面加载错误，无 changelog。",
+    "无法确认该补丁版本是否涉及渲染管线、着色器或性能修复。",
+    "wgpu 是 Rust 的 WebGPU 实现，属于 GPU 渲染基础设施，但本条无实质信息。"
    ],
    "tags": [
     "WebGPU",
@@ -4220,6 +4218,33 @@
    ],
    "relevance": 2,
    "level": "入门"
+  }
+ },
+ {
+  "id": "a3efc1d41568",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-naga-bridge-v30.0.2",
+  "title": "wgpu-naga-bridge-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目下 wgpu-naga-bridge 的 v30.0.2 版本发布说明，但页面正文只有 GitHub 的模板与加载错误信息，没有列出任何具体变更内容。wgpu-naga-bridge 是连接 wgpu 与 naga 着色器编译器的桥接 crate，属于 WebGPU 生态的底层组件。由于缺少实际的更新条目，无法判断本次发布涉及着色器翻译、后端支持或性能方面的具体改动。",
+   "points": [
+    "发布版本为 wgpu-naga-bridge v30.0.2，由 cwfitzgerald 提交并签名",
+    "页面未渲染出任何 release notes 内容，仅有 GitHub 的加载错误提示",
+    "该 crate 属于 wgpu/naga 着色器编译与 WebGPU 生态的桥接层",
+    "无具体功能、修复或性能信息可供评估"
+   ],
+   "tags": [
+    "WebGPU",
+    "着色器",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -4879,36 +4904,6 @@
   }
  },
  {
-  "id": "e1b7dc9fdab0",
-  "url": "https://arxiv.org/abs/2611.07289",
-  "title": "Patch-Based Generalized Neural Texture Upscaling",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  },
-  "ai": {
-   "summary": "该工作提出一种轻量级神经纹理放大方法，直接集成到纹理采样阶段。方法在多样化纹理 patch 上训练单个泛化 MLP，避免逐资产重训练或修改资产管线。其目标是降低磁盘存储与运行时 VRAM 占用，并在 GPU 上实现非发散执行。",
-   "points": [
-    "将神经纹理放大嵌入纹理采样阶段，而非离线预处理。",
-    "用单个泛化 MLP 覆盖多种纹理 patch，免去逐资产训练。",
-    "降低纹理存储与显存开销，GPU 执行无分支发散。",
-    "属于通用纹理压缩/放大技术，与 CAD 渲染管线仅间接相关。"
-   ],
-   "tags": [
-    "着色器",
-    "性能优化",
-    "GPU驱动渲染"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
   "id": "b4d519102979",
   "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
   "title": "Real-Time Path Tracing in Games",
@@ -4995,6 +4990,36 @@
    ],
    "relevance": 1,
    "level": "入门"
+  }
+ },
+ {
+  "id": "e1b7dc9fdab0",
+  "url": "https://arxiv.org/abs/2611.07289",
+  "title": "Patch-Based Generalized Neural Texture Upscaling",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  },
+  "ai": {
+   "summary": "该工作提出一种轻量级神经纹理放大方法，直接集成到纹理采样阶段。方法在多样化纹理 patch 上训练单个泛化 MLP，避免逐资产重训练或修改资产管线。其目标是降低磁盘存储与运行时 VRAM 占用，并在 GPU 上实现非发散执行。",
+   "points": [
+    "将神经纹理放大嵌入纹理采样阶段，而非离线预处理。",
+    "用单个泛化 MLP 覆盖多种纹理 patch，免去逐资产训练。",
+    "降低纹理存储与显存开销，GPU 执行无分支发散。",
+    "属于通用纹理压缩/放大技术，与 CAD 渲染管线仅间接相关。"
+   ],
+   "tags": [
+    "着色器",
+    "性能优化",
+    "GPU驱动渲染"
+   ],
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -6207,20 +6232,6 @@
   }
  },
  {
-  "id": "93d916478236",
-  "url": "https://www.youtube.com/watch?v=_1BQ-6qc0Bk",
-  "title": "Pong - From 2D to 3D With Vulkan",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-10-25T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• continues a tutorial series by moving a 2D Pong implementation into 3D using Vulkan\n• stages the scene in Blender with paddles, ball, and walls, exports it as GLB\n• shows how to map the exported data into data for runtime usage\n• presents what changes are required to move the logic into 3D space",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
-  }
- },
- {
   "id": "9c2d643d36dd",
   "url": "https://danfountain.com/blog/paint-that-squishes/",
   "title": "Paint That Squishes",
@@ -6243,6 +6254,20 @@
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
   "snippet": "• explains a virtual shadow map implementation using cascaded virtual page tables and physical page allocation\n• covers bookkeeping, visible-page marking, 2D wraparound addressing, and hierarchical page buffer culling\n• provides performance timings on an RTX 3070\n• discusses caching, filtering, and future work such as translucency and local lights",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
+  }
+ },
+ {
+  "id": "93d916478236",
+  "url": "https://www.youtube.com/watch?v=_1BQ-6qc0Bk",
+  "title": "Pong - From 2D to 3D With Vulkan",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-10-25T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• continues a tutorial series by moving a 2D Pong implementation into 3D using Vulkan\n• stages the scene in Blender with paddles, ball, and walls, exports it as GLB\n• shows how to map the exported data into data for runtime usage\n• presents what changes are required to move the logic into 3D space",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
