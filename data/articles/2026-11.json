@@ -27,6 +27,295 @@
   }
  },
  {
+  "id": "a8d9bfef1c44",
+  "url": "https://arxiv.org/abs/2611.34939",
+  "title": "A Mesh for Every Moment",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Roy Or-El",
+  "published": "2026-11-25T18:59:45.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "We present MEMO (a Mesh for Every MOment), a method that reconstructs the geometry of complete dynamic scenes, captured by multiple synchronized cameras, and extracts a mesh at every frame. Existing dynamic Gaussian splatting methods either model appearance alone or target isolated objects segmented…",
+  "ai": {
+   "summary": "MEMO 提出一种从多相机同步视频重建完整动态场景几何并逐帧提取网格的方法。核心是受高斯过程启发的逐高斯运动模型，将每个高斯的位置和旋转表示为时间高斯核的组合，使高斯在序列中始终是有效表面元素，从而可从高斯定义的场中随时导出网格。针对大快速运动，设计了基于轨迹的初始化，用闭式解拟合初始轨迹。在 Blender-Moments 基准和两个真实数据集上，MEMO 重建几何最准确，新视角合成和训练时间也具竞争力。",
+   "points": [
+    "提出逐高斯运动模型，用时间高斯核组合表示位置和旋转，保持高斯为有效表面元素。",
+    "设计基于轨迹的初始化方案，闭式拟合初始轨迹以处理大快速运动。",
+    "可从高斯定义的隐式场中逐帧提取网格，避免 TSDF 融合或泊松重建的固定网格限制。",
+    "发布 Blender-Moments 基准，含九个动画场景及逐帧真值网格，实验证明几何重建最优。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "网格处理",
+    "神经渲染"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "0d4a3c05bf94",
+  "url": "https://arxiv.org/abs/2611.34894",
+  "title": "What a Drop Reveals: Sim-to-Real Material Estimation for Deformable Objects from Video",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Ziyue Peng",
+  "published": "2026-11-25T18:47:56.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "How an object deforms when it hits the ground reveals what it is made of. From a single real video of a drop, we estimate a deformable object's density-normalized stiffness $E/ρ$, and its yield stress $σ_Y/ρ$ when the impact causes plastic deformation, with a feed-forward predictor trained only in s…",
+  "ai": {
+   "summary": "本文研究从单段真实视频估计可变形物体的材料参数（密度归一化刚度 E/ρ 和屈服应力 σ_Y/ρ）。作者发现，在仿真中验证时，基于估计深度提升到 3D 的轨迹（tracklets）是最准确的输入，但在真实视频上表现最差；而短 2D 光流轨迹在仿真中无提升，却迁移效果最好。为此提出 PhysReader，在仿真中通过匹配看到精确 3D 形变的教师模型来学习从 2D 到 3D 的提升，并构建 PhysReader-Real 数据集（16 个日常物体各掉落 5 次）验证迁移性能。实验表明 PhysReader 在真实数据上优于所有其他输入和基线，且仅需 12 秒，而逐场景优化器虽略优但需 49 分钟。",
+   "points": [
+    "揭示仿真验证与真实迁移的输入排序矛盾：3D 轨迹在仿真中最优但真实中最差，2D 光流轨迹反之。",
+    "提出 PhysReader，在仿真中学习从 2D 轨迹到 3D 形变的提升，以匹配精确 3D 教师。",
+    "构建 PhysReader-Real 数据集，包含 16 个物体各 5 次掉落视频及参考材料参数。",
+    "PhysReader 在真实数据上优于所有基线，速度比逐场景优化快 245 倍。"
+   ],
+   "tags": [
+    "性能优化",
+    "计算几何"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "9fdba83b1b3e",
+  "url": "https://arxiv.org/abs/2611.34535",
+  "title": "Square-root comparison, Turnpike, and exact semidefinite feasibility",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "C. S. Elder",
+  "published": "2026-11-25T15:18:28.000Z",
+  "fetched": "2026-11-26T05:16:17.434153Z",
+  "snippet": "Given positive integers $a_i,K$, put $S=\\sum_{i=1}^k\\sqrt{a_i}$. We construct a realizable Turnpike instance in which the minimum spacing of distinct distances and the smallest nonzero addition residual are both at most $|S-K|$ when $S\\ne K$. With approximation oracles, one three-distance realizabil…",
+  "ai": {
+   "summary": "该论文研究平方根和与整数比较的判定问题，构造了 Turnpike 实例，使不同距离的最小间距和最小非零加法残差都不超过 |S−K|；借助近似 oracle，一次三距离可实现性查询即可判定 S≤K。论文还给出无序根式和（非负有理系数）的多项式时间整数替换，保持所有归一化标尺，并给出平方根比较到精确半定可行性的经典归约。属于计算几何与数值判定理论，与 CAD 几何内核或 GPU 渲染无直接关联。",
+   "points": [
+    "构造 Turnpike 实例，将平方根和与整数的比较转化为距离可实现性判定。",
+    "一次三距离查询即可在近似 oracle 下判定 S≤K。",
+    "无序根式和可用整数替换在多项式时间内保持归一化标尺。",
+    "给出平方根比较到精确半定可行性（SDP feasibility）的双向归约。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "751a1eba20d6",
+  "url": "https://arxiv.org/abs/2611.34284",
+  "title": "ReMeDi: Single-Image PBR Material Estimation via Reparameterization between Metal and Dielectric Hypotheses",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Fan Fei",
+  "published": "2026-11-25T12:37:52.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "Physically based rendering (PBR) material estimation facilitates relighting, material editing, and 3D content creation. As the reflectance of a surface heavily depends on whether it is a metal or a dielectric, producing any map that determines albedo involves a decision on metalness, which we call t…",
+  "ai": {
+   "summary": "该论文针对单图像 PBR 材质估计中金属度（metalness）与 base color 不匹配导致材质物理不合理的问题，提出 ReMeDi 方法。核心做法是将 base color 重参数化为全金属与全介电两种假设下估计结果的 metalness 加权混合，并用两个独立网络分别约束到一种假设，从而强制金属度与 base color 一致。实验表明该方法在材质精度与重光照保真度上优于现有方法。",
+   "points": [
+    "指出 metallic-roughness 工作流中 metalness 与 base color 不匹配会造成材质误读，提出“intended metalness”概念。",
+    "将 base color 重参数化为全金属与全介电两种假设估计值的 metalness 加权混合。",
+    "用两个独立网络分别负责一种假设，解决单一网络难以同时学习两种假设的监督问题。",
+    "在材质估计精度与重光照效果上超越 SOTA。"
+   ],
+   "tags": [
+    "PBR",
+    "神经渲染"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "e39d023b252a",
+  "url": "https://arxiv.org/abs/2611.34238",
+  "title": "Computing Optimal Graph Mappings",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Maike Buchin",
+  "published": "2026-11-25T12:00:25.000Z",
+  "fetched": "2026-11-26T05:16:17.434153Z",
+  "snippet": "The weak graph distance is a distance measure for comparing two embedded graphs, which takes into account both the topology and the geometry of the graphs. The algorithm for computing this measure produces a mapping from one graph to the other that minimises the maximum distance; however, it maps al…",
+  "ai": {
+   "summary": "该论文研究嵌入图之间的弱图距离（weak graph distance）计算，该度量同时考虑拓扑与几何。原有算法只保证最小化最大距离，瓶颈之外的其余部分映射质量不佳。作者提出两种最优映射准则，并给出相应计算算法，使瓶颈之外的图部分尽可能精确映射。属于计算几何中的图匹配问题，与 CAD 几何内核和 GPU 渲染核心主题关联较弱。",
+   "points": [
+    "弱图距离同时考虑嵌入图的拓扑与几何，用于图之间的比较",
+    "原算法仅最小化最大距离，瓶颈之外的映射精度不足",
+    "提出两种最优映射准则并给出对应算法",
+    "属于计算几何理论工作，未涉及 B-Rep、NURBS 或渲染管线"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "517492340e80",
+  "url": "https://arxiv.org/abs/2611.34223",
+  "title": "AnyCam4D: Ray-Based 4D Gaussian Rendering for Arbitrary Camera Models",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Sascha Kirch",
+  "published": "2026-11-25T11:47:58.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "Real cameras are not pinholes, yet most dynamic Gaussian splatting assumes they are. Footage is therefore undistorted first, losing field of view or detail, especially with wide-angle and fisheye cameras. Static Gaussian splatting has largely solved this with ray-based rendering, which suits any cam…",
+  "ai": {
+   "summary": "针对动态 Gaussian splatting 普遍假设针孔相机、需先对鱼眼/广角素材去畸变而损失视场与细节的问题，AnyCam4D 提出基于光线的光栅化，直接在原始素材上训练原生 4D Gaussian。其核心贡献是对 4D 协方差做数值稳定的平方根分解，从而可靠恢复每个 Gaussian 的朝向与尺寸，使任意相机模型（含滚动快门、景深、色差）都能直接渲染。在 170° 合成鱼眼相机上 PSNR 提升 3.0–8.1 dB，真实素材上感知误差更低，且无需针对相机做专门推导。",
+   "points": [
+    "用基于光线的光栅化替代针孔投影，直接在未去畸变的鱼眼/广角原始素材上训练 4D Gaussian，保留视场与分辨率。",
+    "关键方法是条件化 4D 协方差的平方根，数值稳定地恢复 Gaussian 的朝向与尺寸，这是原生 4D Gaussian 无法直接套用光线渲染的症结。",
+    "支持滚动快门、景深、色差等非针孔成像效应的渲染，训练好的模型可换用其他相机模型渲染。",
+    "170° 合成鱼眼上 PSNR 提升 3.0–8.1 dB；视角偏离采集装置 60–80° 时领先 6.2 dB。"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "神经渲染",
+    "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "6f950bb8f51e",
+  "url": "https://arxiv.org/abs/2611.34128",
+  "title": "FoundSurface: Feedforward Ray-Based 3D Scene Surface Reconstruction from Unposed Images",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Shenxing Wei",
+  "published": "2026-11-25T10:30:24.000Z",
+  "fetched": "2026-11-26T05:16:17.434153Z",
+  "snippet": "Accurate 3D surface reconstruction from unposed images remains a fundamental challenge in computer vision. Recent feed-forward pointmap methods eliminate the need for camera poses but inherently produce discrete, sparse representations. In this paper, we present a generalizable pipeline that directl…",
+  "ai": {
+   "summary": "该论文提出 FoundSurface，一种从无位姿图像直接重建连续三维表面的前馈式流水线。方法先用预训练 pointmap 模型提取显式几何先验，再通过以查询视角为中心的选择模块和 surfel 投票机制筛选相关参考视图；随后用 cross-attention 回归器将查询射线与参考特征关联，估计连续粗表面；最后用基于 raylet 的模块聚合局部三维特征，雕刻高频细节并解析法线。在 9 个数据集上训练为单一基础模型后，在 6 个未见数据集上零样本泛化，几何精度与细节保持均超过现有基线。",
+   "points": [
+    "将 pointmap 与 ray-based 表示结合，从无位姿图像恢复连续高保真表面，而非离散稀疏点云。",
+    "用 surfel 投票机制选择几何相关参考视图，cross-attention 回归器估计连续粗表面。",
+    "raylet 模块聚合局部特征以恢复高频细节并输出解析法线。",
+    "单模型跨 9 数据集训练，在 6 个未见数据集上零样本泛化优于 SOTA。"
+   ],
+   "tags": [
+    "计算几何",
+    "神经渲染",
+    "网格处理"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "76992dfd3d52",
+  "url": "https://arxiv.org/abs/2611.33918",
+  "title": "MöbiuString: Structured String Art via Optimizing Generatrices on the Möbius Strip",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Xinding Zhu",
+  "published": "2026-11-25T07:37:54.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "String art is a worldwide handicraft that mimics an image with straight strings stretched between boundary pins. Existing image-driven methods primarily optimize individual strings for reconstruction fidelity, leaving the global organization of the strings weakly controlled.In this paper, we introdu…",
+  "ai": {
+   "summary": "该论文提出 MöbiuString，用 Möbius 带上的母线（generatrix）形式化无序边界点对构成的弦族，从而显式控制弦的整体排布，而非逐根优化。方法在图像区域边界布钉，在钉索引平面内为每条母线选取候选弦段，并用基于 2DGS 的可微渲染器联合优化母线参数与多层颜色，周期性离散重搜索以跳出局部最优。这是首个支持自由形状区域边界、具有结构化弦组织的自动图像弦艺术生成方法，在两组数据集与用户研究中优于基线。",
+   "points": [
+    "以 Möbius 带母线形式化弦族，实现对弦整体排列结构的显式控制",
+    "在钉索引平面内为母线选取候选弦段，并用 2DGS 可微渲染器联合优化参数与颜色",
+    "周期性离散重搜索修正弦族，避免陷入较差的局部配置",
+    "支持自由形状区域边界与多色、给定弦预算的生成，实验与用户研究优于基线"
+   ],
+   "tags": [
+    "神经渲染",
+    "计算几何",
+    "光栅化"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "fe572a75e4bf",
+  "url": "https://arxiv.org/abs/2611.33894",
+  "title": "SIA: Selective Image Analogy",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Amirhossein Alimohammadi",
+  "published": "2026-11-25T07:14:14.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "Image analogy transfers a demonstrated transformation from a before/after pair (A, A') to a new query image B. Existing methods assume all changes in (A, A') should be fully transferred, limiting flexibility when users want only a subset of the demonstrated edits. We introduce Selective Image Analog…",
+  "ai": {
+   "summary": "该论文提出 Selective Image Analogy (SIA) 这一新任务：从单对 before/after 示例 (A, A') 中学习多种编辑，并在推理时由用户选择只迁移其中一部分到新图像 B。方法先训练模型完整迁移示例中的变换，再通过 mask-aligned suppression 机制实现选择性控制，包括 token-gated LoRA（在去噪时把 adapter 更新限制在被抑制的 edit token 上）和 concept suppression vector（在去噪前削弱文本嵌入中选中的 token）。这样无需为每种编辑组合重新提供示例对，即可抑制 A' 中可见但用户不需要的编辑，同时保留所选编辑。作者构建了多编辑类比数据集，并通过定量、定性实验和用户研究验证了方法的有效性。",
+   "points": [
+    "提出 SIA 新设定：单对示例编码多种编辑，推理时由用户选择迁移哪些编辑",
+    "构建带 full-edit 与 partial-edit 目标的多编辑类比数据集",
+    "用 token-gated LoRA 与 concept suppression vector 实现编辑选择性抑制",
+    "无需为每种编辑组合提供新示例对，实验与用户研究验证有效性"
+   ],
+   "tags": [
+    "神经渲染"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "7fa72969e225",
+  "url": "https://arxiv.org/abs/2611.33829",
+  "title": "VoroPlex: A Python Framework for Multi-Threaded and Differentiable Voronoi Tessellation",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Peihang Lin",
+  "published": "2026-11-25T05:59:21.000Z",
+  "fetched": "2026-11-26T05:16:17.434153Z",
+  "snippet": "Voronoi tessellations are widely used in computational physics, for example to measure local structure in particle systems and to generate meshes. We present VoroPlex, an open-source Python package for computing Voronoi tessellations in two and three dimensions. VoroPlex is built on the multi-thread…",
+  "ai": {
+   "summary": "VoroPlex 是一个开源 Python 包，用于在二维和三维中计算 Voronoi 剖分，基于多线程 C++ 库 Voro++ 实现并行加速，并支持可微分计算。它通过为每个 Voronoi 顶点标记定义它的生成元，计算顶点对生成元位置的导数，从而借助 PyTorch 对单元面积、体积、界面面积等量进行梯度优化。该包还提供提取单元组间界面和导出网格的工具。在 28 线程下处理一百万个点，二维比 SciPy 快 46 倍，三维快 39 倍。应用示例包括变密度质心 Voronoi 剖分、基于符号距离函数的二维形状网格生成以及具有优选单元取向的泡沫设计。",
+   "points": [
+    "基于多线程 Voro++ 实现并行 Voronoi 剖分，百万点规模下比 SciPy 快数十倍。",
+    "通过顶点标签计算 Voronoi 顶点对生成元位置的导数，支持 PyTorch 自动微分与梯度优化。",
+    "提供单元组间界面提取和网格导出功能，便于后续处理。",
+    "演示了变密度 CVT、SDF 形状网格化和泡沫取向设计三个应用。"
+   ],
+   "tags": [
+    "计算几何",
+    "网格处理",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "9736064dc8a5",
+  "url": "https://arxiv.org/abs/2611.33824",
+  "title": "Revisiting Monocular In-Hand Object Scanning: Dataset, Pose Estimation, and Surface Reconstruction",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "Di Wu",
+  "published": "2026-11-25T05:54:14.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "In-Hand Object Scanning (IHOS) from monocular video captured by a commodity smartphone holds immense potential to democratize 3D digitization for non-expert users, facilitating applications in digital archiving, augmented reality, and custom fabrication. Yet, IHOS remains largely understudied due to…",
+  "ai": {
+   "summary": "该论文针对单目视频手持物体扫描（IHOS）缺乏真实数据集与系统基准的问题，发布了 ToysRUs 4K UHD 数据集。作者从第一性原理分析 SfM 相机位姿估计，指出相邻帧基线过小、大视角长程帧特征匹配稀疏以及手部动态遮挡三大挑战，提出按足够角度间隔采样子序列做 SfM 并迭代拼接为全局轨迹。表面重建方面引入遮挡感知的 2D Gaussian Splatting，在手部区域采用不透明度渲染并省略不透明度损失。实验表明该方法在几何精度与光度保真度上优于神经隐式表示与 3D 基础模型。",
+   "points": [
+    "发布 ToysRUs 数据集：4K UHD 单目视频拍摄的多样小雕像，用于 IHOS 基准评测",
+    "提出子序列采样 SfM 加迭代轨迹拼接，缓解小基线与长程稀疏匹配问题",
+    "引入遮挡感知 2D Gaussian Splatting，手部区域跳过不透明度损失以提升重建质量",
+    "在几何精度与光度保真度上超越神经隐式表示和 3D 基础模型"
+   ],
+   "tags": [
+    "高斯泼溅",
+    "网格处理",
+    "计算几何"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
   "id": "e132fb56eb47",
   "url": "https://github.com/FreeCAD/FreeCAD/releases/tag/weekly-2026.11.25",
   "title": "FreeCAD Development Build weekly-2026.11.25",
@@ -49,6 +338,58 @@
    ],
    "relevance": 1,
    "level": "入门"
+  }
+ },
+ {
+  "id": "8c28a80eb486",
+  "url": "https://arxiv.org/abs/2611.33615",
+  "title": "Learning from Natural Images Untangles Number Sense",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Yechan Cho",
+  "published": "2026-11-25T01:41:10.000Z",
+  "fetched": "2026-11-26T05:16:17.434153Z",
+  "snippet": "Numerical cognition is a simple yet fundamental ability that remains challenging for modern vision-language models. Meanwhile, number sense is already present in numerically naïve animals, suggesting that it can emerge without explicit numerical learning. Deep neural networks provide a related obser…",
+  "ai": {
+   "summary": "该研究探讨视觉学习如何影响视觉-语言模型中的数感（numerosity）与比例（proportion）表征。作者提出一个几何框架，追踪这两个量在训练前后的子空间角度与重叠度变化。实验发现，自然图像预训练虽未提升单元级数感选择性，却增大了数感与比例子空间之间的夹角并减少重叠，从而在二者冲突时支持更稳健的读出。直接操纵这些几何性质进一步验证了它们对解码准确率与功能独立性的贡献；自监督与合成图像训练也能产生类似分离，说明无需显式数值训练。",
+   "points": [
+    "提出几何框架，用子空间夹角与重叠度量化数感与比例表征的可分性。",
+    "自然图像预训练增大两子空间夹角、降低重叠，改善冲突情境下的读出鲁棒性。",
+    "直接操纵几何性质可因果性地影响解码准确率与功能独立性。",
+    "自监督与合成图像训练同样能实现数量分离，无需类别标签或自然图像。"
+   ],
+   "tags": [
+    "计算几何"
+   ],
+   "relevance": 1,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "44c2b8c39738",
+  "url": "https://arxiv.org/abs/2611.33505",
+  "title": "Representing and Animating Piano-Hinged Solids as Non-Manifold Cell Complexes: The Magic Photo Cube",
+  "source": "arXiv cs.CG 计算几何",
+  "topic": "geometry",
+  "author": "Ergun Akleman",
+  "published": "2026-11-24T22:25:59.000Z",
+  "fetched": "2026-11-26T05:16:17.434153Z",
+  "snippet": "Piano-hinged solids are articulated structures consisting of rigid solid components connected along edges, allowing relative rotations while preserving their connectivity. We propose representing such structures as a class of edge-connected non-manifold cell complexes, in which the components and th…",
+  "ai": {
+   "summary": "论文提出将钢琴铰接实体（由刚性组件沿边铰接而成的可动结构）表示为边连接的非流形胞腔复形，通过胞腔关联而非独立几何铰链元素编码组件及其铰接关系，为描述几何、连通性和允许运动提供统一框架。以魔术照片立方体（8个立方胞腔经8条边铰链连接）为例，重建两种三阶段折叠序列并分析构型，数值分析表明不同位置和朝向的终端构型在标记定向装配下刚性等价。该表示支持几何建模、动画和构型分析，并附带基于JavaScript和WebGL的交互式模拟器。",
+   "points": [
+    "提出边连接非流形胞腔复形表示钢琴铰接实体，用胞腔关联编码铰链关系而非独立几何元素。",
+    "以魔术照片立方体为例，每个胞腔保持持久身份和局部坐标系，折叠操作通过刚体变换传递铰链轴。",
+    "重建两种三阶段折叠序列，数值分析证明其终端构型在标记定向装配下刚性等价。",
+    "实现基于JavaScript和WebGL的交互式模拟器，支持几何建模、动画和构型分析。"
+   ],
+   "tags": [
+    "计算几何",
+    "网格处理",
+    "CAD渲染"
+   ],
+   "relevance": 3,
+   "level": "进阶"
   }
  },
  {
@@ -204,6 +545,31 @@
    ],
    "relevance": 1,
    "level": "专业"
+  }
+ },
+ {
+  "id": "cd7f014e0214",
+  "url": "https://arxiv.org/abs/2611.33256",
+  "title": "Massively multiplayer browser games on stateless pages and a relational database, a tutorial on their construction",
+  "source": "arXiv cs.GR 图形学",
+  "topic": "rendering",
+  "author": "É. O. Rodrigues",
+  "published": "2026-11-24T17:12:38.000Z",
+  "fetched": "2026-11-26T05:16:26.321118Z",
+  "snippet": "A massively multiplayer browser game is a persistent world that many players change through ordinary web pages, with no client to install. This work is a tutorial for a developer or developer who wants to structure such a game from the start, from the overall organisation into modules to the protoco…",
+  "ai": {
+   "summary": "这是一篇关于如何构建无状态页面、基于关系数据库的大型多人在线浏览器游戏的教程，以开源 RPG 游戏 Naruto! Nigeru 为例。文章从模块划分、请求周期、数据模型、无会话玩家身份、基于坐标哈希的世界地图、回合制战斗、并发经济与交易/决斗协议等方面给出设计决策与替代方案。内容属于 Web 后端与游戏架构，与 CAD 几何内核及 GPU 渲染无关。",
+   "points": [
+    "以开源 RPG 为例讲解无状态页面 + 关系数据库的 MMO 浏览器游戏架构",
+    "涵盖请求周期、数据模型、无会话身份、坐标哈希地图与回合制战斗等机制",
+    "讨论并发请求下的经济系统与玩家间交易/决斗协议",
+    "全文不涉及几何建模、B-Rep 或 GPU 渲染技术"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
   }
  },
  {
@@ -1089,188 +1455,6 @@
   }
  },
  {
-  "id": "9d87aedfb559",
-  "url": "https://ipotrick.github.io/site/blogs/practical-efficient-rendergraphs/",
-  "title": "Practical, efficient render graphs",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• walks through building a render graph from scratch based on resource access timelines\n• explains two-level command recording, consecutive read and concurrent-write access grouping, pass batching, pass reordering, and transient memory aliasing\n• includes discussions on memory usage and GPU time savings",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "文章从零构建一个实用的 render graph，核心是基于资源访问时间线自动生成 barrier 并优化 pass 顺序。它采用两级命令录制，并通过连续读分组、并发写分组、pass 批处理、pass 重排序和瞬态内存别名等逐步优化，减少 GPU 同步开销和显存占用。在作者的研究渲染器中，该方案节省约 350 MB 显存（占总 VRAM 的 20%）和每帧 0.2–0.4 ms GPU 时间。文章还讨论了 split barrier 和 async compute 等进阶优化，并指出 render graph 相比手工放置 barrier 更可维护。",
-   "points": [
-    "基于资源访问时间线自动生成 barrier，解决手工同步在复杂渲染设置组合下难以维护的问题。",
-    "两级命令录制与访问分组（连续读、并发写）减少不必要的 barrier 和 GPU 流水线排空。",
-    "pass 批处理与重排序优化执行顺序，瞬态内存别名降低显存占用。",
-    "在 Timberdoodle 渲染器中实测节省约 350 MB 显存和每帧 0.2–0.4 ms GPU 时间。"
-   ],
-   "tags": [
-    "渲染管线",
-    "GPU驱动渲染",
-    "性能优化",
-    "Vulkan"
-   ],
-   "relevance": 4,
-   "level": "进阶"
-  }
- },
- {
-  "id": "c3b55d004048",
-  "url": "https://www.youtube.com/watch?v=MFgptB5tpxk",
-  "title": "Siggraph 2026: smolder real-time volumetric effect rendering in glacier & 007 first light (Advances)",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• presents Smolder, a real-time volumetric effect rendering framework\n• uses Moment-based Order Independent Transparency (MBI) for shadows and transmittance\n• custom OpenVDB-based runtime density format integrated with lighting and volumetric fog\n• presents how cross-target hardware scaling is approached",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "该演讲介绍 Smolder，一个实时体积特效渲染框架，用于《冰川》与《007 First Light》等游戏。核心方法包括基于矩的 Order Independent Transparency（MBI）处理阴影与透射率，以及自定义的 OpenVDB 运行时密度格式，并与光照和体积雾集成；同时讨论了跨目标硬件的缩放策略。内容属于通用实时体积渲染技术，与 CAD 几何内核及 CAD 渲染的核心主题关联较弱。",
-   "points": [
-    "提出 Smolder 实时体积特效框架，用于游戏中的烟雾、雾等体积效果。",
-    "使用 Moment-based Order Independent Transparency（MBI）计算体积阴影与透射率。",
-    "采用自定义 OpenVDB 运行时密度格式，并与光照、体积雾管线集成。",
-    "讨论跨目标硬件的性能缩放方案，偏向游戏引擎工程实践。"
-   ],
-   "tags": [
-    "渲染管线",
-    "性能优化",
-    "全局光照"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
-  "id": "000e59d42da7",
-  "url": "https://www.phoronix.com/news/Vulkan-AMDX-Ray-Tracing-Struct",
-  "title": "Vulkan 1.4.369 Introduces New AMD Extension For Improving Ray-Tracing Performance",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• introduces the experimental VK_AMDX_multi_level_acceleration_structure extension shipped in Vulkan 1.4.369\n• adds up to two extra instance levels to the ray-tracing acceleration structure hierarchy to avoid unrolling bottom-level instances and duplicating rigidly animated geometry\n• targets lower acceleration structure build and update costs while reducing memory usage",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "Vulkan 1.4.369 引入实验性扩展 VK_AMDX_multi_level_acceleration_structure，在光线追踪加速结构（AS）的两级 BVH 层级中增加最多两级实例层级，避免将刚性动画几何展开为重复的底层实例。该改动主要针对 AS 构建/更新时间与内存占用两大瓶颈，使大型动态场景能以更粗粒度更新加速结构，降低构建成本并减少内存复制。对 CAD 渲染中超大装配体的光线追踪与动态更新有参考价值。",
-   "points": [
-    "新增 VK_AMDX_multi_level_acceleration_structure 扩展，为光线追踪 AS 增加最多两级实例层级。",
-    "避免刚性动画几何被展开复制到底层实例，降低 AS 构建/更新开销与内存占用。",
-    "支持以更粗粒度控制大型场景中哪些部分需要重建或更新。",
-    "属于 Vulkan 实验性扩展，面向游戏与实时渲染场景。"
-   ],
-   "tags": [
-    "Vulkan",
-    "光线追踪",
-    "GPU驱动渲染",
-    "性能优化"
-   ],
-   "relevance": 3,
-   "level": "进阶"
-  }
- },
- {
-  "id": "a8fae7f80df2",
-  "url": "https://arxiv.org/abs/2611.25265",
-  "title": "Real Cameras are Radiometric",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• proposes a radiometric camera model that lifts any central geometric camera model by adding a finite aperture, a free-form focus surface, and a vignetting function\n• calibrates parameters via inverse rendering directly on sensor-relative irradiance from standard calibration target images without feature detection",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "该文提出一种辐射度相机模型，在任意中心几何相机模型的基础上加入有限孔径、自由曲面焦面和暗角函数，从而把纯几何投影扩展为辐射度成像模型。参数标定不依赖特征检测，而是直接在传感器相对辐照度上做逆渲染，用标准标定靶图像求解。意义在于为渲染与视觉提供更真实的相机成像前向模型，可用于逆渲染、相机标定与合成数据生成。",
-   "points": [
-    "在中心几何相机模型上叠加有限孔径、自由曲面焦面与暗角函数，形成辐射度相机模型。",
-    "参数通过逆渲染在传感器相对辐照度上标定，无需特征检测。",
-    "仅用标准标定靶图像即可完成标定，降低了对标定流程的依赖。",
-    "属于计算摄影与逆渲染方向，与 CAD 几何内核及 CAD/GPU 渲染核心主题关系较远。"
-   ],
-   "tags": [
-    "光线追踪",
-    "渲染管线"
-   ],
-   "relevance": 2,
-   "level": "专业"
-  }
- },
- {
-  "id": "258f568e0fde",
-  "url": "https://bkaradzic.github.io/posts/memory-management/",
-  "title": "Blocks with ownership: a novel approach to CPU and GPU memory in C++",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• presents bx::Blk, a 24-byte non-copyable block handle storing a 64-bit pointer or GPU offset, size, alignment, last operation, and an 8-bit allocator handle\n• unifies CPU and GPU sub-allocation by keeping allocator bookkeeping inside the block rather than memory headers\n• presents how multiple allocators can be used to manage VkDeviceMemory or ID3D12Heaps",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "文章介绍 bx::Blk，一个 24 字节、不可拷贝的内存块句柄，将指针或 GPU 偏移、大小、对齐、最后操作和分配器句柄统一封装，把分配器元数据从内存头部移到块本身，从而统一 CPU 与 GPU 的子分配。它回顾了可组合分配器的历史（Vmalloc、Heap Layers、Alexandrescu 的 Blk 提案），并展示如何用多个分配器管理 VkDeviceMemory 或 ID3D12Heaps。核心价值在于提供一种更安全、可组合且同时覆盖 CPU/GPU 内存的分配抽象。",
-   "points": [
-    "bx::Blk 用 24 字节块句柄替代裸指针，携带大小、对齐、分配器来源和最后操作信息，避免在内存头部存储元数据。",
-    "块不可拷贝且能检测重复释放，无效时给出原因，并统一描述 CPU 内存与 GPU 偏移内存。",
-    "设计继承自 Alexandrescu 2015 年的可组合分配器思想，并扩展到 GPU 子分配场景。",
-    "配套提供可组合分配器、分配调试、内存跟踪和通用堆，可用于管理 Vulkan/D3D12 的显存堆。"
-   ],
-   "tags": [
-    "GPU驱动渲染",
-    "性能优化",
-    "Vulkan",
-    "D3D12"
-   ],
-   "relevance": 3,
-   "level": "进阶"
-  }
- },
- {
-  "id": "88ccf0883fcd",
-  "url": "https://xandev.blog.br/studies/timberborn-frame-analysis/",
-  "title": "Timberborn Frame Analysis",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-23T04:00:00.000Z",
-  "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• analyzes a late-game Timberborn frame in RenderDoc and Radeon GPU Profiler\n• documents the Unity frame structure\n• detects that most of the cost is from GPU idle time, with large gaps between 8k shadow draws and 11k non-instanced opaque draws",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
-  },
-  "ai": {
-   "summary": "作者用 RenderDoc 和 Radeon GPU Profiler 分析 Timberborn 后期大场景的一帧，发现帧率下降主要来自 GPU 空闲时间，而非模拟或绘制调用本身。帧结构为：单张 4096x4096 正交阴影贴图、按扇区从近到远排序的不透明绘制流（约 8k 阴影绘制、11k 非实例化不透明绘制）、水面深度 pass 和天空盒。水面渲染使用 73 个 chunk，在顶点着色器里采样多张全图俯视数据纹理（Outflows、WaterData、WaterSkirts 等）做形变。文章重点在绘制顺序与传给 GPU 的数据，而非复杂渲染技术。",
-   "points": [
-    "帧时间瓶颈是 GPU 空闲时间，表现为 8k 阴影绘制与 11k 非实例化不透明绘制之间存在大段间隙。",
-    "主渲染按扇区从近到远排序，扇区内依次绘制植被、水坝/建筑、地形，植被用 Perlin 噪声做顶点位移模拟风。",
-    "水面由 73 个 chunk 组成，顶点着色器采样 Outflows、WaterData、WaterSkirts 等全图俯视纹理进行形变。",
-    "阴影贴图为单张 4096x4096 正交贴图，覆盖范围跟随相机视角并做剔除。"
-   ],
-   "tags": [
-    "性能优化",
-    "GPU驱动渲染",
-    "CAD渲染"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
   "id": "961b1f98591a",
   "url": "https://drive.proton.me/urls/Y4PRYSVFS0",
   "title": "[pptx] From Voxels To Pixels",
@@ -1390,6 +1574,188 @@
    ],
    "relevance": 2,
    "level": "入门"
+  }
+ },
+ {
+  "id": "258f568e0fde",
+  "url": "https://bkaradzic.github.io/posts/memory-management/",
+  "title": "Blocks with ownership: a novel approach to CPU and GPU memory in C++",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• presents bx::Blk, a 24-byte non-copyable block handle storing a 64-bit pointer or GPU offset, size, alignment, last operation, and an 8-bit allocator handle\n• unifies CPU and GPU sub-allocation by keeping allocator bookkeeping inside the block rather than memory headers\n• presents how multiple allocators can be used to manage VkDeviceMemory or ID3D12Heaps",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "文章介绍 bx::Blk，一个 24 字节、不可拷贝的内存块句柄，将指针或 GPU 偏移、大小、对齐、最后操作和分配器句柄统一封装，把分配器元数据从内存头部移到块本身，从而统一 CPU 与 GPU 的子分配。它回顾了可组合分配器的历史（Vmalloc、Heap Layers、Alexandrescu 的 Blk 提案），并展示如何用多个分配器管理 VkDeviceMemory 或 ID3D12Heaps。核心价值在于提供一种更安全、可组合且同时覆盖 CPU/GPU 内存的分配抽象。",
+   "points": [
+    "bx::Blk 用 24 字节块句柄替代裸指针，携带大小、对齐、分配器来源和最后操作信息，避免在内存头部存储元数据。",
+    "块不可拷贝且能检测重复释放，无效时给出原因，并统一描述 CPU 内存与 GPU 偏移内存。",
+    "设计继承自 Alexandrescu 2015 年的可组合分配器思想，并扩展到 GPU 子分配场景。",
+    "配套提供可组合分配器、分配调试、内存跟踪和通用堆，可用于管理 Vulkan/D3D12 的显存堆。"
+   ],
+   "tags": [
+    "GPU驱动渲染",
+    "性能优化",
+    "Vulkan",
+    "D3D12"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "a8fae7f80df2",
+  "url": "https://arxiv.org/abs/2611.25265",
+  "title": "Real Cameras are Radiometric",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• proposes a radiometric camera model that lifts any central geometric camera model by adding a finite aperture, a free-form focus surface, and a vignetting function\n• calibrates parameters via inverse rendering directly on sensor-relative irradiance from standard calibration target images without feature detection",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "该文提出一种辐射度相机模型，在任意中心几何相机模型的基础上加入有限孔径、自由曲面焦面和暗角函数，从而把纯几何投影扩展为辐射度成像模型。参数标定不依赖特征检测，而是直接在传感器相对辐照度上做逆渲染，用标准标定靶图像求解。意义在于为渲染与视觉提供更真实的相机成像前向模型，可用于逆渲染、相机标定与合成数据生成。",
+   "points": [
+    "在中心几何相机模型上叠加有限孔径、自由曲面焦面与暗角函数，形成辐射度相机模型。",
+    "参数通过逆渲染在传感器相对辐照度上标定，无需特征检测。",
+    "仅用标准标定靶图像即可完成标定，降低了对标定流程的依赖。",
+    "属于计算摄影与逆渲染方向，与 CAD 几何内核及 CAD/GPU 渲染核心主题关系较远。"
+   ],
+   "tags": [
+    "光线追踪",
+    "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "000e59d42da7",
+  "url": "https://www.phoronix.com/news/Vulkan-AMDX-Ray-Tracing-Struct",
+  "title": "Vulkan 1.4.369 Introduces New AMD Extension For Improving Ray-Tracing Performance",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• introduces the experimental VK_AMDX_multi_level_acceleration_structure extension shipped in Vulkan 1.4.369\n• adds up to two extra instance levels to the ray-tracing acceleration structure hierarchy to avoid unrolling bottom-level instances and duplicating rigidly animated geometry\n• targets lower acceleration structure build and update costs while reducing memory usage",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "Vulkan 1.4.369 引入实验性扩展 VK_AMDX_multi_level_acceleration_structure，在光线追踪加速结构（AS）的两级 BVH 层级中增加最多两级实例层级，避免将刚性动画几何展开为重复的底层实例。该改动主要针对 AS 构建/更新时间与内存占用两大瓶颈，使大型动态场景能以更粗粒度更新加速结构，降低构建成本并减少内存复制。对 CAD 渲染中超大装配体的光线追踪与动态更新有参考价值。",
+   "points": [
+    "新增 VK_AMDX_multi_level_acceleration_structure 扩展，为光线追踪 AS 增加最多两级实例层级。",
+    "避免刚性动画几何被展开复制到底层实例，降低 AS 构建/更新开销与内存占用。",
+    "支持以更粗粒度控制大型场景中哪些部分需要重建或更新。",
+    "属于 Vulkan 实验性扩展，面向游戏与实时渲染场景。"
+   ],
+   "tags": [
+    "Vulkan",
+    "光线追踪",
+    "GPU驱动渲染",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "c3b55d004048",
+  "url": "https://www.youtube.com/watch?v=MFgptB5tpxk",
+  "title": "Siggraph 2026: smolder real-time volumetric effect rendering in glacier & 007 first light (Advances)",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• presents Smolder, a real-time volumetric effect rendering framework\n• uses Moment-based Order Independent Transparency (MBI) for shadows and transmittance\n• custom OpenVDB-based runtime density format integrated with lighting and volumetric fog\n• presents how cross-target hardware scaling is approached",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "该演讲介绍 Smolder，一个实时体积特效渲染框架，用于《冰川》与《007 First Light》等游戏。核心方法包括基于矩的 Order Independent Transparency（MBI）处理阴影与透射率，以及自定义的 OpenVDB 运行时密度格式，并与光照和体积雾集成；同时讨论了跨目标硬件的缩放策略。内容属于通用实时体积渲染技术，与 CAD 几何内核及 CAD 渲染的核心主题关联较弱。",
+   "points": [
+    "提出 Smolder 实时体积特效框架，用于游戏中的烟雾、雾等体积效果。",
+    "使用 Moment-based Order Independent Transparency（MBI）计算体积阴影与透射率。",
+    "采用自定义 OpenVDB 运行时密度格式，并与光照、体积雾管线集成。",
+    "讨论跨目标硬件的性能缩放方案，偏向游戏引擎工程实践。"
+   ],
+   "tags": [
+    "渲染管线",
+    "性能优化",
+    "全局光照"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "9d87aedfb559",
+  "url": "https://ipotrick.github.io/site/blogs/practical-efficient-rendergraphs/",
+  "title": "Practical, efficient render graphs",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• walks through building a render graph from scratch based on resource access timelines\n• explains two-level command recording, consecutive read and concurrent-write access grouping, pass batching, pass reordering, and transient memory aliasing\n• includes discussions on memory usage and GPU time savings",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "文章从零构建一个实用的 render graph，核心是基于资源访问时间线自动生成 barrier 并优化 pass 顺序。它采用两级命令录制，并通过连续读分组、并发写分组、pass 批处理、pass 重排序和瞬态内存别名等逐步优化，减少 GPU 同步开销和显存占用。在作者的研究渲染器中，该方案节省约 350 MB 显存（占总 VRAM 的 20%）和每帧 0.2–0.4 ms GPU 时间。文章还讨论了 split barrier 和 async compute 等进阶优化，并指出 render graph 相比手工放置 barrier 更可维护。",
+   "points": [
+    "基于资源访问时间线自动生成 barrier，解决手工同步在复杂渲染设置组合下难以维护的问题。",
+    "两级命令录制与访问分组（连续读、并发写）减少不必要的 barrier 和 GPU 流水线排空。",
+    "pass 批处理与重排序优化执行顺序，瞬态内存别名降低显存占用。",
+    "在 Timberdoodle 渲染器中实测节省约 350 MB 显存和每帧 0.2–0.4 ms GPU 时间。"
+   ],
+   "tags": [
+    "渲染管线",
+    "GPU驱动渲染",
+    "性能优化",
+    "Vulkan"
+   ],
+   "relevance": 4,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "88ccf0883fcd",
+  "url": "https://xandev.blog.br/studies/timberborn-frame-analysis/",
+  "title": "Timberborn Frame Analysis",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-23T04:00:00.000Z",
+  "fetched": "2026-11-25T14:46:16.969422Z",
+  "snippet": "• analyzes a late-game Timberborn frame in RenderDoc and Radeon GPU Profiler\n• documents the Unity frame structure\n• detects that most of the cost is from GPU idle time, with large gaps between 8k shadow draws and 11k non-instanced opaque draws",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
+  },
+  "ai": {
+   "summary": "作者用 RenderDoc 和 Radeon GPU Profiler 分析 Timberborn 后期大场景的一帧，发现帧率下降主要来自 GPU 空闲时间，而非模拟或绘制调用本身。帧结构为：单张 4096x4096 正交阴影贴图、按扇区从近到远排序的不透明绘制流（约 8k 阴影绘制、11k 非实例化不透明绘制）、水面深度 pass 和天空盒。水面渲染使用 73 个 chunk，在顶点着色器里采样多张全图俯视数据纹理（Outflows、WaterData、WaterSkirts 等）做形变。文章重点在绘制顺序与传给 GPU 的数据，而非复杂渲染技术。",
+   "points": [
+    "帧时间瓶颈是 GPU 空闲时间，表现为 8k 阴影绘制与 11k 非实例化不透明绘制之间存在大段间隙。",
+    "主渲染按扇区从近到远排序，扇区内依次绘制植被、水坝/建筑、地形，植被用 Perlin 噪声做顶点位移模拟风。",
+    "水面由 73 个 chunk 组成，顶点着色器采样 Outflows、WaterData、WaterSkirts 等全图俯视纹理进行形变。",
+    "阴影贴图为单张 4096x4096 正交贴图，覆盖范围跟随相机视角并做剔除。"
+   ],
+   "tags": [
+    "性能优化",
+    "GPU驱动渲染",
+    "CAD渲染"
+   ],
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -3199,25 +3565,26 @@
   }
  },
  {
-  "id": "06bf46d7e5a7",
-  "url": "https://developer.nvidia.com/blog/post-training-nvidia-nemotron-to-increase-accuracy-in-your-scientific-domain/",
-  "title": "Post-Training NVIDIA Nemotron to Increase Accuracy in Your Scientific Domain",
+  "id": "abadf42522dd",
+  "url": "https://developer.nvidia.com/blog/nvidia-vera-rubin-nvl72-achieves-up-to-2x-blackwell-ultra-performance-in-mlperf-training-v6-1/",
+  "title": "NVIDIA Vera Rubin NVL72 Achieves up to 2x Blackwell Ultra Performance in MLPerf Training v6.1",
   "source": "NVIDIA Technical Blog",
   "topic": "rendering",
-  "author": "Gautham Dharuman",
+  "author": "Farshad Ghodsian",
   "published": "2026-11-16T16:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Agentic AI is reshaping scientific research and innovation. Researchers communicate complex scientific hypotheses in natural language and let autonomous agents...",
+  "snippet": "As AI agents tackle increasingly complex workflows, reducing time-to-train is critical for rapidly iterating on both models and the agents they power. MLPerf...",
   "ai": {
-   "summary": "该文章介绍如何对 NVIDIA Nemotron 大语言模型进行后训练（post-training），以提升其在特定科学领域中的准确率。核心方法是通过领域数据微调与 agentic 工作流，让自主智能体完成假设规划、仿真执行与结果自校正。文章面向科学计算场景，与 CAD 几何内核及 GPU 渲染无直接关系。",
+   "summary": "该文是 NVIDIA 关于 Vera Rubin NVL72 在 MLPerf Training v6.1 中的 AI 训练性能发布说明，核心是 DeepSeek-V3 671B MoE 等基准上相比 GB300 NVL72 最高 2x 的每 GPU 性能提升，以及 256 到 1024 GPU 扩展时超过 97% 的扩展效率。文章重点在 NVLink 6、ConnectX-9 等互连与 CUDA 软件栈成熟度，不涉及几何内核或 GPU 图形渲染管线。",
    "points": [
-    "主题为 LLM 后训练与科学智能体工作流",
-    "涉及自然语言驱动的仿真规划与自校正",
-    "未涉及几何建模算法或渲染管线技术",
-    "对 CAD 几何内核与 GPU 渲染学习价值低"
+    "Vera Rubin NVL72 在七个 MLPerf Training 基准中的六个取得最快训练时间，DeepSeek-V3 671B 上 1024 GPU 用时 4.14 分钟，约为 GB300 的一半。",
+    "从 256 扩展到 1024 GPU 保持 97% 以上扩展效率，依赖 NVLink 6 铜缆骨干与 ConnectX-9 SuperNIC。",
+    "新增 Qwen 3.5 397B GRPO 强化学习后训练基准，并同时提交 TensorRT-LLM 与 vLLM 两种推理后端。",
+    "内容属于 AI 训练性能与数据中心互连，与 CAD 几何内核、GPU 图形渲染无直接关系。"
    ],
    "tags": [
-    "性能优化"
+    "性能优化",
+    "GPU架构"
    ],
    "relevance": 1,
    "level": "进阶"
@@ -3250,26 +3617,25 @@
   }
  },
  {
-  "id": "abadf42522dd",
-  "url": "https://developer.nvidia.com/blog/nvidia-vera-rubin-nvl72-achieves-up-to-2x-blackwell-ultra-performance-in-mlperf-training-v6-1/",
-  "title": "NVIDIA Vera Rubin NVL72 Achieves up to 2x Blackwell Ultra Performance in MLPerf Training v6.1",
+  "id": "06bf46d7e5a7",
+  "url": "https://developer.nvidia.com/blog/post-training-nvidia-nemotron-to-increase-accuracy-in-your-scientific-domain/",
+  "title": "Post-Training NVIDIA Nemotron to Increase Accuracy in Your Scientific Domain",
   "source": "NVIDIA Technical Blog",
   "topic": "rendering",
-  "author": "Farshad Ghodsian",
+  "author": "Gautham Dharuman",
   "published": "2026-11-16T16:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "As AI agents tackle increasingly complex workflows, reducing time-to-train is critical for rapidly iterating on both models and the agents they power. MLPerf...",
+  "snippet": "Agentic AI is reshaping scientific research and innovation. Researchers communicate complex scientific hypotheses in natural language and let autonomous agents...",
   "ai": {
-   "summary": "该文是 NVIDIA 关于 Vera Rubin NVL72 在 MLPerf Training v6.1 中的 AI 训练性能发布说明，核心是 DeepSeek-V3 671B MoE 等基准上相比 GB300 NVL72 最高 2x 的每 GPU 性能提升，以及 256 到 1024 GPU 扩展时超过 97% 的扩展效率。文章重点在 NVLink 6、ConnectX-9 等互连与 CUDA 软件栈成熟度，不涉及几何内核或 GPU 图形渲染管线。",
+   "summary": "该文章介绍如何对 NVIDIA Nemotron 大语言模型进行后训练（post-training），以提升其在特定科学领域中的准确率。核心方法是通过领域数据微调与 agentic 工作流，让自主智能体完成假设规划、仿真执行与结果自校正。文章面向科学计算场景，与 CAD 几何内核及 GPU 渲染无直接关系。",
    "points": [
-    "Vera Rubin NVL72 在七个 MLPerf Training 基准中的六个取得最快训练时间，DeepSeek-V3 671B 上 1024 GPU 用时 4.14 分钟，约为 GB300 的一半。",
-    "从 256 扩展到 1024 GPU 保持 97% 以上扩展效率，依赖 NVLink 6 铜缆骨干与 ConnectX-9 SuperNIC。",
-    "新增 Qwen 3.5 397B GRPO 强化学习后训练基准，并同时提交 TensorRT-LLM 与 vLLM 两种推理后端。",
-    "内容属于 AI 训练性能与数据中心互连，与 CAD 几何内核、GPU 图形渲染无直接关系。"
+    "主题为 LLM 后训练与科学智能体工作流",
+    "涉及自然语言驱动的仿真规划与自校正",
+    "未涉及几何建模算法或渲染管线技术",
+    "对 CAD 几何内核与 GPU 渲染学习价值低"
    ],
    "tags": [
-    "性能优化",
-    "GPU架构"
+    "性能优化"
    ],
    "relevance": 1,
    "level": "进阶"
@@ -3634,37 +4000,6 @@
   }
  },
  {
-  "id": "6899e55b962c",
-  "url": "https://arxiv.org/abs/2611.12650",
-  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该工作针对神经纹理压缩在斜视角下模糊的问题，把各向异性过滤直接集成进神经解码器：解码器根据像素足迹的形状、角度和距离（即 LOD 条件）自适应调整过滤方式。这样在近距离和陡峭角度下都能保持表面清晰，同时以约四分之一的内存达到接近全尺寸压缩纹理的质量。",
-   "points": [
-    "将各向异性过滤内嵌到神经纹理压缩的解码器中，而非后处理",
-    "解码器依据像素足迹形状、角度与距离（LOD）条件调整过滤",
-    "显著改善斜视角与近距离的清晰度，避免模糊",
-    "内存约为全尺寸压缩纹理的四分之一，质量接近"
-   ],
-   "tags": [
-    "LOD",
-    "神经渲染",
-    "纹理压缩",
-    "各向异性过滤"
-   ],
-   "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
   "id": "04c7cfe4c68e",
   "url": "https://www.youtube.com/watch?v=mHIJVclRZ18",
   "title": "[video] The Hidden Assumptions in Every Volume Renderer",
@@ -3774,6 +4109,37 @@
    "tags": [
     "抗锯齿",
     "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "6899e55b962c",
+  "url": "https://arxiv.org/abs/2611.12650",
+  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该工作针对神经纹理压缩在斜视角下模糊的问题，把各向异性过滤直接集成进神经解码器：解码器根据像素足迹的形状、角度和距离（即 LOD 条件）自适应调整过滤方式。这样在近距离和陡峭角度下都能保持表面清晰，同时以约四分之一的内存达到接近全尺寸压缩纹理的质量。",
+   "points": [
+    "将各向异性过滤内嵌到神经纹理压缩的解码器中，而非后处理",
+    "解码器依据像素足迹形状、角度与距离（LOD）条件调整过滤",
+    "显著改善斜视角与近距离的清晰度，避免模糊",
+    "内存约为全尺寸压缩纹理的四分之一，质量接近"
+   ],
+   "tags": [
+    "LOD",
+    "神经渲染",
+    "纹理压缩",
+    "各向异性过滤"
    ],
    "relevance": 2,
    "level": "进阶"
@@ -3911,31 +4277,6 @@
   }
  },
  {
-  "id": "647ecc584acf",
-  "url": "https://developer.nvidia.com/blog/adapt-human-motion-for-robots-with-nvidia-soma-retargeter/",
-  "title": "Adapt Human Motion for Robots with NVIDIA SOMA Retargeter",
-  "source": "NVIDIA Technical Blog",
-  "topic": "rendering",
-  "author": "John Malaska",
-  "published": "2026-11-13T17:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Human motion offers roboticists a great starting point for teaching humanoid robots how to move. A human demonstration captures the coordination and timing...",
-  "ai": {
-   "summary": "NVIDIA SOMA Retargeter 是一个开源工具，用于将人类动作数据（BVH 格式，基于 SOMA 骨架）重定向到不同人形机器人的比例与关节结构上。其流程为：先按机器人比例缩放动作目标，再用基于 NVIDIA Warp 的 Newton 求解器做逆运动学求解，最后进行脚部着地等后处理修正。v0.2 版本为 Unitree G1/H2、Booster T1、AgiBot X2 Ultra/A3T3 五款机器人提供了参考配置与重定向示例，输出 CSV 轨迹可供策略训练使用。",
-   "points": [
-    "以 SOMA 骨架作为统一的人类动作表示，兼容动捕数据、视频重建（GEM-X）与生成模型（Kimodo、ARDY）等多种来源。",
-    "重定向管线包含比例缩放、基于 Warp/Newton 的逆运动学求解与脚部着地后处理。",
-    "v0.2 提供五款人形机器人的参考配置与成对的人-机器人动作示例。",
-    "输出 CSV 轨迹可转换为 SONIC、ProtoMotions 等策略训练所需的动作库格式。"
-   ],
-   "tags": [
-    "版本发布"
-   ],
-   "relevance": 1,
-   "level": "入门"
-  }
- },
- {
   "id": "dbb6a7059ae0",
   "url": "https://developer.nvidia.com/blog/when-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm/",
   "title": "When One GPU Isn’t Enough: Serving GLM-5.3 Across Two NVIDIA DGX Stations with vLLM",
@@ -3958,6 +4299,31 @@
    ],
    "relevance": 1,
    "level": "进阶"
+  }
+ },
+ {
+  "id": "647ecc584acf",
+  "url": "https://developer.nvidia.com/blog/adapt-human-motion-for-robots-with-nvidia-soma-retargeter/",
+  "title": "Adapt Human Motion for Robots with NVIDIA SOMA Retargeter",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "John Malaska",
+  "published": "2026-11-13T17:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "Human motion offers roboticists a great starting point for teaching humanoid robots how to move. A human demonstration captures the coordination and timing...",
+  "ai": {
+   "summary": "NVIDIA SOMA Retargeter 是一个开源工具，用于将人类动作数据（BVH 格式，基于 SOMA 骨架）重定向到不同人形机器人的比例与关节结构上。其流程为：先按机器人比例缩放动作目标，再用基于 NVIDIA Warp 的 Newton 求解器做逆运动学求解，最后进行脚部着地等后处理修正。v0.2 版本为 Unitree G1/H2、Booster T1、AgiBot X2 Ultra/A3T3 五款机器人提供了参考配置与重定向示例，输出 CSV 轨迹可供策略训练使用。",
+   "points": [
+    "以 SOMA 骨架作为统一的人类动作表示，兼容动捕数据、视频重建（GEM-X）与生成模型（Kimodo、ARDY）等多种来源。",
+    "重定向管线包含比例缩放、基于 Warp/Newton 的逆运动学求解与脚部着地后处理。",
+    "v0.2 提供五款人形机器人的参考配置与成对的人-机器人动作示例。",
+    "输出 CSV 轨迹可转换为 SONIC、ProtoMotions 等策略训练所需的动作库格式。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
   }
  },
  {
@@ -3988,9 +4354,9 @@
   }
  },
  {
-  "id": "1f70bbc78b52",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-info-v30.0.2",
-  "title": "wgpu-info-v30.0.2",
+  "id": "c978e1d8ba71",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-hal-v30.0.2",
+  "title": "wgpu-hal-v30.0.2",
   "source": "wgpu Releases",
   "topic": "general",
   "author": "cwfitzgerald",
@@ -3998,18 +4364,20 @@
   "fetched": "2026-11-23T12:05:13.655237Z",
   "snippet": "Release v30.0.2",
   "ai": {
-   "summary": "这是 wgpu 仓库中 wgpu-info 工具 v30.0.2 的发布标签页面，正文只包含 GitHub 的提交签名验证信息和页面加载错误提示，没有任何关于功能变更、修复或性能改进的实质内容。wgpu-info 是用于查询 GPU 适配器与后端信息的诊断工具，与 WebGPU 生态相关，但本次发布说明未提供可学习的技术细节。",
+   "summary": "这是 wgpu 项目 wgpu-hal 组件的 v30.0.2 版本发布说明，但页面正文只包含 GitHub 的签名验证与标签选择界面，没有列出任何具体变更内容。wgpu-hal 是 wgpu 的底层硬件抽象层，负责对接 Vulkan、D3D12、Metal 等图形后端。由于缺少 changelog 细节，无法判断本次发布是否涉及渲染管线或性能相关修复。",
    "points": [
-    "发布页正文仅有提交签名验证信息与页面加载错误，无实际变更日志",
-    "wgpu-info 是 wgpu/WebGPU 生态中查询 GPU 适配器与后端能力的诊断工具",
-    "未涉及几何内核、渲染算法或性能优化的具体内容"
+    "wgpu-hal 是 wgpu 的底层后端抽象层，对接 Vulkan/D3D12/Metal 等 API",
+    "发布页面未提供具体变更条目，仅有签名验证信息",
+    "无法确认是否包含与 CAD 渲染或 GPU 性能相关的改动"
    ],
    "tags": [
+    "版本发布",
     "WebGPU",
-    "版本发布"
+    "Vulkan",
+    "D3D12"
    ],
    "relevance": 2,
-   "level": "入门"
+   "level": "进阶"
   }
  },
  {
@@ -4035,31 +4403,6 @@
    ],
    "relevance": 2,
    "level": "入门"
-  }
- },
- {
-  "id": "478c2f46545c",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-v30.0.2",
-  "title": "wgpu-core-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu-core 的补丁版本发布（v30.0.2），但发布页面未能加载出具体变更内容，正文只有 GitHub 的签名验证与标签选择界面，没有可读的更新说明。wgpu 是 Rust 生态的跨平台 GPU 抽象层，wgpu-core 是其核心校验与资源管理层，支撑 WebGPU 及 Vulkan/D3D12/Metal 后端。由于缺少实际 changelog，无法判断本次修复涉及几何建模还是渲染管线细节。",
-   "points": [
-    "发布为 wgpu-core v30.0.2 补丁版本，由 Connor Fitzgerald 签名提交",
-    "页面正文未加载出变更日志，无法获知具体修复内容",
-    "wgpu-core 是 WebGPU 在 Rust 中的核心实现，可映射到 Vulkan/D3D12/Metal 后端"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "进阶"
   }
  },
  {
@@ -4140,9 +4483,9 @@
   }
  },
  {
-  "id": "c978e1d8ba71",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-hal-v30.0.2",
-  "title": "wgpu-hal-v30.0.2",
+  "id": "1f70bbc78b52",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-info-v30.0.2",
+  "title": "wgpu-info-v30.0.2",
   "source": "wgpu Releases",
   "topic": "general",
   "author": "cwfitzgerald",
@@ -4150,20 +4493,18 @@
   "fetched": "2026-11-23T12:05:13.655237Z",
   "snippet": "Release v30.0.2",
   "ai": {
-   "summary": "这是 wgpu 项目 wgpu-hal 组件的 v30.0.2 版本发布说明，但页面正文只包含 GitHub 的签名验证与标签选择界面，没有列出任何具体变更内容。wgpu-hal 是 wgpu 的底层硬件抽象层，负责对接 Vulkan、D3D12、Metal 等图形后端。由于缺少 changelog 细节，无法判断本次发布是否涉及渲染管线或性能相关修复。",
+   "summary": "这是 wgpu 仓库中 wgpu-info 工具 v30.0.2 的发布标签页面，正文只包含 GitHub 的提交签名验证信息和页面加载错误提示，没有任何关于功能变更、修复或性能改进的实质内容。wgpu-info 是用于查询 GPU 适配器与后端信息的诊断工具，与 WebGPU 生态相关，但本次发布说明未提供可学习的技术细节。",
    "points": [
-    "wgpu-hal 是 wgpu 的底层后端抽象层，对接 Vulkan/D3D12/Metal 等 API",
-    "发布页面未提供具体变更条目，仅有签名验证信息",
-    "无法确认是否包含与 CAD 渲染或 GPU 性能相关的改动"
+    "发布页正文仅有提交签名验证信息与页面加载错误，无实际变更日志",
+    "wgpu-info 是 wgpu/WebGPU 生态中查询 GPU 适配器与后端能力的诊断工具",
+    "未涉及几何内核、渲染算法或性能优化的具体内容"
    ],
    "tags": [
-    "版本发布",
     "WebGPU",
-    "Vulkan",
-    "D3D12"
+    "版本发布"
    ],
    "relevance": 2,
-   "level": "进阶"
+   "level": "入门"
   }
  },
  {
@@ -4241,6 +4582,31 @@
    "tags": [
     "WebGPU",
     "着色器",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "478c2f46545c",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-core-v30.0.2",
+  "title": "wgpu-core-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu-core 的补丁版本发布（v30.0.2），但发布页面未能加载出具体变更内容，正文只有 GitHub 的签名验证与标签选择界面，没有可读的更新说明。wgpu 是 Rust 生态的跨平台 GPU 抽象层，wgpu-core 是其核心校验与资源管理层，支撑 WebGPU 及 Vulkan/D3D12/Metal 后端。由于缺少实际 changelog，无法判断本次修复涉及几何建模还是渲染管线细节。",
+   "points": [
+    "发布为 wgpu-core v30.0.2 补丁版本，由 Connor Fitzgerald 签名提交",
+    "页面正文未加载出变更日志，无法获知具体修复内容",
+    "wgpu-core 是 WebGPU 在 Rust 中的核心实现，可映射到 Vulkan/D3D12/Metal 后端"
+   ],
+   "tags": [
+    "WebGPU",
     "版本发布"
    ],
    "relevance": 2,
@@ -4629,32 +4995,6 @@
   }
  },
  {
-  "id": "863e60369b68",
-  "url": "https://developer.nvidia.com/blog/agent-substrate-advancing-kubernetes-for-agents-at-scale/",
-  "title": "Agent Substrate: Advancing Kubernetes for Agents at Scale",
-  "source": "NVIDIA Technical Blog",
-  "topic": "rendering",
-  "author": "Ekin Karabulut",
-  "published": "2026-11-10T15:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "AI agents spend most of their time idle, waiting on a human prompt, a tool result or a model response. Kubernetes wasn’t built for that. Running one Pod per...",
-  "ai": {
-   "summary": "NVIDIA 介绍开源项目 Agent Substrate，它针对 AI agent 会话大部分时间空闲、Kubernetes 按 Pod 冷启动代价高的问题，用少量常驻 worker Pod 多路复用大量会话：空闲会话连同内存与文件系统状态被 checkpoint 并释放 worker，下次请求时恢复到任意空闲 worker，无需再走 API server/scheduler/kubelet。项目与 NVIDIA Dynamo（推理调度、KV cache 感知路由）和 KAI Scheduler（与 GPU 训练/推理服务混部）配合，运行在 DSX AI Factory 平台，并已捐入 CNCF Sandbox。",
-   "points": [
-    "用 actor 到 worker Pod 的二级控制面替代一会话一 Pod，空闲会话 checkpoint 后释放资源，实现约 10 倍密度。",
-    "面向编码助手、RL 后训练环境和短时 GPU sandbox 三类负载，支持 gVisor/microVM 隔离与零信任安全。",
-    "Dynamo 依据 session identity、KV cache 位置和 tool-call 边界路由推理请求，并把首 token 时间等信号回传给 Substrate 决定挂起或恢复。",
-    "上游贡献包括 router 请求排队、microVM 容器级资源限制，以及基于 Kubernetes DRA 的厂商中立 GPU 状态暂停/恢复。"
-   ],
-   "tags": [
-    "版本发布",
-    "性能优化"
-   ],
-   "relevance": 1,
-   "level": "进阶"
-  }
- },
- {
   "id": "ce98a6a1f234",
   "url": "https://developer.nvidia.com/blog/start-and-restore-gpu-workloads-in-seconds-with-nvidia-snapshot/",
   "title": "Start and Restore GPU Workloads in Seconds with NVIDIA Snapshot",
@@ -4699,6 +5039,32 @@
    ],
    "tags": [
     "版本发布"
+   ],
+   "relevance": 1,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "863e60369b68",
+  "url": "https://developer.nvidia.com/blog/agent-substrate-advancing-kubernetes-for-agents-at-scale/",
+  "title": "Agent Substrate: Advancing Kubernetes for Agents at Scale",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Ekin Karabulut",
+  "published": "2026-11-10T15:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "AI agents spend most of their time idle, waiting on a human prompt, a tool result or a model response. Kubernetes wasn’t built for that. Running one Pod per...",
+  "ai": {
+   "summary": "NVIDIA 介绍开源项目 Agent Substrate，它针对 AI agent 会话大部分时间空闲、Kubernetes 按 Pod 冷启动代价高的问题，用少量常驻 worker Pod 多路复用大量会话：空闲会话连同内存与文件系统状态被 checkpoint 并释放 worker，下次请求时恢复到任意空闲 worker，无需再走 API server/scheduler/kubelet。项目与 NVIDIA Dynamo（推理调度、KV cache 感知路由）和 KAI Scheduler（与 GPU 训练/推理服务混部）配合，运行在 DSX AI Factory 平台，并已捐入 CNCF Sandbox。",
+   "points": [
+    "用 actor 到 worker Pod 的二级控制面替代一会话一 Pod，空闲会话 checkpoint 后释放资源，实现约 10 倍密度。",
+    "面向编码助手、RL 后训练环境和短时 GPU sandbox 三类负载，支持 gVisor/microVM 隔离与零信任安全。",
+    "Dynamo 依据 session identity、KV cache 位置和 tool-call 边界路由推理请求，并把首 token 时间等信号回传给 Substrate 决定挂起或恢复。",
+    "上游贡献包括 router 请求排队、microVM 容器级资源限制，以及基于 Kubernetes DRA 的厂商中立 GPU 状态暂停/恢复。"
+   ],
+   "tags": [
+    "版本发布",
+    "性能优化"
    ],
    "relevance": 1,
    "level": "进阶"
@@ -4780,6 +5146,38 @@
    ],
    "relevance": 3,
    "level": "进阶"
+  }
+ },
+ {
+  "id": "b4d519102979",
+  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
+  "title": "Real-Time Path Tracing in Games",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  },
+  "ai": {
+   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
+   "points": [
+    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
+    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
+    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
+    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
+   ],
+   "tags": [
+    "光线追踪",
+    "全局光照",
+    "性能优化",
+    "D3D12",
+    "渲染管线"
+   ],
+   "relevance": 3,
+   "level": "专业"
   }
  },
  {
@@ -4901,38 +5299,6 @@
    ],
    "relevance": 2,
    "level": "入门"
-  }
- },
- {
-  "id": "b4d519102979",
-  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
-  "title": "Real-Time Path Tracing in Games",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  },
-  "ai": {
-   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
-   "points": [
-    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
-    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
-    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
-    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
-   ],
-   "tags": [
-    "光线追踪",
-    "全局光照",
-    "性能优化",
-    "D3D12",
-    "渲染管线"
-   ],
-   "relevance": 3,
-   "level": "专业"
   }
  },
  {
@@ -5568,35 +5934,34 @@
   }
  },
  {
-  "id": "88ae331d7de9",
-  "url": "https://endfield-behind-the-frame.vinluo46.chatgpt.site/en",
-  "title": "Behind the Frame: Endfield | PC Rendering Analysis",
+  "id": "4c29b1f2c0af",
+  "url": "https://grgkopanas.github.io/3dgs_cuda_blog/",
+  "title": "What the 3DGS Literature Left on the Table",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-01T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• dissects the Vulkan rendering pipeline of the game Endfield\n• covers deferred G-buffer layout, virtual texturing, screen-space effects, volumetric fog, irradiance volumes, and character forward lighting\n• highlights a mixed deferred and forward character shading approach",
+  "snippet": "• presents a deep-dive analysis of CUDA optimization remaining in 3D Gaussian Splatting after comparison with current literature techniques\n• details five hardware-level optimizations targeting warp execution, register pressure, L2 cache, and SIMT divergence",
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
   },
   "ai": {
-   "summary": "本文深入分析了游戏 Endfield 的 Vulkan 渲染管线，重点介绍了其混合延迟与正向的角色着色方案：先通过 base pass 写入 G-buffer，再对角色进行逐 mesh 的正向光照。文章还涵盖了延迟 G-buffer 布局、虚拟纹理、屏幕空间效果、体积雾、辐照度体积等特性，并讨论了该架构在长期运营的动漫风格游戏中的可维护性优势。",
+   "summary": "文章系统分析了 3D Gaussian Splatting (3DGS) 在整合现有文献优化后仍存在的 GPU 硬件级性能瓶颈，并给出五个针对 warp 执行、寄存器压力、L2 缓存和 SIMT 分歧的优化步骤。作者将 DISTWAR、gsplat、StopThePop 等五类优化合并为 s01_literature 基线，在 Mip-NeRF 360 场景上比 Inria 原实现快 4.09×；随后通过 s02–s06 逐步优化，最终达到 7.30× 端到端加速且图像质量不变。文章从 A100 的 SM 子分区、warp 调度器、寄存器文件、执行管道和 L2 缓存扇区等硬件细节出发，解释每个性能悬崖的成因与消除方法。",
    "points": [
-    "Endfield 采用混合渲染路径：环境使用延迟着色，角色在 base pass 后单独进行正向光照，以隔离角色材质与光照的复杂性。",
-    "管线包含虚拟纹理、屏幕空间效果、体积雾和辐照度体积等高级特性，并穿插大量 compute dispatch 与绘制交替执行。",
-    "顶点阶段处理压缩属性解码、蒙皮和角色描边，不同材质（头发、身体、眼睛、描边）有各自的布局。",
-    "文章认为这种分离角色光照的方案比统一延迟光照更适应长期内容扩展，能控制存储与寄存器开销。"
+    "整合文献优化得到 s01_literature 基线，比 Inria 原实现快 4.09×，且优于现有开源实现。",
+    "剩余 1.78× 加速空间来自 warp 执行模型、寄存器压力、L2 缓存扇区和算术执行管道等硬件级瓶颈。",
+    "五个独立优化步骤（s02–s06）逐一解决上述瓶颈，最终实现 7.30× 端到端加速且图像质量不变。",
+    "文章以 A100 为例详细解释 SM 子分区、warp 调度、寄存器分配与缓存层次对 3DGS 内核性能的影响。"
    ],
    "tags": [
-    "CAD渲染",
-    "渲染管线",
-    "Vulkan",
     "GPU驱动渲染",
-    "性能优化"
+    "性能优化",
+    "GPU架构",
+    "高斯泼溅"
    ],
    "relevance": 3,
-   "level": "进阶"
+   "level": "专业"
   }
  },
  {
@@ -5626,100 +5991,6 @@
     "性能优化"
    ],
    "relevance": 2,
-   "level": "进阶"
-  }
- },
- {
-  "id": "d8562ead568f",
-  "url": "https://gamedev.net/tutorials/programming/general-and-gameplay-programming/shadow-caster-volumes-for-the-culling-of-potential-shadow-casters-r2330",
-  "title": "Shadow Caster Volumes For The Culling Of Potential Shadow Casters",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a technique for culling shadow casters by constructing a shadow-caster volume that extends the view frustum to include the light source\n• extends the method to directional lights and semi-transparent object bounds",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  },
-  "ai": {
-   "summary": "文章提出一种阴影投射体剔除技术：通过把视锥向光源方向延伸，构造出“阴影投射体体积”（shadow caster volume），只保留可能对当前视野产生阴影的物体，从而减少阴影渲染的候选对象。该方法进一步扩展到平行光（directional light）以及半透明物体的包围体处理。核心价值在于降低阴影 pass 的绘制与遍历开销，属于渲染管线中的可见性剔除优化。",
-   "points": [
-    "用视锥向光源延伸构造 shadow caster volume，剔除不可能投影到视野内的物体",
-    "方法可推广到 directional light，并处理半透明物体的包围体",
-    "属于阴影渲染前的可见性剔除优化，可减少阴影 pass 的绘制量",
-    "与 GPU 剔除、间接绘制等管线优化思路相通，但偏通用渲染而非 CAD 专用"
-   ],
-   "tags": [
-    "剔除",
-    "阴影",
-    "渲染管线",
-    "性能优化"
-   ],
-   "relevance": 3,
-   "level": "进阶"
-  }
- },
- {
-  "id": "af5af692b191",
-  "url": "https://charlesgrassi.dev/blog/neural-volumetric-clouds/",
-  "title": "Neural Shaders, Explained With Clouds",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a walkthrough of replacing a cloud in-scattering approximation with a small trained neural network\n• details how the inputs are processed using mip-pyramid density samples and a two-hidden-layer MLP evaluated in plain HLSL\n• measures the neural model against a path-traced reference\n• compares error and performance",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  },
-  "ai": {
-   "summary": "文章介绍神经着色器（neural shader）的概念，并以体积云为例完整实现：用小型神经网络替代云中单次散射的近似计算。网络输入为 mip 金字塔密度采样，采用两层隐藏层 MLP，在 HLSL 中直接求值。作者将神经模型与路径追踪参考结果对比，测量误差与性能，说明神经着色器能在实时帧率下达到接近正确解的效果。云形状由约 40 行 SDF 函数生成，便于渲染器与路径追踪器共享同一几何。",
-   "points": [
-    "神经着色器用训练好的小型网络替代着色器中难以解析推导的计算，如云中多次散射。",
-    "网络输入为 mip 金字塔密度采样，采用两层隐藏层 MLP，在 HLSL 中直接求值，可实时运行。",
-    "云形状由约 40 行 SDF 函数生成，渲染器烘焙为体素网格，路径追踪器直接采样同一函数，保证对比一致。",
-    "与路径追踪参考对比，神经模型在误差和性能上取得平衡，但文章未给出具体数值。"
-   ],
-   "tags": [
-    "神经渲染",
-    "着色器",
-    "光线追踪",
-    "性能优化"
-   ],
-   "relevance": 3,
-   "level": "进阶"
-  }
- },
- {
-  "id": "bc93d505c8d7",
-  "url": "https://devblogs.microsoft.com/directx/clas-ptlas-preview/",
-  "title": "[PREVIEW] Raytracing: Clustered Geometry, Partitioned TLAS, Indirect Acceleration Structure Builds",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• previews DXR Clustered Geometry and Partitioned TLAS, enabling GPU-driven efficient scene updates\n• introduces Cluster-Level Acceleration Structures (CLAS) for reusable meshlet building blocks and PTLAS for sparse partition-based TLAS updates\n• provides API walkthroughs, shader intrinsics in Shader Model 6.10, and official samples\n• additionally discusses how animated meshes are better supported",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  },
-  "ai": {
-   "summary": "微软发布 DXR Clustered Geometry 与 Partitioned TLAS 预览，将 BLAS 构建单元细化为最多 256 三角形的 CLAS，支持 GPU 驱动的间接加速结构构建；PTLAS 将 TLAS 更新限制在变化的分区，降低大场景更新开销。两者可独立或组合使用，无需新硬件，但依赖厂商驱动支持。配套 Shader Model 6.10 内建函数与官方示例，并改善动画网格的光线追踪支持。",
-   "points": [
-    "CLAS 以最多 256 三角形/顶点为构建单元，可复用组装 Cluster BLAS，降低动画、流式与生成几何的 BLAS 重建成本。",
-    "PTLAS 将 TLAS 划分为稀疏分区，仅更新变化区域，适合大规模场景的增量更新。",
-    "新增 GPU 驱动的 ExecuteIndirectRTASOperations 与 GetRTASOperationPrebuildInfo，支持间接构建与仅尺寸查询。",
-    "Shader Model 6.10 提供 ClusterID()、TriangleObjectPositions() 等内建函数，便于命中着色器访问簇级数据。"
-   ],
-   "tags": [
-    "光线追踪",
-    "GPU驱动渲染",
-    "LOD",
-    "D3D12",
-    "性能优化"
-   ],
-   "relevance": 4,
    "level": "进阶"
   }
  },
@@ -5756,31 +6027,63 @@
   }
  },
  {
-  "id": "90230e5fb2c8",
-  "url": "https://www.youtube.com/watch?v=VW_NUH-6kv0",
-  "title": "[video] Memory Management, Explained Simply (Part 3)",
+  "id": "28012691739d",
+  "url": "https://valdes.cc/articles/scratchytoy.html",
+  "title": "ScratchyToy",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-01T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers topics such as virtual memory, paging, and allocation strategies\n• aims to provide visual explanations suitable for readers new to systems topics",
+  "snippet": "• introduces a prototype shader editor that combines Shadertoy-style GLSL coding with Scratch-like visual blocks\n• implements a bidirectional AST mapping that keeps text and block representations synchronized\n• supports inline expression previews with multiple evaluations for loop and function contexts",
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
   },
   "ai": {
-   "summary": "这是一期面向初学者的视频，用可视化方式讲解虚拟内存、分页（paging）和内存分配策略等系统基础概念。内容属于通用系统知识科普，不涉及 GPU 驱动渲染、显存管理或 CAD 几何内核的具体技术。对已有基础的学习者来说，信息密度低，与两个核心方向都只有间接关联。",
+   "summary": "文章介绍了一个名为 ScratchyToy 的原型着色器编辑器，把 Shadertoy 风格的 GLSL 文本编程与 Scratch 式可视化积木结合起来。核心实现是文本与积木两种表示之间的双向 AST 映射，使两者保持同步。还支持内联表达式预览，并能在循环和函数上下文中进行多次求值。整体偏着色器创作工具与教学交互，与 CAD 几何内核和 GPU 驱动渲染关系较远。",
    "points": [
-    "讲解虚拟内存、分页与分配策略等通用操作系统内存概念",
-    "定位为面向初学者的可视化科普，不含 GPU 或图形 API 相关内容",
-    "与显存管理、GPU 资源分配等渲染侧主题没有直接对应",
-    "对 CAD 几何内核方向无实质关联"
+    "将 GLSL 文本编辑与 Scratch 式积木编程融合在同一编辑器中",
+    "通过双向 AST 映射保证文本与积木表示实时同步",
+    "支持内联表达式预览，可针对循环与函数上下文多次求值",
+    "属于着色器创作/教学工具，未涉及渲染管线性能或几何算法"
    ],
    "tags": [
-    "性能优化"
+    "着色器"
    ],
    "relevance": 2,
    "level": "入门"
+  }
+ },
+ {
+  "id": "88ae331d7de9",
+  "url": "https://endfield-behind-the-frame.vinluo46.chatgpt.site/en",
+  "title": "Behind the Frame: Endfield | PC Rendering Analysis",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• dissects the Vulkan rendering pipeline of the game Endfield\n• covers deferred G-buffer layout, virtual texturing, screen-space effects, volumetric fog, irradiance volumes, and character forward lighting\n• highlights a mixed deferred and forward character shading approach",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "本文深入分析了游戏 Endfield 的 Vulkan 渲染管线，重点介绍了其混合延迟与正向的角色着色方案：先通过 base pass 写入 G-buffer，再对角色进行逐 mesh 的正向光照。文章还涵盖了延迟 G-buffer 布局、虚拟纹理、屏幕空间效果、体积雾、辐照度体积等特性，并讨论了该架构在长期运营的动漫风格游戏中的可维护性优势。",
+   "points": [
+    "Endfield 采用混合渲染路径：环境使用延迟着色，角色在 base pass 后单独进行正向光照，以隔离角色材质与光照的复杂性。",
+    "管线包含虚拟纹理、屏幕空间效果、体积雾和辐照度体积等高级特性，并穿插大量 compute dispatch 与绘制交替执行。",
+    "顶点阶段处理压缩属性解码、蒙皮和角色描边，不同材质（头发、身体、眼睛、描边）有各自的布局。",
+    "文章认为这种分离角色光照的方案比统一延迟光照更适应长期内容扩展，能控制存储与寄存器开销。"
+   ],
+   "tags": [
+    "CAD渲染",
+    "渲染管线",
+    "Vulkan",
+    "GPU驱动渲染",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
   }
  },
  {
@@ -5814,62 +6117,125 @@
   }
  },
  {
-  "id": "4c29b1f2c0af",
-  "url": "https://grgkopanas.github.io/3dgs_cuda_blog/",
-  "title": "What the 3DGS Literature Left on the Table",
+  "id": "90230e5fb2c8",
+  "url": "https://www.youtube.com/watch?v=VW_NUH-6kv0",
+  "title": "[video] Memory Management, Explained Simply (Part 3)",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-01T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a deep-dive analysis of CUDA optimization remaining in 3D Gaussian Splatting after comparison with current literature techniques\n• details five hardware-level optimizations targeting warp execution, register pressure, L2 cache, and SIMT divergence",
+  "snippet": "• covers topics such as virtual memory, paging, and allocation strategies\n• aims to provide visual explanations suitable for readers new to systems topics",
   "via": {
    "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
   },
   "ai": {
-   "summary": "文章系统分析了 3D Gaussian Splatting (3DGS) 在整合现有文献优化后仍存在的 GPU 硬件级性能瓶颈，并给出五个针对 warp 执行、寄存器压力、L2 缓存和 SIMT 分歧的优化步骤。作者将 DISTWAR、gsplat、StopThePop 等五类优化合并为 s01_literature 基线，在 Mip-NeRF 360 场景上比 Inria 原实现快 4.09×；随后通过 s02–s06 逐步优化，最终达到 7.30× 端到端加速且图像质量不变。文章从 A100 的 SM 子分区、warp 调度器、寄存器文件、执行管道和 L2 缓存扇区等硬件细节出发，解释每个性能悬崖的成因与消除方法。",
+   "summary": "这是一期面向初学者的视频，用可视化方式讲解虚拟内存、分页（paging）和内存分配策略等系统基础概念。内容属于通用系统知识科普，不涉及 GPU 驱动渲染、显存管理或 CAD 几何内核的具体技术。对已有基础的学习者来说，信息密度低，与两个核心方向都只有间接关联。",
    "points": [
-    "整合文献优化得到 s01_literature 基线，比 Inria 原实现快 4.09×，且优于现有开源实现。",
-    "剩余 1.78× 加速空间来自 warp 执行模型、寄存器压力、L2 缓存扇区和算术执行管道等硬件级瓶颈。",
-    "五个独立优化步骤（s02–s06）逐一解决上述瓶颈，最终实现 7.30× 端到端加速且图像质量不变。",
-    "文章以 A100 为例详细解释 SM 子分区、warp 调度、寄存器分配与缓存层次对 3DGS 内核性能的影响。"
+    "讲解虚拟内存、分页与分配策略等通用操作系统内存概念",
+    "定位为面向初学者的可视化科普，不含 GPU 或图形 API 相关内容",
+    "与显存管理、GPU 资源分配等渲染侧主题没有直接对应",
+    "对 CAD 几何内核方向无实质关联"
    ],
    "tags": [
-    "GPU驱动渲染",
-    "性能优化",
-    "GPU架构",
-    "高斯泼溅"
-   ],
-   "relevance": 3,
-   "level": "专业"
-  }
- },
- {
-  "id": "28012691739d",
-  "url": "https://valdes.cc/articles/scratchytoy.html",
-  "title": "ScratchyToy",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-01T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces a prototype shader editor that combines Shadertoy-style GLSL coding with Scratch-like visual blocks\n• implements a bidirectional AST mapping that keeps text and block representations synchronized\n• supports inline expression previews with multiple evaluations for loop and function contexts",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
-  },
-  "ai": {
-   "summary": "文章介绍了一个名为 ScratchyToy 的原型着色器编辑器，把 Shadertoy 风格的 GLSL 文本编程与 Scratch 式可视化积木结合起来。核心实现是文本与积木两种表示之间的双向 AST 映射，使两者保持同步。还支持内联表达式预览，并能在循环和函数上下文中进行多次求值。整体偏着色器创作工具与教学交互，与 CAD 几何内核和 GPU 驱动渲染关系较远。",
-   "points": [
-    "将 GLSL 文本编辑与 Scratch 式积木编程融合在同一编辑器中",
-    "通过双向 AST 映射保证文本与积木表示实时同步",
-    "支持内联表达式预览，可针对循环与函数上下文多次求值",
-    "属于着色器创作/教学工具，未涉及渲染管线性能或几何算法"
-   ],
-   "tags": [
-    "着色器"
+    "性能优化"
    ],
    "relevance": 2,
    "level": "入门"
+  }
+ },
+ {
+  "id": "bc93d505c8d7",
+  "url": "https://devblogs.microsoft.com/directx/clas-ptlas-preview/",
+  "title": "[PREVIEW] Raytracing: Clustered Geometry, Partitioned TLAS, Indirect Acceleration Structure Builds",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• previews DXR Clustered Geometry and Partitioned TLAS, enabling GPU-driven efficient scene updates\n• introduces Cluster-Level Acceleration Structures (CLAS) for reusable meshlet building blocks and PTLAS for sparse partition-based TLAS updates\n• provides API walkthroughs, shader intrinsics in Shader Model 6.10, and official samples\n• additionally discusses how animated meshes are better supported",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "微软发布 DXR Clustered Geometry 与 Partitioned TLAS 预览，将 BLAS 构建单元细化为最多 256 三角形的 CLAS，支持 GPU 驱动的间接加速结构构建；PTLAS 将 TLAS 更新限制在变化的分区，降低大场景更新开销。两者可独立或组合使用，无需新硬件，但依赖厂商驱动支持。配套 Shader Model 6.10 内建函数与官方示例，并改善动画网格的光线追踪支持。",
+   "points": [
+    "CLAS 以最多 256 三角形/顶点为构建单元，可复用组装 Cluster BLAS，降低动画、流式与生成几何的 BLAS 重建成本。",
+    "PTLAS 将 TLAS 划分为稀疏分区，仅更新变化区域，适合大规模场景的增量更新。",
+    "新增 GPU 驱动的 ExecuteIndirectRTASOperations 与 GetRTASOperationPrebuildInfo，支持间接构建与仅尺寸查询。",
+    "Shader Model 6.10 提供 ClusterID()、TriangleObjectPositions() 等内建函数，便于命中着色器访问簇级数据。"
+   ],
+   "tags": [
+    "光线追踪",
+    "GPU驱动渲染",
+    "LOD",
+    "D3D12",
+    "性能优化"
+   ],
+   "relevance": 4,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "af5af692b191",
+  "url": "https://charlesgrassi.dev/blog/neural-volumetric-clouds/",
+  "title": "Neural Shaders, Explained With Clouds",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• presents a walkthrough of replacing a cloud in-scattering approximation with a small trained neural network\n• details how the inputs are processed using mip-pyramid density samples and a two-hidden-layer MLP evaluated in plain HLSL\n• measures the neural model against a path-traced reference\n• compares error and performance",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "文章介绍神经着色器（neural shader）的概念，并以体积云为例完整实现：用小型神经网络替代云中单次散射的近似计算。网络输入为 mip 金字塔密度采样，采用两层隐藏层 MLP，在 HLSL 中直接求值。作者将神经模型与路径追踪参考结果对比，测量误差与性能，说明神经着色器能在实时帧率下达到接近正确解的效果。云形状由约 40 行 SDF 函数生成，便于渲染器与路径追踪器共享同一几何。",
+   "points": [
+    "神经着色器用训练好的小型网络替代着色器中难以解析推导的计算，如云中多次散射。",
+    "网络输入为 mip 金字塔密度采样，采用两层隐藏层 MLP，在 HLSL 中直接求值，可实时运行。",
+    "云形状由约 40 行 SDF 函数生成，渲染器烘焙为体素网格，路径追踪器直接采样同一函数，保证对比一致。",
+    "与路径追踪参考对比，神经模型在误差和性能上取得平衡，但文章未给出具体数值。"
+   ],
+   "tags": [
+    "神经渲染",
+    "着色器",
+    "光线追踪",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "d8562ead568f",
+  "url": "https://gamedev.net/tutorials/programming/general-and-gameplay-programming/shadow-caster-volumes-for-the-culling-of-potential-shadow-casters-r2330",
+  "title": "Shadow Caster Volumes For The Culling Of Potential Shadow Casters",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-01T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• presents a technique for culling shadow casters by constructing a shadow-caster volume that extends the view frustum to include the light source\n• extends the method to directional lights and semi-transparent object bounds",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 461 - November 1st, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461/"
+  },
+  "ai": {
+   "summary": "文章提出一种阴影投射体剔除技术：通过把视锥向光源方向延伸，构造出“阴影投射体体积”（shadow caster volume），只保留可能对当前视野产生阴影的物体，从而减少阴影渲染的候选对象。该方法进一步扩展到平行光（directional light）以及半透明物体的包围体处理。核心价值在于降低阴影 pass 的绘制与遍历开销，属于渲染管线中的可见性剔除优化。",
+   "points": [
+    "用视锥向光源延伸构造 shadow caster volume，剔除不可能投影到视野内的物体",
+    "方法可推广到 directional light，并处理半透明物体的包围体",
+    "属于阴影渲染前的可见性剔除优化，可减少阴影 pass 的绘制量",
+    "与 GPU 剔除、间接绘制等管线优化思路相通，但偏通用渲染而非 CAD 专用"
+   ],
+   "tags": [
+    "剔除",
+    "阴影",
+    "渲染管线",
+    "性能优化"
+   ],
+   "relevance": 3,
+   "level": "进阶"
   }
  },
  {
@@ -6162,28 +6528,14 @@
   }
  },
  {
-  "id": "f47cd29a6463",
-  "url": "https://www.youtube.com/watch?v=Gb2Sw7RHxJ8",
-  "title": "GPU-Driven Anything",
+  "id": "523cea9b54b6",
+  "url": "https://www.youtube.com/watch?v=dYxEmKbZfr4",
+  "title": "Your Softmax Is Broken. Here's the Fix.",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• explains the count/prefix-sum/write pattern used in GPU-driven graphics for culling, LOD, and clustered lighting\n• covers expansion, compaction, and binning\n• discusses the difference between push- and pull-based models for moving data\n• additionally presents the effect of determinism compared against atomics",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
-  }
- },
- {
-  "id": "4efe370000b2",
-  "url": "https://ptrtoliam.dev/blog/vkwayland/",
-  "title": "Using Vulkan on Wayland Without WSI",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-10-25T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• presents a way to present a Vulkan frame without using libwayland or Vulkan’s Wayland WSI\n• covers device selection, DRM format modifiers, and a manual frame queue for presenting frames to the compositor",
+  "snippet": "• analyzes numerical bugs in standard softmax, log-softmax, and cross-entropy implementations across PyTorch, JAX, and TensorFlow\n• explains softmax collapse (gradient vanishing at high confidence) and softmax cancellation\n• proposes log-space drop-in replacements using softplus, log1p, and expm1 to eliminate precision cliffs and other issues",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
@@ -6204,14 +6556,14 @@
   }
  },
  {
-  "id": "523cea9b54b6",
-  "url": "https://www.youtube.com/watch?v=dYxEmKbZfr4",
-  "title": "Your Softmax Is Broken. Here's the Fix.",
+  "id": "f47cd29a6463",
+  "url": "https://www.youtube.com/watch?v=Gb2Sw7RHxJ8",
+  "title": "GPU-Driven Anything",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• analyzes numerical bugs in standard softmax, log-softmax, and cross-entropy implementations across PyTorch, JAX, and TensorFlow\n• explains softmax collapse (gradient vanishing at high confidence) and softmax cancellation\n• proposes log-space drop-in replacements using softplus, log1p, and expm1 to eliminate precision cliffs and other issues",
+  "snippet": "• explains the count/prefix-sum/write pattern used in GPU-driven graphics for culling, LOD, and clustered lighting\n• covers expansion, compaction, and binning\n• discusses the difference between push- and pull-based models for moving data\n• additionally presents the effect of determinism compared against atomics",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
@@ -6268,6 +6620,20 @@
   "published": "2026-10-25T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
   "snippet": "• continues a tutorial series by moving a 2D Pong implementation into 3D using Vulkan\n• stages the scene in Blender with paddles, ball, and walls, exports it as GLB\n• shows how to map the exported data into data for runtime usage\n• presents what changes are required to move the logic into 3D space",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
+  }
+ },
+ {
+  "id": "4efe370000b2",
+  "url": "https://ptrtoliam.dev/blog/vkwayland/",
+  "title": "Using Vulkan on Wayland Without WSI",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-10-25T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• presents a way to present a Vulkan frame without using libwayland or Vulkan’s Wayland WSI\n• covers device selection, DRM format modifiers, and a manual frame queue for presenting frames to the compositor",
   "via": {
    "title": "Graphics Programming weekly - Issue 460 - October 25th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460/"
