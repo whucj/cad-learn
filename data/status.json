@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T05:17:04.681537Z",
+ "generatedAt": "2026-11-26T14:10:02.494063Z",
  "schedule": {
   "every": "4x-daily",
   "label": "每天 4 次",
@@ -16,7 +16,7 @@
    "topic": "geometry",
    "ok": true,
    "items": 30,
-   "added": 6
+   "added": 0
   },
   {
    "name": "arXiv NURBS / B-Rep",
@@ -37,7 +37,7 @@
    "topic": "geometry",
    "ok": true,
    "items": 10,
-   "added": 0
+   "added": 1
   },
   {
    "name": "CGAL Releases",
@@ -65,7 +65,7 @@
    "topic": "rendering",
    "ok": true,
    "items": 30,
-   "added": 8
+   "added": 0
   },
   {
    "name": "Graphics Programming Weekly",

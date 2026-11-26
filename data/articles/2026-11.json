@@ -1,5 +1,30 @@
 [
  {
+  "id": "f6218db79040",
+  "url": "https://github.com/FreeCAD/FreeCAD/releases/tag/weekly-2026.11.26",
+  "title": "FreeCAD Development Build weekly-2026.11.26",
+  "source": "FreeCAD Releases",
+  "topic": "geometry",
+  "author": "github-actions[bot]",
+  "published": "2026-11-26T12:41:37.000Z",
+  "fetched": "2026-11-26T14:09:54.810397Z",
+  "snippet": "ImportantBleeding edge FreeCAD development builds for testing bugfixes, regressions, and recently implemented features. Do not use in a production environment. Changes since last weekly: weekly-2026.11.25...weekly-2026.11.26 How-to use Download the appropriate asset for your OS below Unpack the bund…",
+  "ai": {
+   "summary": "这是 FreeCAD 每周开发构建（weekly-2026.11.26）的发布说明，属于供测试 bugfix 与回归问题的 bleeding edge 版本，并非正式发布。正文只包含下载与启动方式（Windows 运行 bin/freecad.exe、macOS 启动 FreeCAD.app、Linux 打开 AppImage），以及指向 weekly-2026.11.25...weekly-2026.11.26 的变更对比链接；但该链接内容加载失败，因此没有列出任何具体的几何内核或渲染改动。对学习 CAD 几何内核与 GPU 渲染而言，本文没有可提取的技术信息。",
+   "points": [
+    "FreeCAD 每周开发构建，仅用于测试 bugfix 与回归，不建议生产环境使用",
+    "正文仅含各平台下载解压与启动步骤，无功能说明",
+    "变更对比链接加载失败，未列出任何具体提交内容",
+    "未涉及 B-Rep、NURBS、布尔运算或渲染管线等技术细节"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
+  }
+ },
+ {
   "id": "0174ddbc696b",
   "url": "https://developer.nvidia.com/blog/how-to-optimize-nvfp4-attention-on-nvidia-rtx-blackwell-through-register-recycling/",
   "title": "How to Optimize NVFP4 Attention on NVIDIA RTX Blackwell Through Register Recycling",
@@ -3851,63 +3876,34 @@
   }
  },
  {
-  "id": "8cb2d0d26950",
-  "url": "https://vulkan.org/events/vulkanised-2027",
-  "title": "Vulkanised and Real-Time Shading Symposium 2027",
+  "id": "6899e55b962c",
+  "url": "https://arxiv.org/abs/2611.12650",
+  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
+  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
+   "summary": "该工作针对神经纹理压缩在斜视角下模糊的问题，把各向异性过滤直接集成进神经解码器：解码器根据像素足迹的形状、角度和距离（即 LOD 条件）自适应调整过滤方式。这样在近距离和陡峭角度下都能保持表面清晰，同时以约四分之一的内存达到接近全尺寸压缩纹理的质量。",
    "points": [
-    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
-    "设有光线追踪、神经渲染与生产案例分享",
-    "包含 Slang、着色器语言、工具链与性能优化专题",
-    "早鸟注册截止 2027 年 1 月 15 日"
+    "将各向异性过滤内嵌到神经纹理压缩的解码器中，而非后处理",
+    "解码器依据像素足迹形状、角度与距离（LOD）条件调整过滤",
+    "显著改善斜视角与近距离的清晰度，避免模糊",
+    "内存约为全尺寸压缩纹理的四分之一，质量接近"
    ],
    "tags": [
-    "Vulkan",
-    "GPU驱动渲染",
-    "着色器",
-    "光线追踪"
-   ],
-   "relevance": 2,
-   "level": "入门"
-  }
- },
- {
-  "id": "0fe388cf8c03",
-  "url": "https://arxiv.org/abs/2611.13677",
-  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
-   "points": [
-    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
-    "随变形选择性更新纹理缓存，而非每帧全量重建。",
-    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
-    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
-   ],
-   "tags": [
+    "LOD",
     "神经渲染",
-    "渲染管线"
+    "纹理压缩",
+    "各向异性过滤"
    ],
    "relevance": 2,
-   "level": "专业"
+   "level": "进阶"
   }
  },
  {
@@ -4115,34 +4111,63 @@
   }
  },
  {
-  "id": "6899e55b962c",
-  "url": "https://arxiv.org/abs/2611.12650",
-  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
+  "id": "8cb2d0d26950",
+  "url": "https://vulkan.org/events/vulkanised-2027",
+  "title": "Vulkanised and Real-Time Shading Symposium 2027",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
+  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "该工作针对神经纹理压缩在斜视角下模糊的问题，把各向异性过滤直接集成进神经解码器：解码器根据像素足迹的形状、角度和距离（即 LOD 条件）自适应调整过滤方式。这样在近距离和陡峭角度下都能保持表面清晰，同时以约四分之一的内存达到接近全尺寸压缩纹理的质量。",
+   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
    "points": [
-    "将各向异性过滤内嵌到神经纹理压缩的解码器中，而非后处理",
-    "解码器依据像素足迹形状、角度与距离（LOD）条件调整过滤",
-    "显著改善斜视角与近距离的清晰度，避免模糊",
-    "内存约为全尺寸压缩纹理的四分之一，质量接近"
+    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
+    "设有光线追踪、神经渲染与生产案例分享",
+    "包含 Slang、着色器语言、工具链与性能优化专题",
+    "早鸟注册截止 2027 年 1 月 15 日"
    ],
    "tags": [
-    "LOD",
-    "神经渲染",
-    "纹理压缩",
-    "各向异性过滤"
+    "Vulkan",
+    "GPU驱动渲染",
+    "着色器",
+    "光线追踪"
    ],
    "relevance": 2,
-   "level": "进阶"
+   "level": "入门"
+  }
+ },
+ {
+  "id": "0fe388cf8c03",
+  "url": "https://arxiv.org/abs/2611.13677",
+  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
+   "points": [
+    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
+    "随变形选择性更新纹理缓存，而非每帧全量重建。",
+    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
+    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
+   ],
+   "tags": [
+    "神经渲染",
+    "渲染管线"
+   ],
+   "relevance": 2,
+   "level": "专业"
   }
  },
  {
@@ -4350,33 +4375,6 @@
     "B-Rep"
    ],
    "relevance": 4,
-   "level": "进阶"
-  }
- },
- {
-  "id": "c978e1d8ba71",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-hal-v30.0.2",
-  "title": "wgpu-hal-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu 项目 wgpu-hal 组件的 v30.0.2 版本发布说明，但页面正文只包含 GitHub 的签名验证与标签选择界面，没有列出任何具体变更内容。wgpu-hal 是 wgpu 的底层硬件抽象层，负责对接 Vulkan、D3D12、Metal 等图形后端。由于缺少 changelog 细节，无法判断本次发布是否涉及渲染管线或性能相关修复。",
-   "points": [
-    "wgpu-hal 是 wgpu 的底层后端抽象层，对接 Vulkan/D3D12/Metal 等 API",
-    "发布页面未提供具体变更条目，仅有签名验证信息",
-    "无法确认是否包含与 CAD 渲染或 GPU 性能相关的改动"
-   ],
-   "tags": [
-    "版本发布",
-    "WebGPU",
-    "Vulkan",
-    "D3D12"
-   ],
-   "relevance": 2,
    "level": "进阶"
   }
  },
@@ -4608,6 +4606,33 @@
    "tags": [
     "WebGPU",
     "版本发布"
+   ],
+   "relevance": 2,
+   "level": "进阶"
+  }
+ },
+ {
+  "id": "c978e1d8ba71",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-hal-v30.0.2",
+  "title": "wgpu-hal-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu 项目 wgpu-hal 组件的 v30.0.2 版本发布说明，但页面正文只包含 GitHub 的签名验证与标签选择界面，没有列出任何具体变更内容。wgpu-hal 是 wgpu 的底层硬件抽象层，负责对接 Vulkan、D3D12、Metal 等图形后端。由于缺少 changelog 细节，无法判断本次发布是否涉及渲染管线或性能相关修复。",
+   "points": [
+    "wgpu-hal 是 wgpu 的底层后端抽象层，对接 Vulkan/D3D12/Metal 等 API",
+    "发布页面未提供具体变更条目，仅有签名验证信息",
+    "无法确认是否包含与 CAD 渲染或 GPU 性能相关的改动"
+   ],
+   "tags": [
+    "版本发布",
+    "WebGPU",
+    "Vulkan",
+    "D3D12"
    ],
    "relevance": 2,
    "level": "进阶"
@@ -5149,35 +5174,33 @@
   }
  },
  {
-  "id": "b4d519102979",
-  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
-  "title": "Real-Time Path Tracing in Games",
+  "id": "e1b7dc9fdab0",
+  "url": "https://arxiv.org/abs/2611.07289",
+  "title": "Patch-Based Generalized Neural Texture Upscaling",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
+  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
+   "summary": "该工作提出一种轻量级神经纹理放大方法，直接集成到纹理采样阶段。方法在多样化纹理 patch 上训练单个泛化 MLP，避免逐资产重训练或修改资产管线。其目标是降低磁盘存储与运行时 VRAM 占用，并在 GPU 上实现非发散执行。",
    "points": [
-    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
-    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
-    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
-    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
+    "将神经纹理放大嵌入纹理采样阶段，而非离线预处理。",
+    "用单个泛化 MLP 覆盖多种纹理 patch，免去逐资产训练。",
+    "降低纹理存储与显存开销，GPU 执行无分支发散。",
+    "属于通用纹理压缩/放大技术，与 CAD 渲染管线仅间接相关。"
    ],
    "tags": [
-    "光线追踪",
-    "全局光照",
+    "着色器",
     "性能优化",
-    "D3D12",
-    "渲染管线"
+    "GPU驱动渲染"
    ],
-   "relevance": 3,
-   "level": "专业"
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -5208,37 +5231,6 @@
    ],
    "relevance": 2,
    "level": "入门"
-  }
- },
- {
-  "id": "646e7777e05c",
-  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
-  "title": "Around The World, Part 34: A pretty sky",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  },
-  "ai": {
-   "summary": "文章介绍了一个风格化航海游戏在天空、大气散射和云渲染方面的视觉改进。作者用 Rust 编写了蒙特卡洛光线追踪器，确认 POV-Ray 未模拟多次散射，并据此预计算了新的云查找表（LUT），使云底更亮、光照更均匀。在 Godot 中，通过将云底法线朝上采样间接光，使云获得天空的蓝色/粉色色调，更自然地融入天空。此外，调整大气光线步进中内散射与外散射的顺序，修复了太阳天顶时地平线异常偏黄的问题。",
-   "points": [
-    "自研 Rust 蒙特卡洛光线追踪器验证 POV-Ray 缺少多次散射，并生成更均匀的云 LUT。",
-    "在 Godot 中将云底法线朝上以采样天空间接光，使云获得蓝色/粉色环境色调。",
-    "调整大气光线步进顺序（先外散射衰减再内散射累加），修复天顶太阳时地平线偏黄。",
-    "改进后云层金属感消失，云底更亮，日落时云呈粉色，整体更自然。"
-   ],
-   "tags": [
-    "光线追踪",
-    "着色器",
-    "渲染管线",
-    "全局光照"
-   ],
-   "relevance": 2,
-   "level": "进阶"
   }
  },
  {
@@ -5359,30 +5351,63 @@
   }
  },
  {
-  "id": "e1b7dc9fdab0",
-  "url": "https://arxiv.org/abs/2611.07289",
-  "title": "Patch-Based Generalized Neural Texture Upscaling",
+  "id": "b4d519102979",
+  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
+  "title": "Real-Time Path Tracing in Games",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
+  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "该工作提出一种轻量级神经纹理放大方法，直接集成到纹理采样阶段。方法在多样化纹理 patch 上训练单个泛化 MLP，避免逐资产重训练或修改资产管线。其目标是降低磁盘存储与运行时 VRAM 占用，并在 GPU 上实现非发散执行。",
+   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
    "points": [
-    "将神经纹理放大嵌入纹理采样阶段，而非离线预处理。",
-    "用单个泛化 MLP 覆盖多种纹理 patch，免去逐资产训练。",
-    "降低纹理存储与显存开销，GPU 执行无分支发散。",
-    "属于通用纹理压缩/放大技术，与 CAD 渲染管线仅间接相关。"
+    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
+    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
+    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
+    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
    ],
    "tags": [
-    "着色器",
+    "光线追踪",
+    "全局光照",
     "性能优化",
-    "GPU驱动渲染"
+    "D3D12",
+    "渲染管线"
+   ],
+   "relevance": 3,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "646e7777e05c",
+  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
+  "title": "Around The World, Part 34: A pretty sky",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  },
+  "ai": {
+   "summary": "文章介绍了一个风格化航海游戏在天空、大气散射和云渲染方面的视觉改进。作者用 Rust 编写了蒙特卡洛光线追踪器，确认 POV-Ray 未模拟多次散射，并据此预计算了新的云查找表（LUT），使云底更亮、光照更均匀。在 Godot 中，通过将云底法线朝上采样间接光，使云获得天空的蓝色/粉色色调，更自然地融入天空。此外，调整大气光线步进中内散射与外散射的顺序，修复了太阳天顶时地平线异常偏黄的问题。",
+   "points": [
+    "自研 Rust 蒙特卡洛光线追踪器验证 POV-Ray 缺少多次散射，并生成更均匀的云 LUT。",
+    "在 Godot 中将云底法线朝上以采样天空间接光，使云获得蓝色/粉色环境色调。",
+    "调整大气光线步进顺序（先外散射衰减再内散射累加），修复天顶太阳时地平线偏黄。",
+    "改进后云层金属感消失，云底更亮，日落时云呈粉色，整体更自然。"
+   ],
+   "tags": [
+    "光线追踪",
+    "着色器",
+    "渲染管线",
+    "全局光照"
    ],
    "relevance": 2,
    "level": "进阶"
