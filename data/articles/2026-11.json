@@ -1,5 +1,30 @@
 [
  {
+  "id": "26c6a825c636",
+  "url": "https://github.com/FreeCAD/FreeCAD/releases/tag/26.3rc3",
+  "title": "FreeCAD 26.3 Release Candidate 3",
+  "source": "FreeCAD Releases",
+  "topic": "geometry",
+  "author": "maxwxyz",
+  "published": "2026-11-27T11:21:33.000Z",
+  "fetched": "2026-11-27T14:07:56.633086Z",
+  "snippet": "This is the third release candidate for FreeCAD 26.3, and if nothing new turns up, the last one. There are no open blockers for 26.3. Unless a new one is reported in the coming days, the stable release follows in the next weeks. Changes since RC2: 26.3rc2...26.3rc3 That makes this week the last oppo…",
+  "ai": {
+   "summary": "这是 FreeCAD 26.3 的第三个候选发布版本（RC3），若无新的阻塞性问题，它将是最后一个候选版本，稳定版会在随后几周发布。本次公告主要面向测试者，呼吁在稳定版发布前测试该构建并报告回归问题；RC1/RC2 中已报告的问题需确认是否修复。公告未列出具体代码改动，仅指向 RC2 到 RC3 的变更对比与 26.3 发布说明，并提醒部分默认值和行为有变化。",
+   "points": [
+    "RC3 是 26.3 稳定版前的最后一个候选版本，无未解决的阻塞问题。",
+    "重点征集回归问题报告，并要求确认 RC1/RC2 已报问题是否修复。",
+    "26.3 存在默认值与行为变更，建议阅读官方发布说明。",
+    "修复会回移到发布分支，随每月补丁版（首个为 26.3.1）发布。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
+  }
+ },
+ {
   "id": "f6218db79040",
   "url": "https://github.com/FreeCAD/FreeCAD/releases/tag/weekly-2026.11.26",
   "title": "FreeCAD Development Build weekly-2026.11.26",
@@ -3876,62 +3901,32 @@
   }
  },
  {
-  "id": "8cb2d0d26950",
-  "url": "https://vulkan.org/events/vulkanised-2027",
-  "title": "Vulkanised and Real-Time Shading Symposium 2027",
+  "id": "0fe388cf8c03",
+  "url": "https://arxiv.org/abs/2611.13677",
+  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
+  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
+   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
    "points": [
-    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
-    "设有光线追踪、神经渲染与生产案例分享",
-    "包含 Slang、着色器语言、工具链与性能优化专题",
-    "早鸟注册截止 2027 年 1 月 15 日"
+    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
+    "随变形选择性更新纹理缓存，而非每帧全量重建。",
+    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
+    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
    ],
    "tags": [
-    "Vulkan",
-    "GPU驱动渲染",
-    "着色器",
-    "光线追踪"
+    "神经渲染",
+    "渲染管线"
    ],
    "relevance": 2,
-   "level": "入门"
-  }
- },
- {
-  "id": "f24777d5e668",
-  "url": "https://www.youtube.com/watch?v=VZfuShX693Q",
-  "title": "[video] How Neural Nets Survive Fewer Bits | Quantization",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-15T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers fundamental quantization techniques to compress neural network weights into low-bit formats like FP8, INT8, and INT4\n• explains linear quantization with scale and zero-point parameters, tuning granularity across tensors, channels, and groups\n• compares post-training quantization against quantization-aware training to preserve accuracy under reduced precision",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
-  },
-  "ai": {
-   "summary": "该视频讲解神经网络权重量化压缩到 FP8/INT8/INT4 等低位宽格式的基础技术，介绍带 scale 与 zero-point 的线性量化，以及 tensor/channel/group 不同粒度的调优方式，并对比 post-training quantization 与 quantization-aware training 在低精度下保持精度方面的差异。内容属于通用机器学习推理优化，与 CAD 几何内核和 GPU 驱动渲染均无直接关系。",
-   "points": [
-    "讲解 FP8/INT8/INT4 线性量化的 scale 与 zero-point 机制",
-    "讨论 tensor、channel、group 级量化粒度的取舍",
-    "对比 PTQ 与 QAT 在低精度下的精度保持策略",
-    "属于神经网络压缩科普，不涉及图形渲染或几何建模"
-   ],
-   "tags": [
-    "性能优化"
-   ],
-   "relevance": 1,
-   "level": "入门"
+   "level": "专业"
   }
  },
  {
@@ -4142,32 +4137,62 @@
   }
  },
  {
-  "id": "0fe388cf8c03",
-  "url": "https://arxiv.org/abs/2611.13677",
-  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
+  "id": "8cb2d0d26950",
+  "url": "https://vulkan.org/events/vulkanised-2027",
+  "title": "Vulkanised and Real-Time Shading Symposium 2027",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
+  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
+   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
    "points": [
-    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
-    "随变形选择性更新纹理缓存，而非每帧全量重建。",
-    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
-    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
+    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
+    "设有光线追踪、神经渲染与生产案例分享",
+    "包含 Slang、着色器语言、工具链与性能优化专题",
+    "早鸟注册截止 2027 年 1 月 15 日"
    ],
    "tags": [
-    "神经渲染",
-    "渲染管线"
+    "Vulkan",
+    "GPU驱动渲染",
+    "着色器",
+    "光线追踪"
    ],
    "relevance": 2,
-   "level": "专业"
+   "level": "入门"
+  }
+ },
+ {
+  "id": "f24777d5e668",
+  "url": "https://www.youtube.com/watch?v=VZfuShX693Q",
+  "title": "[video] How Neural Nets Survive Fewer Bits | Quantization",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-15T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• covers fundamental quantization techniques to compress neural network weights into low-bit formats like FP8, INT8, and INT4\n• explains linear quantization with scale and zero-point parameters, tuning granularity across tensors, channels, and groups\n• compares post-training quantization against quantization-aware training to preserve accuracy under reduced precision",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
+  },
+  "ai": {
+   "summary": "该视频讲解神经网络权重量化压缩到 FP8/INT8/INT4 等低位宽格式的基础技术，介绍带 scale 与 zero-point 的线性量化，以及 tensor/channel/group 不同粒度的调优方式，并对比 post-training quantization 与 quantization-aware training 在低精度下保持精度方面的差异。内容属于通用机器学习推理优化，与 CAD 几何内核和 GPU 驱动渲染均无直接关系。",
+   "points": [
+    "讲解 FP8/INT8/INT4 线性量化的 scale 与 zero-point 机制",
+    "讨论 tensor、channel、group 级量化粒度的取舍",
+    "对比 PTQ 与 QAT 在低精度下的精度保持策略",
+    "属于神经网络压缩科普，不涉及图形渲染或几何建模"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "入门"
   }
  },
  {
@@ -4376,31 +4401,6 @@
    ],
    "relevance": 4,
    "level": "进阶"
-  }
- },
- {
-  "id": "60ccb3943776",
-  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
-  "title": "wgpu-v30.0.2",
-  "source": "wgpu Releases",
-  "topic": "general",
-  "author": "cwfitzgerald",
-  "published": "2026-11-12T18:34:15.000Z",
-  "fetched": "2026-11-23T12:05:13.655237Z",
-  "snippet": "Release v30.0.2",
-  "ai": {
-   "summary": "这是 wgpu v30.0.2 的补丁版本发布页面，但正文只包含 GitHub 的签名验证和加载错误提示，没有列出任何实际的变更日志或修复内容。因此无法判断该版本在 WebGPU 实现、渲染管线或性能方面具体改了什么。对学习 GPU 驱动渲染的读者而言，这条信息本身几乎没有可提取的技术内容。",
-   "points": [
-    "发布说明正文缺失，仅显示 GitHub 页面加载错误，无 changelog。",
-    "无法确认该补丁版本是否涉及渲染管线、着色器或性能修复。",
-    "wgpu 是 Rust 的 WebGPU 实现，属于 GPU 渲染基础设施，但本条无实质信息。"
-   ],
-   "tags": [
-    "WebGPU",
-    "版本发布"
-   ],
-   "relevance": 2,
-   "level": "入门"
   }
  },
  {
@@ -4636,6 +4636,31 @@
    ],
    "relevance": 2,
    "level": "进阶"
+  }
+ },
+ {
+  "id": "60ccb3943776",
+  "url": "https://github.com/gfx-rs/wgpu/releases/tag/wgpu-v30.0.2",
+  "title": "wgpu-v30.0.2",
+  "source": "wgpu Releases",
+  "topic": "general",
+  "author": "cwfitzgerald",
+  "published": "2026-11-12T18:34:15.000Z",
+  "fetched": "2026-11-23T12:05:13.655237Z",
+  "snippet": "Release v30.0.2",
+  "ai": {
+   "summary": "这是 wgpu v30.0.2 的补丁版本发布页面，但正文只包含 GitHub 的签名验证和加载错误提示，没有列出任何实际的变更日志或修复内容。因此无法判断该版本在 WebGPU 实现、渲染管线或性能方面具体改了什么。对学习 GPU 驱动渲染的读者而言，这条信息本身几乎没有可提取的技术内容。",
+   "points": [
+    "发布说明正文缺失，仅显示 GitHub 页面加载错误，无 changelog。",
+    "无法确认该补丁版本是否涉及渲染管线、着色器或性能修复。",
+    "wgpu 是 Rust 的 WebGPU 实现，属于 GPU 渲染基础设施，但本条无实质信息。"
+   ],
+   "tags": [
+    "WebGPU",
+    "版本发布"
+   ],
+   "relevance": 2,
+   "level": "入门"
   }
  },
  {
@@ -5174,35 +5199,34 @@
   }
  },
  {
-  "id": "b4d519102979",
-  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
-  "title": "Real-Time Path Tracing in Games",
+  "id": "646e7777e05c",
+  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
+  "title": "Around The World, Part 34: A pretty sky",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
+  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
+   "summary": "文章介绍了一个风格化航海游戏在天空、大气散射和云渲染方面的视觉改进。作者用 Rust 编写了蒙特卡洛光线追踪器，确认 POV-Ray 未模拟多次散射，并据此预计算了新的云查找表（LUT），使云底更亮、光照更均匀。在 Godot 中，通过将云底法线朝上采样间接光，使云获得天空的蓝色/粉色色调，更自然地融入天空。此外，调整大气光线步进中内散射与外散射的顺序，修复了太阳天顶时地平线异常偏黄的问题。",
    "points": [
-    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
-    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
-    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
-    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
+    "自研 Rust 蒙特卡洛光线追踪器验证 POV-Ray 缺少多次散射，并生成更均匀的云 LUT。",
+    "在 Godot 中将云底法线朝上以采样天空间接光，使云获得蓝色/粉色环境色调。",
+    "调整大气光线步进顺序（先外散射衰减再内散射累加），修复天顶太阳时地平线偏黄。",
+    "改进后云层金属感消失，云底更亮，日落时云呈粉色，整体更自然。"
    ],
    "tags": [
     "光线追踪",
-    "全局光照",
-    "性能优化",
-    "D3D12",
-    "渲染管线"
+    "着色器",
+    "渲染管线",
+    "全局光照"
    ],
-   "relevance": 3,
-   "level": "专业"
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -5233,36 +5257,6 @@
    ],
    "relevance": 2,
    "level": "入门"
-  }
- },
- {
-  "id": "04c5d8781fa6",
-  "url": "https://github.com/aurimasg/splines",
-  "title": "Splines",
-  "source": "Graphics Programming Weekly",
-  "topic": "rendering",
-  "published": "2026-11-08T04:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• provides a collection of interpolating spline algorithms\n• implements C2 cubic, G2 cubic, Hobby, Adobe kappa-Curves, and a custom S9 G2-continuous low curvature variation\n• outputs either cubic or quadratic Bézier curves",
-  "via": {
-   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
-   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
-  },
-  "ai": {
-   "summary": "该项目开源了一组插值样条（interpolating spline）算法实现，包括 C2 连续三次样条、G2 连续三次样条、Hobby 样条、Adobe κ-Curves，以及作者自研的 S9 样条。S9 基于非多项式曲线，具有 G2 连续性和低曲率变化的特点。每个求解器都提供循环与非循环两种变体，输出三次或二次 Bézier 曲线。该工作为曲线插值提供了多种可对比的样条方案，并附带交互式演示。",
-   "points": [
-    "实现 C2/G2 连续三次样条、Hobby 样条与 Adobe κ-Curves 等多种插值样条",
-    "提出 S9：基于非多项式曲线、G2 连续且曲率变化低的样条",
-    "所有求解器支持循环/非循环变体，输出 cubic 或 quadratic Bézier",
-    "提供在线交互演示与配套文章，便于对比各方案效果"
-   ],
-   "tags": [
-    "计算几何",
-    "NURBS",
-    "几何鲁棒性"
-   ],
-   "relevance": 3,
-   "level": "进阶"
   }
  },
  {
@@ -5383,33 +5377,64 @@
   }
  },
  {
-  "id": "646e7777e05c",
-  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
-  "title": "Around The World, Part 34: A pretty sky",
+  "id": "b4d519102979",
+  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
+  "title": "Real-Time Path Tracing in Games",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
+  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "文章介绍了一个风格化航海游戏在天空、大气散射和云渲染方面的视觉改进。作者用 Rust 编写了蒙特卡洛光线追踪器，确认 POV-Ray 未模拟多次散射，并据此预计算了新的云查找表（LUT），使云底更亮、光照更均匀。在 Godot 中，通过将云底法线朝上采样间接光，使云获得天空的蓝色/粉色色调，更自然地融入天空。此外，调整大气光线步进中内散射与外散射的顺序，修复了太阳天顶时地平线异常偏黄的问题。",
+   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
    "points": [
-    "自研 Rust 蒙特卡洛光线追踪器验证 POV-Ray 缺少多次散射，并生成更均匀的云 LUT。",
-    "在 Godot 中将云底法线朝上以采样天空间接光，使云获得蓝色/粉色环境色调。",
-    "调整大气光线步进顺序（先外散射衰减再内散射累加），修复天顶太阳时地平线偏黄。",
-    "改进后云层金属感消失，云底更亮，日落时云呈粉色，整体更自然。"
+    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
+    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
+    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
+    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
    ],
    "tags": [
     "光线追踪",
-    "着色器",
-    "渲染管线",
-    "全局光照"
+    "全局光照",
+    "性能优化",
+    "D3D12",
+    "渲染管线"
    ],
-   "relevance": 2,
+   "relevance": 3,
+   "level": "专业"
+  }
+ },
+ {
+  "id": "04c5d8781fa6",
+  "url": "https://github.com/aurimasg/splines",
+  "title": "Splines",
+  "source": "Graphics Programming Weekly",
+  "topic": "rendering",
+  "published": "2026-11-08T04:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.671630Z",
+  "snippet": "• provides a collection of interpolating spline algorithms\n• implements C2 cubic, G2 cubic, Hobby, Adobe kappa-Curves, and a custom S9 G2-continuous low curvature variation\n• outputs either cubic or quadratic Bézier curves",
+  "via": {
+   "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
+   "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
+  },
+  "ai": {
+   "summary": "该项目开源了一组插值样条（interpolating spline）算法实现，包括 C2 连续三次样条、G2 连续三次样条、Hobby 样条、Adobe κ-Curves，以及作者自研的 S9 样条。S9 基于非多项式曲线，具有 G2 连续性和低曲率变化的特点。每个求解器都提供循环与非循环两种变体，输出三次或二次 Bézier 曲线。该工作为曲线插值提供了多种可对比的样条方案，并附带交互式演示。",
+   "points": [
+    "实现 C2/G2 连续三次样条、Hobby 样条与 Adobe κ-Curves 等多种插值样条",
+    "提出 S9：基于非多项式曲线、G2 连续且曲率变化低的样条",
+    "所有求解器支持循环/非循环变体，输出 cubic 或 quadratic Bézier",
+    "提供在线交互演示与配套文章，便于对比各方案效果"
+   ],
+   "tags": [
+    "计算几何",
+    "NURBS",
+    "几何鲁棒性"
+   ],
+   "relevance": 3,
    "level": "进阶"
   }
  },

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T05:13:53.416543Z",
+ "generatedAt": "2026-11-27T14:11:14.217059Z",
  "schedule": {
   "every": "4x-daily",
   "label": "每天 4 次",
@@ -14,16 +14,14 @@
   {
    "name": "arXiv cs.CG 计算几何",
    "topic": "geometry",
-   "ok": true,
-   "items": 30,
-   "added": 0
+   "ok": false,
+   "error": "网络错误：TimeoutException after 0:00:25.000000: Future not completed"
   },
   {
    "name": "arXiv NURBS / B-Rep",
    "topic": "geometry",
-   "ok": true,
-   "items": 30,
-   "added": 0
+   "ok": false,
+   "error": "网络错误：TimeoutException after 0:00:25.000000: Future not completed"
   },
   {
    "name": "OCCT Releases",
@@ -37,7 +35,7 @@
    "topic": "geometry",
    "ok": true,
    "items": 10,
-   "added": 0
+   "added": 1
   },
   {
    "name": "CGAL Releases",
@@ -63,9 +61,8 @@
   {
    "name": "arXiv cs.GR 图形学",
    "topic": "rendering",
-   "ok": true,
-   "items": 30,
-   "added": 0
+   "ok": false,
+   "error": "网络错误：TimeoutException after 0:00:25.000000: Future not completed"
   },
   {
    "name": "Graphics Programming Weekly",
