@@ -1480,33 +1480,34 @@
   }
  },
  {
-  "id": "88ccf0883fcd",
-  "url": "https://xandev.blog.br/studies/timberborn-frame-analysis/",
-  "title": "Timberborn Frame Analysis",
+  "id": "961b1f98591a",
+  "url": "https://drive.proton.me/urls/Y4PRYSVFS0",
+  "title": "[pptx] From Voxels To Pixels",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-23T04:00:00.000Z",
   "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• analyzes a late-game Timberborn frame in RenderDoc and Radeon GPU Profiler\n• documents the Unity frame structure\n• detects that most of the cost is from GPU idle time, with large gaps between 8k shadow draws and 11k non-instanced opaque draws",
+  "snippet": "• details the evolution of the voxel terrain renderer from a mesh-based and visibility-buffer pipeline to a sparse SDF brick renderer\n• describes the brick structure (54x14x54 sparse octrees of 6x6x6 SDF and material bricks with GPU feedback streaming, tight brick bounds, and jumpflood SDF generation in LDS) used for sphere-traced visibility, DDA ray tracing, and detail scattering\n• presents the results, performance, and memory savings",
   "via": {
    "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
   },
   "ai": {
-   "summary": "作者用 RenderDoc 和 Radeon GPU Profiler 分析 Timberborn 后期大场景的一帧，发现帧率下降主要来自 GPU 空闲时间，而非模拟或绘制调用本身。帧结构为：单张 4096x4096 正交阴影贴图、按扇区从近到远排序的不透明绘制流（约 8k 阴影绘制、11k 非实例化不透明绘制）、水面深度 pass 和天空盒。水面渲染使用 73 个 chunk，在顶点着色器里采样多张全图俯视数据纹理（Outflows、WaterData、WaterSkirts 等）做形变。文章重点在绘制顺序与传给 GPU 的数据，而非复杂渲染技术。",
+   "summary": "这是一份关于体素地形渲染器演进的技术分享，介绍了从基于网格与可见性缓冲的管线，转向稀疏 SDF brick 渲染器的过程。核心结构是 54x14x54 的稀疏八叉树，叶节点为 6x6x6 的 SDF 与材质 brick，配合 GPU feedback 流式加载、紧致 brick 包围盒，以及在 LDS 中通过 jumpflood 生成 SDF。渲染端结合球体追踪可见性、DDA 光线追踪与细节散布，并给出了性能与内存节省结果。",
    "points": [
-    "帧时间瓶颈是 GPU 空闲时间，表现为 8k 阴影绘制与 11k 非实例化不透明绘制之间存在大段间隙。",
-    "主渲染按扇区从近到远排序，扇区内依次绘制植被、水坝/建筑、地形，植被用 Perlin 噪声做顶点位移模拟风。",
-    "水面由 73 个 chunk 组成，顶点着色器采样 Outflows、WaterData、WaterSkirts 等全图俯视纹理进行形变。",
-    "阴影贴图为单张 4096x4096 正交贴图，覆盖范围跟随相机视角并做剔除。"
+    "渲染管线由 mesh + visibility buffer 演进为稀疏 SDF brick 的球体追踪与 DDA 光线追踪",
+    "采用 54x14x54 稀疏八叉树组织 6x6x6 SDF/材质 brick，并用 GPU feedback 做流式加载",
+    "在 LDS 中用 jumpflood 生成 SDF，并配合紧致 brick 包围盒提升追踪效率",
+    "报告了性能与内存占用方面的显著节省"
    ],
    "tags": [
-    "性能优化",
     "GPU驱动渲染",
-    "CAD渲染"
+    "光线追踪",
+    "LOD",
+    "性能优化"
    ],
-   "relevance": 2,
-   "level": "进阶"
+   "relevance": 3,
+   "level": "专业"
   }
  },
  {
@@ -1753,34 +1754,33 @@
   }
  },
  {
-  "id": "961b1f98591a",
-  "url": "https://drive.proton.me/urls/Y4PRYSVFS0",
-  "title": "[pptx] From Voxels To Pixels",
+  "id": "88ccf0883fcd",
+  "url": "https://xandev.blog.br/studies/timberborn-frame-analysis/",
+  "title": "Timberborn Frame Analysis",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-23T04:00:00.000Z",
   "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• details the evolution of the voxel terrain renderer from a mesh-based and visibility-buffer pipeline to a sparse SDF brick renderer\n• describes the brick structure (54x14x54 sparse octrees of 6x6x6 SDF and material bricks with GPU feedback streaming, tight brick bounds, and jumpflood SDF generation in LDS) used for sphere-traced visibility, DDA ray tracing, and detail scattering\n• presents the results, performance, and memory savings",
+  "snippet": "• analyzes a late-game Timberborn frame in RenderDoc and Radeon GPU Profiler\n• documents the Unity frame structure\n• detects that most of the cost is from GPU idle time, with large gaps between 8k shadow draws and 11k non-instanced opaque draws",
   "via": {
    "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
   },
   "ai": {
-   "summary": "这是一份关于体素地形渲染器演进的技术分享，介绍了从基于网格与可见性缓冲的管线，转向稀疏 SDF brick 渲染器的过程。核心结构是 54x14x54 的稀疏八叉树，叶节点为 6x6x6 的 SDF 与材质 brick，配合 GPU feedback 流式加载、紧致 brick 包围盒，以及在 LDS 中通过 jumpflood 生成 SDF。渲染端结合球体追踪可见性、DDA 光线追踪与细节散布，并给出了性能与内存节省结果。",
+   "summary": "作者用 RenderDoc 和 Radeon GPU Profiler 分析 Timberborn 后期大场景的一帧，发现帧率下降主要来自 GPU 空闲时间，而非模拟或绘制调用本身。帧结构为：单张 4096x4096 正交阴影贴图、按扇区从近到远排序的不透明绘制流（约 8k 阴影绘制、11k 非实例化不透明绘制）、水面深度 pass 和天空盒。水面渲染使用 73 个 chunk，在顶点着色器里采样多张全图俯视数据纹理（Outflows、WaterData、WaterSkirts 等）做形变。文章重点在绘制顺序与传给 GPU 的数据，而非复杂渲染技术。",
    "points": [
-    "渲染管线由 mesh + visibility buffer 演进为稀疏 SDF brick 的球体追踪与 DDA 光线追踪",
-    "采用 54x14x54 稀疏八叉树组织 6x6x6 SDF/材质 brick，并用 GPU feedback 做流式加载",
-    "在 LDS 中用 jumpflood 生成 SDF，并配合紧致 brick 包围盒提升追踪效率",
-    "报告了性能与内存占用方面的显著节省"
+    "帧时间瓶颈是 GPU 空闲时间，表现为 8k 阴影绘制与 11k 非实例化不透明绘制之间存在大段间隙。",
+    "主渲染按扇区从近到远排序，扇区内依次绘制植被、水坝/建筑、地形，植被用 Perlin 噪声做顶点位移模拟风。",
+    "水面由 73 个 chunk 组成，顶点着色器采样 Outflows、WaterData、WaterSkirts 等全图俯视纹理进行形变。",
+    "阴影贴图为单张 4096x4096 正交贴图，覆盖范围跟随相机视角并做剔除。"
    ],
    "tags": [
+    "性能优化",
     "GPU驱动渲染",
-    "光线追踪",
-    "LOD",
-    "性能优化"
+    "CAD渲染"
    ],
-   "relevance": 3,
-   "level": "专业"
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -3876,34 +3876,34 @@
   }
  },
  {
-  "id": "8cb2d0d26950",
-  "url": "https://vulkan.org/events/vulkanised-2027",
-  "title": "Vulkanised and Real-Time Shading Symposium 2027",
+  "id": "6899e55b962c",
+  "url": "https://arxiv.org/abs/2611.12650",
+  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
+  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
+   "summary": "该工作针对神经纹理压缩在斜视角下模糊的问题，把各向异性过滤直接集成进神经解码器：解码器根据像素足迹的形状、角度和距离（即 LOD 条件）自适应调整过滤方式。这样在近距离和陡峭角度下都能保持表面清晰，同时以约四分之一的内存达到接近全尺寸压缩纹理的质量。",
    "points": [
-    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
-    "设有光线追踪、神经渲染与生产案例分享",
-    "包含 Slang、着色器语言、工具链与性能优化专题",
-    "早鸟注册截止 2027 年 1 月 15 日"
+    "将各向异性过滤内嵌到神经纹理压缩的解码器中，而非后处理",
+    "解码器依据像素足迹形状、角度与距离（LOD）条件调整过滤",
+    "显著改善斜视角与近距离的清晰度，避免模糊",
+    "内存约为全尺寸压缩纹理的四分之一，质量接近"
    ],
    "tags": [
-    "Vulkan",
-    "GPU驱动渲染",
-    "着色器",
-    "光线追踪"
+    "LOD",
+    "神经渲染",
+    "纹理压缩",
+    "各向异性过滤"
    ],
    "relevance": 2,
-   "level": "入门"
+   "level": "进阶"
   }
  },
  {
@@ -4111,34 +4111,34 @@
   }
  },
  {
-  "id": "6899e55b962c",
-  "url": "https://arxiv.org/abs/2611.12650",
-  "title": "Explicit LOD-Conditioned Anisotropic Filtering for Neural Texture Compression",
+  "id": "8cb2d0d26950",
+  "url": "https://vulkan.org/events/vulkanised-2027",
+  "title": "Vulkanised and Real-Time Shading Symposium 2027",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• adds anisotropic filtering directly into neural texture compression, keeping surfaces sharp up close without blurring at steep angles\n• teaches the neural decoder to adjust its filtering based on pixel footprint shape, angle, and distance\n• delivers quality close to full-size compressed textures while using only a quarter of the memory",
+  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "该工作针对神经纹理压缩在斜视角下模糊的问题，把各向异性过滤直接集成进神经解码器：解码器根据像素足迹的形状、角度和距离（即 LOD 条件）自适应调整过滤方式。这样在近距离和陡峭角度下都能保持表面清晰，同时以约四分之一的内存达到接近全尺寸压缩纹理的质量。",
+   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
    "points": [
-    "将各向异性过滤内嵌到神经纹理压缩的解码器中，而非后处理",
-    "解码器依据像素足迹形状、角度与距离（LOD）条件调整过滤",
-    "显著改善斜视角与近距离的清晰度，避免模糊",
-    "内存约为全尺寸压缩纹理的四分之一，质量接近"
+    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
+    "设有光线追踪、神经渲染与生产案例分享",
+    "包含 Slang、着色器语言、工具链与性能优化专题",
+    "早鸟注册截止 2027 年 1 月 15 日"
    ],
    "tags": [
-    "LOD",
-    "神经渲染",
-    "纹理压缩",
-    "各向异性过滤"
+    "Vulkan",
+    "GPU驱动渲染",
+    "着色器",
+    "光线追踪"
    ],
    "relevance": 2,
-   "level": "进阶"
+   "level": "入门"
   }
  },
  {
@@ -4302,31 +4302,6 @@
   }
  },
  {
-  "id": "647ecc584acf",
-  "url": "https://developer.nvidia.com/blog/adapt-human-motion-for-robots-with-nvidia-soma-retargeter/",
-  "title": "Adapt Human Motion for Robots with NVIDIA SOMA Retargeter",
-  "source": "NVIDIA Technical Blog",
-  "topic": "rendering",
-  "author": "John Malaska",
-  "published": "2026-11-13T17:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Human motion offers roboticists a great starting point for teaching humanoid robots how to move. A human demonstration captures the coordination and timing...",
-  "ai": {
-   "summary": "NVIDIA SOMA Retargeter 是一个开源工具，用于将人类动作数据（BVH 格式，基于 SOMA 骨架）重定向到不同人形机器人的比例与关节结构上。其流程为：先按机器人比例缩放动作目标，再用基于 NVIDIA Warp 的 Newton 求解器做逆运动学求解，最后进行脚部着地等后处理修正。v0.2 版本为 Unitree G1/H2、Booster T1、AgiBot X2 Ultra/A3T3 五款机器人提供了参考配置与重定向示例，输出 CSV 轨迹可供策略训练使用。",
-   "points": [
-    "以 SOMA 骨架作为统一的人类动作表示，兼容动捕数据、视频重建（GEM-X）与生成模型（Kimodo、ARDY）等多种来源。",
-    "重定向管线包含比例缩放、基于 Warp/Newton 的逆运动学求解与脚部着地后处理。",
-    "v0.2 提供五款人形机器人的参考配置与成对的人-机器人动作示例。",
-    "输出 CSV 轨迹可转换为 SONIC、ProtoMotions 等策略训练所需的动作库格式。"
-   ],
-   "tags": [
-    "版本发布"
-   ],
-   "relevance": 1,
-   "level": "入门"
-  }
- },
- {
   "id": "dbb6a7059ae0",
   "url": "https://developer.nvidia.com/blog/when-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm/",
   "title": "When One GPU Isn’t Enough: Serving GLM-5.3 Across Two NVIDIA DGX Stations with vLLM",
@@ -4349,6 +4324,31 @@
    ],
    "relevance": 1,
    "level": "进阶"
+  }
+ },
+ {
+  "id": "647ecc584acf",
+  "url": "https://developer.nvidia.com/blog/adapt-human-motion-for-robots-with-nvidia-soma-retargeter/",
+  "title": "Adapt Human Motion for Robots with NVIDIA SOMA Retargeter",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "John Malaska",
+  "published": "2026-11-13T17:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "Human motion offers roboticists a great starting point for teaching humanoid robots how to move. A human demonstration captures the coordination and timing...",
+  "ai": {
+   "summary": "NVIDIA SOMA Retargeter 是一个开源工具，用于将人类动作数据（BVH 格式，基于 SOMA 骨架）重定向到不同人形机器人的比例与关节结构上。其流程为：先按机器人比例缩放动作目标，再用基于 NVIDIA Warp 的 Newton 求解器做逆运动学求解，最后进行脚部着地等后处理修正。v0.2 版本为 Unitree G1/H2、Booster T1、AgiBot X2 Ultra/A3T3 五款机器人提供了参考配置与重定向示例，输出 CSV 轨迹可供策略训练使用。",
+   "points": [
+    "以 SOMA 骨架作为统一的人类动作表示，兼容动捕数据、视频重建（GEM-X）与生成模型（Kimodo、ARDY）等多种来源。",
+    "重定向管线包含比例缩放、基于 Warp/Newton 的逆运动学求解与脚部着地后处理。",
+    "v0.2 提供五款人形机器人的参考配置与成对的人-机器人动作示例。",
+    "输出 CSV 轨迹可转换为 SONIC、ProtoMotions 等策略训练所需的动作库格式。"
+   ],
+   "tags": [
+    "版本发布"
+   ],
+   "relevance": 1,
+   "level": "入门"
   }
  },
  {
@@ -5174,35 +5174,33 @@
   }
  },
  {
-  "id": "b4d519102979",
-  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
-  "title": "Real-Time Path Tracing in Games",
+  "id": "e1b7dc9fdab0",
+  "url": "https://arxiv.org/abs/2611.07289",
+  "title": "Patch-Based Generalized Neural Texture Upscaling",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
+  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
+   "summary": "该工作提出一种轻量级神经纹理放大方法，直接集成到纹理采样阶段。方法在多样化纹理 patch 上训练单个泛化 MLP，避免逐资产重训练或修改资产管线。其目标是降低磁盘存储与运行时 VRAM 占用，并在 GPU 上实现非发散执行。",
    "points": [
-    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
-    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
-    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
-    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
+    "将神经纹理放大嵌入纹理采样阶段，而非离线预处理。",
+    "用单个泛化 MLP 覆盖多种纹理 patch，免去逐资产训练。",
+    "降低纹理存储与显存开销，GPU 执行无分支发散。",
+    "属于通用纹理压缩/放大技术，与 CAD 渲染管线仅间接相关。"
    ],
    "tags": [
-    "光线追踪",
-    "全局光照",
+    "着色器",
     "性能优化",
-    "D3D12",
-    "渲染管线"
+    "GPU驱动渲染"
    ],
-   "relevance": 3,
-   "level": "专业"
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -5353,33 +5351,35 @@
   }
  },
  {
-  "id": "e1b7dc9fdab0",
-  "url": "https://arxiv.org/abs/2611.07289",
-  "title": "Patch-Based Generalized Neural Texture Upscaling",
+  "id": "b4d519102979",
+  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
+  "title": "Real-Time Path Tracing in Games",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• proposes a lightweight neural texture upscaling method integrated directly into the texture sampling stage\n• trains a single generalized MLP on diverse texture patches to avoid per-asset retraining or asset pipeline modifications\n• reduces disk storage and runtime VRAM consumption while providing non-divergent execution on the GPU",
+  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "该工作提出一种轻量级神经纹理放大方法，直接集成到纹理采样阶段。方法在多样化纹理 patch 上训练单个泛化 MLP，避免逐资产重训练或修改资产管线。其目标是降低磁盘存储与运行时 VRAM 占用，并在 GPU 上实现非发散执行。",
+   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
    "points": [
-    "将神经纹理放大嵌入纹理采样阶段，而非离线预处理。",
-    "用单个泛化 MLP 覆盖多种纹理 patch，免去逐资产训练。",
-    "降低纹理存储与显存开销，GPU 执行无分支发散。",
-    "属于通用纹理压缩/放大技术，与 CAD 渲染管线仅间接相关。"
+    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
+    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
+    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
+    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
    ],
    "tags": [
-    "着色器",
+    "光线追踪",
+    "全局光照",
     "性能优化",
-    "GPU驱动渲染"
+    "D3D12",
+    "渲染管线"
    ],
-   "relevance": 2,
-   "level": "进阶"
+   "relevance": 3,
+   "level": "专业"
   }
  },
  {
