@@ -1505,33 +1505,32 @@
   }
  },
  {
-  "id": "9d87aedfb559",
-  "url": "https://ipotrick.github.io/site/blogs/practical-efficient-rendergraphs/",
-  "title": "Practical, efficient render graphs",
+  "id": "88ccf0883fcd",
+  "url": "https://xandev.blog.br/studies/timberborn-frame-analysis/",
+  "title": "Timberborn Frame Analysis",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-23T04:00:00.000Z",
   "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• walks through building a render graph from scratch based on resource access timelines\n• explains two-level command recording, consecutive read and concurrent-write access grouping, pass batching, pass reordering, and transient memory aliasing\n• includes discussions on memory usage and GPU time savings",
+  "snippet": "• analyzes a late-game Timberborn frame in RenderDoc and Radeon GPU Profiler\n• documents the Unity frame structure\n• detects that most of the cost is from GPU idle time, with large gaps between 8k shadow draws and 11k non-instanced opaque draws",
   "via": {
    "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
   },
   "ai": {
-   "summary": "文章从零构建一个实用的 render graph，核心是基于资源访问时间线自动生成 barrier 并优化 pass 顺序。它采用两级命令录制，并通过连续读分组、并发写分组、pass 批处理、pass 重排序和瞬态内存别名等逐步优化，减少 GPU 同步开销和显存占用。在作者的研究渲染器中，该方案节省约 350 MB 显存（占总 VRAM 的 20%）和每帧 0.2–0.4 ms GPU 时间。文章还讨论了 split barrier 和 async compute 等进阶优化，并指出 render graph 相比手工放置 barrier 更可维护。",
+   "summary": "作者用 RenderDoc 和 Radeon GPU Profiler 分析 Timberborn 后期大场景的一帧，发现帧率下降主要来自 GPU 空闲时间，而非模拟或绘制调用本身。帧结构为：单张 4096x4096 正交阴影贴图、按扇区从近到远排序的不透明绘制流（约 8k 阴影绘制、11k 非实例化不透明绘制）、水面深度 pass 和天空盒。水面渲染使用 73 个 chunk，在顶点着色器里采样多张全图俯视数据纹理（Outflows、WaterData、WaterSkirts 等）做形变。文章重点在绘制顺序与传给 GPU 的数据，而非复杂渲染技术。",
    "points": [
-    "基于资源访问时间线自动生成 barrier，解决手工同步在复杂渲染设置组合下难以维护的问题。",
-    "两级命令录制与访问分组（连续读、并发写）减少不必要的 barrier 和 GPU 流水线排空。",
-    "pass 批处理与重排序优化执行顺序，瞬态内存别名降低显存占用。",
-    "在 Timberdoodle 渲染器中实测节省约 350 MB 显存和每帧 0.2–0.4 ms GPU 时间。"
+    "帧时间瓶颈是 GPU 空闲时间，表现为 8k 阴影绘制与 11k 非实例化不透明绘制之间存在大段间隙。",
+    "主渲染按扇区从近到远排序，扇区内依次绘制植被、水坝/建筑、地形，植被用 Perlin 噪声做顶点位移模拟风。",
+    "水面由 73 个 chunk 组成，顶点着色器采样 Outflows、WaterData、WaterSkirts 等全图俯视纹理进行形变。",
+    "阴影贴图为单张 4096x4096 正交贴图，覆盖范围跟随相机视角并做剔除。"
    ],
    "tags": [
-    "渲染管线",
-    "GPU驱动渲染",
     "性能优化",
-    "Vulkan"
+    "GPU驱动渲染",
+    "CAD渲染"
    ],
-   "relevance": 4,
+   "relevance": 2,
    "level": "进阶"
   }
  },
@@ -1748,32 +1747,33 @@
   }
  },
  {
-  "id": "88ccf0883fcd",
-  "url": "https://xandev.blog.br/studies/timberborn-frame-analysis/",
-  "title": "Timberborn Frame Analysis",
+  "id": "9d87aedfb559",
+  "url": "https://ipotrick.github.io/site/blogs/practical-efficient-rendergraphs/",
+  "title": "Practical, efficient render graphs",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-23T04:00:00.000Z",
   "fetched": "2026-11-25T14:46:16.969422Z",
-  "snippet": "• analyzes a late-game Timberborn frame in RenderDoc and Radeon GPU Profiler\n• documents the Unity frame structure\n• detects that most of the cost is from GPU idle time, with large gaps between 8k shadow draws and 11k non-instanced opaque draws",
+  "snippet": "• walks through building a render graph from scratch based on resource access timelines\n• explains two-level command recording, consecutive read and concurrent-write access grouping, pass batching, pass reordering, and transient memory aliasing\n• includes discussions on memory usage and GPU time savings",
   "via": {
    "title": "Graphics Programming weekly - Issue 464 - November 23rd, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464/"
   },
   "ai": {
-   "summary": "作者用 RenderDoc 和 Radeon GPU Profiler 分析 Timberborn 后期大场景的一帧，发现帧率下降主要来自 GPU 空闲时间，而非模拟或绘制调用本身。帧结构为：单张 4096x4096 正交阴影贴图、按扇区从近到远排序的不透明绘制流（约 8k 阴影绘制、11k 非实例化不透明绘制）、水面深度 pass 和天空盒。水面渲染使用 73 个 chunk，在顶点着色器里采样多张全图俯视数据纹理（Outflows、WaterData、WaterSkirts 等）做形变。文章重点在绘制顺序与传给 GPU 的数据，而非复杂渲染技术。",
+   "summary": "文章从零构建一个实用的 render graph，核心是基于资源访问时间线自动生成 barrier 并优化 pass 顺序。它采用两级命令录制，并通过连续读分组、并发写分组、pass 批处理、pass 重排序和瞬态内存别名等逐步优化，减少 GPU 同步开销和显存占用。在作者的研究渲染器中，该方案节省约 350 MB 显存（占总 VRAM 的 20%）和每帧 0.2–0.4 ms GPU 时间。文章还讨论了 split barrier 和 async compute 等进阶优化，并指出 render graph 相比手工放置 barrier 更可维护。",
    "points": [
-    "帧时间瓶颈是 GPU 空闲时间，表现为 8k 阴影绘制与 11k 非实例化不透明绘制之间存在大段间隙。",
-    "主渲染按扇区从近到远排序，扇区内依次绘制植被、水坝/建筑、地形，植被用 Perlin 噪声做顶点位移模拟风。",
-    "水面由 73 个 chunk 组成，顶点着色器采样 Outflows、WaterData、WaterSkirts 等全图俯视纹理进行形变。",
-    "阴影贴图为单张 4096x4096 正交贴图，覆盖范围跟随相机视角并做剔除。"
+    "基于资源访问时间线自动生成 barrier，解决手工同步在复杂渲染设置组合下难以维护的问题。",
+    "两级命令录制与访问分组（连续读、并发写）减少不必要的 barrier 和 GPU 流水线排空。",
+    "pass 批处理与重排序优化执行顺序，瞬态内存别名降低显存占用。",
+    "在 Timberdoodle 渲染器中实测节省约 350 MB 显存和每帧 0.2–0.4 ms GPU 时间。"
    ],
    "tags": [
-    "性能优化",
+    "渲染管线",
     "GPU驱动渲染",
-    "CAD渲染"
+    "性能优化",
+    "Vulkan"
    ],
-   "relevance": 2,
+   "relevance": 4,
    "level": "进阶"
   }
  },
@@ -3901,34 +3901,32 @@
   }
  },
  {
-  "id": "8cb2d0d26950",
-  "url": "https://vulkan.org/events/vulkanised-2027",
-  "title": "Vulkanised and Real-Time Shading Symposium 2027",
+  "id": "0fe388cf8c03",
+  "url": "https://arxiv.org/abs/2611.13677",
+  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
+  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
+   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
    "points": [
-    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
-    "设有光线追踪、神经渲染与生产案例分享",
-    "包含 Slang、着色器语言、工具链与性能优化专题",
-    "早鸟注册截止 2027 年 1 月 15 日"
+    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
+    "随变形选择性更新纹理缓存，而非每帧全量重建。",
+    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
+    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
    ],
    "tags": [
-    "Vulkan",
-    "GPU驱动渲染",
-    "着色器",
-    "光线追踪"
+    "神经渲染",
+    "渲染管线"
    ],
    "relevance": 2,
-   "level": "入门"
+   "level": "专业"
   }
  },
  {
@@ -4139,32 +4137,34 @@
   }
  },
  {
-  "id": "0fe388cf8c03",
-  "url": "https://arxiv.org/abs/2611.13677",
-  "title": "Deformable Texture Maps: Compiling Dynamic Microgeometry into Neural Textures",
+  "id": "8cb2d0d26950",
+  "url": "https://vulkan.org/events/vulkanised-2027",
+  "title": "Vulkanised and Real-Time Shading Symposium 2027",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-15T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• introduces Deformable Texture Maps, a compact neural texture that maps texture coordinates and local deformation\n• caches these maps in persistent texture space and selectively updates them as deformation changes\n• demonstrates the representation on deforming yarn textiles, capturing changing geometry and occlusion",
+  "snippet": "• announces five days of Vulkan and real-time shading talks in Kortrijk, Belgium, from February 8–12, 2027\n• covers Vulkan updates, debugging tools, ray tracing, neural rendering, GPU-driven compute, and production case studies\n• features Ken Perlin’s keynote and sessions on Slang, shader languages, tooling, and optimization\n• early-bird registration runs through January 15",
   "via": {
    "title": "Graphics Programming weekly - Issue 463 - November 15th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463/"
   },
   "ai": {
-   "summary": "该论文提出 Deformable Texture Maps，一种紧凑的神经纹理表示，将纹理坐标与局部变形映射到持久纹理空间中，并随变形变化选择性更新缓存。作者在变形纱线织物上演示了该表示，能够捕捉随变形变化的几何与遮挡关系。核心贡献在于用神经纹理把动态微观几何编译进纹理空间，避免每帧重建高精度几何。",
+   "summary": "这是 Vulkanised 与 Real-Time Shading Symposium 2027 的活动公告，并非技术文章。会议将于 2027 年 2 月 8–12 日在比利时 Kortrijk 举办，为期五天，内容包括 Vulkan 更新、调试工具、光线追踪、神经渲染、GPU-driven compute 以及生产案例。Keynote 由 Ken Perlin 主讲，另设 Slang、着色器语言、工具与优化等专题；早鸟注册截至 1 月 15 日。",
    "points": [
-    "将纹理坐标与局部变形共同映射到持久纹理空间，实现紧凑的神经纹理表示。",
-    "随变形选择性更新纹理缓存，而非每帧全量重建。",
-    "在变形纱线织物上验证，可捕捉变化的几何与遮挡。",
-    "属于神经纹理与微观几何表示方向，与 CAD 渲染管线关联较间接。"
+    "会议涵盖 Vulkan 更新、调试工具与 GPU-driven compute 等主题",
+    "设有光线追踪、神经渲染与生产案例分享",
+    "包含 Slang、着色器语言、工具链与性能优化专题",
+    "早鸟注册截止 2027 年 1 月 15 日"
    ],
    "tags": [
-    "神经渲染",
-    "渲染管线"
+    "Vulkan",
+    "GPU驱动渲染",
+    "着色器",
+    "光线追踪"
    ],
    "relevance": 2,
-   "level": "专业"
+   "level": "入门"
   }
  },
  {
@@ -4327,31 +4327,6 @@
   }
  },
  {
-  "id": "dbb6a7059ae0",
-  "url": "https://developer.nvidia.com/blog/when-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm/",
-  "title": "When One GPU Isn’t Enough: Serving GLM-5.3 Across Two NVIDIA DGX Stations with vLLM",
-  "source": "NVIDIA Technical Blog",
-  "topic": "rendering",
-  "author": "Fatima Fall",
-  "published": "2026-11-13T17:00:00.000Z",
-  "fetched": "2026-11-23T12:05:14.450503Z",
-  "snippet": "Running a frontier-scale model locally means keeping all its weights in GPU memory; the largest models no longer fit on one machine. Two NVIDIA DGX Stations...",
-  "ai": {
-   "summary": "该文介绍如何在两台 NVIDIA DGX Station 上通过 ConnectX-8 RDMA 与 vLLM 的 tensor parallelism（TP=2）本地部署 753B 参数的 MoE 模型 GLM-5.3 NVFP4，解决单卡 252 GB HBM3e 无法容纳约 464 GB 权重的问题。两台机器各持一半权重并共同参与计算，由 Station A 暴露单一 OpenAI 兼容端点，并启用多 token 预测、FP8 KV-cache 与前缀缓存。AIPerf 在 SPEED-Bench Coding 上的测试显示并发 16 时输出吞吐峰值 607.8 tokens/s，并发 32 时降至 385.0 tokens/s、平均延迟 453.5 s。内容属于大模型推理部署运维，与图形学无关。",
-   "points": [
-    "用 TP=2 将 753B MoE 模型权重拆分到两台 GB300 DGX Station，避免 CPU offload。",
-    "通过 ConnectX-8 RDMA 双 rail 互联，Station A 提供统一 OpenAI 兼容 API。",
-    "vLLM 启用多 token 预测、FP8 KV-cache 与前缀缓存以提升并发吞吐。",
-    "基准显示并发 16 时吞吐最高，继续加压后吞吐下降、延迟显著上升。"
-   ],
-   "tags": [
-    "性能优化"
-   ],
-   "relevance": 1,
-   "level": "进阶"
-  }
- },
- {
   "id": "647ecc584acf",
   "url": "https://developer.nvidia.com/blog/adapt-human-motion-for-robots-with-nvidia-soma-retargeter/",
   "title": "Adapt Human Motion for Robots with NVIDIA SOMA Retargeter",
@@ -4374,6 +4349,31 @@
    ],
    "relevance": 1,
    "level": "入门"
+  }
+ },
+ {
+  "id": "dbb6a7059ae0",
+  "url": "https://developer.nvidia.com/blog/when-one-gpu-isnt-enough-serving-glm-5-3-across-two-nvidia-dgx-stations-with-vllm/",
+  "title": "When One GPU Isn’t Enough: Serving GLM-5.3 Across Two NVIDIA DGX Stations with vLLM",
+  "source": "NVIDIA Technical Blog",
+  "topic": "rendering",
+  "author": "Fatima Fall",
+  "published": "2026-11-13T17:00:00.000Z",
+  "fetched": "2026-11-23T12:05:14.450503Z",
+  "snippet": "Running a frontier-scale model locally means keeping all its weights in GPU memory; the largest models no longer fit on one machine. Two NVIDIA DGX Stations...",
+  "ai": {
+   "summary": "该文介绍如何在两台 NVIDIA DGX Station 上通过 ConnectX-8 RDMA 与 vLLM 的 tensor parallelism（TP=2）本地部署 753B 参数的 MoE 模型 GLM-5.3 NVFP4，解决单卡 252 GB HBM3e 无法容纳约 464 GB 权重的问题。两台机器各持一半权重并共同参与计算，由 Station A 暴露单一 OpenAI 兼容端点，并启用多 token 预测、FP8 KV-cache 与前缀缓存。AIPerf 在 SPEED-Bench Coding 上的测试显示并发 16 时输出吞吐峰值 607.8 tokens/s，并发 32 时降至 385.0 tokens/s、平均延迟 453.5 s。内容属于大模型推理部署运维，与图形学无关。",
+   "points": [
+    "用 TP=2 将 753B MoE 模型权重拆分到两台 GB300 DGX Station，避免 CPU offload。",
+    "通过 ConnectX-8 RDMA 双 rail 互联，Station A 提供统一 OpenAI 兼容 API。",
+    "vLLM 启用多 token 预测、FP8 KV-cache 与前缀缓存以提升并发吞吐。",
+    "基准显示并发 16 时吞吐最高，继续加压后吞吐下降、延迟显著上升。"
+   ],
+   "tags": [
+    "性能优化"
+   ],
+   "relevance": 1,
+   "level": "进阶"
   }
  },
  {
@@ -5199,35 +5199,34 @@
   }
  },
  {
-  "id": "b4d519102979",
-  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
-  "title": "Real-Time Path Tracing in Games",
+  "id": "646e7777e05c",
+  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
+  "title": "Around The World, Part 34: A pretty sky",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
+  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
+   "summary": "文章介绍了一个风格化航海游戏在天空、大气散射和云渲染方面的视觉改进。作者用 Rust 编写了蒙特卡洛光线追踪器，确认 POV-Ray 未模拟多次散射，并据此预计算了新的云查找表（LUT），使云底更亮、光照更均匀。在 Godot 中，通过将云底法线朝上采样间接光，使云获得天空的蓝色/粉色色调，更自然地融入天空。此外，调整大气光线步进中内散射与外散射的顺序，修复了太阳天顶时地平线异常偏黄的问题。",
    "points": [
-    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
-    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
-    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
-    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
+    "自研 Rust 蒙特卡洛光线追踪器验证 POV-Ray 缺少多次散射，并生成更均匀的云 LUT。",
+    "在 Godot 中将云底法线朝上以采样天空间接光，使云获得蓝色/粉色环境色调。",
+    "调整大气光线步进顺序（先外散射衰减再内散射累加），修复天顶太阳时地平线偏黄。",
+    "改进后云层金属感消失，云底更亮，日落时云呈粉色，整体更自然。"
    ],
    "tags": [
     "光线追踪",
-    "全局光照",
-    "性能优化",
-    "D3D12",
-    "渲染管线"
+    "着色器",
+    "渲染管线",
+    "全局光照"
    ],
-   "relevance": 3,
-   "level": "专业"
+   "relevance": 2,
+   "level": "进阶"
   }
  },
  {
@@ -5378,34 +5377,35 @@
   }
  },
  {
-  "id": "646e7777e05c",
-  "url": "https://frozenfractal.com/blog/2026/10/12/around-the-world-34-a-pretty-sky/",
-  "title": "Around The World, Part 34: A pretty sky",
+  "id": "b4d519102979",
+  "url": "https://github.com/NVIDIA-RTX/Whitepapers/tree/main/pt_performance_whitepaper",
+  "title": "Real-Time Path Tracing in Games",
   "source": "Graphics Programming Weekly",
   "topic": "rendering",
   "published": "2026-11-08T04:00:00.000Z",
   "fetched": "2026-11-23T12:05:14.671630Z",
-  "snippet": "• covers visual improvements to the sky, atmospheric scattering, and cloud rendering in a stylized sailing game\n• verifies multiple scattering missing in POV-Ray using a custom Rust ray tracer and precomputes updated cloud LUTs\n• details Godot shader tricks, including upward-pointing cloud normals for indirect light and view-vector adjustments for small planet horizons",
+  "snippet": "• outlines best practices and architecture strategies for real-time path tracing in modern game engines\n• recommends budgeting rays per signal rather than per pixel, combining shallow bounces with radiance caching and ReSTIR\n• discusses acceleration structure updates, firefly management, and tuning ray dispatch alongside denoising and upscaling",
   "via": {
    "title": "Graphics Programming weekly - Issue 462 - November 8th, 2026",
    "url": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462/"
   },
   "ai": {
-   "summary": "文章介绍了一个风格化航海游戏在天空、大气散射和云渲染方面的视觉改进。作者用 Rust 编写了蒙特卡洛光线追踪器，确认 POV-Ray 未模拟多次散射，并据此预计算了新的云查找表（LUT），使云底更亮、光照更均匀。在 Godot 中，通过将云底法线朝上采样间接光，使云获得天空的蓝色/粉色色调，更自然地融入天空。此外，调整大气光线步进中内散射与外散射的顺序，修复了太阳天顶时地平线异常偏黄的问题。",
+   "summary": "该白皮书针对游戏实时路径追踪的性能与可扩展性提出最佳实践，核心思想是按信号（直接光照、漫反射GI、高光、体积、缓存更新）而非全局每像素光线数分配光线预算，并将缓存、降噪和超分视为渲染管线的一部分。方法上建议结合浅层反弹与辐射度缓存、ReSTIR 重用、有界 VNDF 采样，并讨论加速结构更新、萤火虫管理与光线调度调优。结论是实时路径追踪需在严格帧预算内以最终重建图像质量为目标，通过自适应光线分配和特性分级回退实现可扩展性。",
    "points": [
-    "自研 Rust 蒙特卡洛光线追踪器验证 POV-Ray 缺少多次散射，并生成更均匀的云 LUT。",
-    "在 Godot 中将云底法线朝上以采样天空间接光，使云获得蓝色/粉色环境色调。",
-    "调整大气光线步进顺序（先外散射衰减再内散射累加），修复天顶太阳时地平线偏黄。",
-    "改进后云层金属感消失，云底更亮，日落时云呈粉色，整体更自然。"
+    "按信号分配光线预算：直接光照、漫反射GI、高光、体积和缓存更新各有独立成本控制策略，而非统一每像素光线数。",
+    "缓存、降噪器和超分器是渲染器的一部分，需与光线调度、加速结构更新一起联合调优。",
+    "主可见性通常仍用光栅化生成 G-buffer，路径追踪应用于间接光照、复杂可见性、高光响应和高质量阴影等最高价值处。",
+    "需警惕低 PDF 导致的萤火虫污染时空降噪器，实时收敛依赖重要性采样、重用、辐射度缓存和稳定时间累积。"
    ],
    "tags": [
     "光线追踪",
-    "着色器",
-    "渲染管线",
-    "全局光照"
+    "全局光照",
+    "性能优化",
+    "D3D12",
+    "渲染管线"
    ],
-   "relevance": 2,
-   "level": "进阶"
+   "relevance": 3,
+   "level": "专业"
   }
  },
  {
